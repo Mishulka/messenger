@@ -1,5 +1,5 @@
 import styles from './style.module.pcss';
 
 
-export default `<button id="btn-test" class="${styles.button}">Click me</button>`;
+export default `<button id="btn-test" class="${styles.button}">{{text}}</button>`;
 

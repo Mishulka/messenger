@@ -1,5 +1,10 @@
 import styles from './style.module.pcss';
 
 
-export default `<button id="btn-test" class="${styles.button}">SearchInput</button>`;
+export default `<input 
+type="search" 
+id="{{inputId}}" 
+class="${styles.input}"
+placeholder="{{placeholder}}">
+</input>`;
 
