@@ -3,11 +3,21 @@ import Handlebars from "handlebars";
 import * as Pages from "./pages";
 
 //import components
+import Dropdown from './partials/dropdown/Dropdown';
+import Field from './partials/field/Field';
+import Input from './partials/input/Input';
+import SearchInput from './partials/searchInput/SearchInput';
+import SettingField from './partials/settingField/SettingField';
 import button from './partials/button/button';
-import { testData } from "./mockData.js";
+
 
 //register components
 Handlebars.registerPartial('Button', button);
+Handlebars.registerPartial('Dropdown', Dropdown);
+Handlebars.registerPartial('Field', Field);
+Handlebars.registerPartial('Input', Input);
+Handlebars.registerPartial('SearchInput', SearchInput);
+Handlebars.registerPartial('SettingField', SettingField);
 
 
 export default class App {
@@ -44,10 +54,12 @@ export default class App {
         }
         this.attachEventListeners();
     }
+
     renderPage(page) {
         const template = Handlebars.compile(page);
         this.appElement.innerHTML = template();
     }
+
     attachEventListeners() {
         //example event:
         // const PressedButton = document.getElementById('btn-test');
@@ -59,6 +71,7 @@ export default class App {
         // }
 
     }
+
     setState(newState) {
         this.state = { ...this.state, ...newState };
         this.render();

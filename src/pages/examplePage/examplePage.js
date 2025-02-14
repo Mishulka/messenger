@@ -4,6 +4,11 @@ const template = `
   <p>This is content from the Example Page template.</p>
   <p>Components:</p>
   {{> Button}}
+  {{> Dropdown}}
+  {{> Field}}
+  {{> Input}}
+  {{> SearchInput}}
+  {{> SettingField}}
 </div>
 `;
 
