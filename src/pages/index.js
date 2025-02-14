@@ -9,4 +9,4 @@ import Handlebars from 'handlebars';
 // export default Pages
 
 // pages/index.js
-export { ExamplePage } from './examplePage/examplePage.js'; // Corrected import!
+export { AllComponentsPage } from './examplePage/examplePage.js'; // Corrected import!

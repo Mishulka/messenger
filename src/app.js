@@ -1,14 +1,13 @@
+//libs
 import Handlebars from "handlebars";
-
 import * as Pages from "./pages";
 
-import examp from './partials/examp';
+//import components
+import button from './partials/button/button';
 import { testData } from "./mockData.js";
-import userPartial from './partials/userNames';
 
-Handlebars.registerPartial('examp', examp);
-Handlebars.registerPartial('userPartial', userPartial);
-
+//register components
+Handlebars.registerPartial('Button', button);
 
 
 export default class App {
@@ -25,16 +24,26 @@ export default class App {
         // this.appElement.innerHTML = template({});
         if(this.state.currentPage === "ExampPage") {
             let template;
-            template = Handlebars.compile(Pages.ExamplePage);    
+            template = Handlebars.compile(Pages.AllComponentsPage);    
             this.appElement.innerHTML = template({
                 currentPage: this.state.currentPage,
                 users: testData});
         }
-     
-   
-        
+        this.attachEventListeners();
+    }
+    attachEventListeners() {
+        // const PressedButton = document.getElementById('btn-test');
+        // if(PressedButton) {
+        //     PressedButton.addEventListener('click', () => {
+        //         console.log("log about press this button")
+        //         this.setState({ currentPage: 'PageAfterPressingThisButton' });
+        //     })
+        // }
 
-        //this.attachEventListeners();
+    }
+    setState(newState) {
+        this.state = { ...this.state, ...newState };
+        this.render();
     }
    
 }
