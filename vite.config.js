@@ -6,13 +6,11 @@ import { fileURLToPath, URL } from 'url';
 
 export default defineConfig({
   build: {
-    rollupOptions: {
-        main: resolve(__dirname, 'index.html')
-    }
+    outDir: './dist',
+    sourcemap: true,
   },
   css: {
     modules: {
- 
     },
     postcss: {
       plugins: [

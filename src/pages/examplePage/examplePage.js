@@ -1,13 +1,13 @@
 const template = `
 <div>
-  <h2>Example Page Content 2</h2>
-  <p>This is content from the Example Page template.</p>
+  <h2>Example Page</h2>
+  <p>This is Page with all components.</p>
   <p>Components:</p>
-  {{> Button}}
+  {{> Button text="Just Button"}}
   {{> Dropdown}}
   {{> Field}}
   {{> Input}}
-  {{> SearchInput}}
+  {{> SearchInput placeholder="Search"}}
   {{> SettingField}}
 </div>
 `;
