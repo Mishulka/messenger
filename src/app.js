@@ -11,27 +11,45 @@ Handlebars.registerPartial('Button', button);
 
 
 export default class App {
+    
     constructor() {
         this.state = {
-            currentPage: 'ExampPage'
+            currentPage: 'AllBlocks'
         }
         this.appElement = document.getElementById('app');
     };
-
+    
     render() {
-        // let template;
-        // template = Handlebars.compile(Pages.MessagePage);
-        // this.appElement.innerHTML = template({});
-        if(this.state.currentPage === "ExampPage") {
-            let template;
-            template = Handlebars.compile(Pages.AllComponentsPage);    
-            this.appElement.innerHTML = template({
-                currentPage: this.state.currentPage,
-                users: testData});
+        switch (this.state.currentPage) {
+            case "AllBlocks":
+                this.renderPage(Pages.AllComponentsPage);
+                break;
+            case "505":
+                this.renderPage(Pages.ServerError);
+                break;
+            case "Login":
+                this.renderPage(Pages.Login);
+                break;
+            case "NewAvatar":
+                this.renderPage(Pages.NewAvatar);
+                break;
+            case "Profile":
+                this.renderPage(Pages.Profile);
+                break;
+            case "Signin":
+                this.renderPage(Pages.Signin);
+                break;
+            default:
+                this.renderPage(Pages.NotFound);
         }
         this.attachEventListeners();
     }
+    renderPage(page) {
+        const template = Handlebars.compile(page);
+        this.appElement.innerHTML = template();
+    }
     attachEventListeners() {
+        //example event:
         // const PressedButton = document.getElementById('btn-test');
         // if(PressedButton) {
         //     PressedButton.addEventListener('click', () => {
