@@ -34,7 +34,7 @@ const usersData = [
 //pages contexts
 const pages = {
     'Login': [ Pages.Login, {} ], 
-    'SelectChat': [ Pages.SelectChat, {} ], 
+    'SelectChat': [ Pages.SelectChat, { users: usersData }], 
     '505': [Pages.ServerError, {}], 
     'NewAvatar': [Pages.NewAvatar, {}], 
     'Profile': [Pages.Profile, {}], 
@@ -46,7 +46,7 @@ const pages = {
 export default class App {
     constructor() {
         this.state = {
-            currentPage: 'AllBlocks'
+            currentPage: 'Login'
         }
         this.appElement = document.getElementById('app');
     };
@@ -76,7 +76,8 @@ export default class App {
         const allLinks = document.querySelectorAll('a');
         allButtons.forEach(button => {
             button.addEventListener('click', () => {
-                const pageName = link.dataset.page;
+                console.log("button click")
+                const pageName = button.dataset.page;
                 if (pageName) {
                     event.preventDefault();
                     event.stopImmediatePropagation();
