@@ -1,4 +1,4 @@
-export { AllComponentsPage } from './examplePage/examplePage.js';
+export { AllBlocks } from './examplePage/examplePage.js';
 export { NotFound } from './404/notFound.js';
 export { ServerError } from './505/ServerError.js';
 export { Signin } from './SignIn/Signin.js';

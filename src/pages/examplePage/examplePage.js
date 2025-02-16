@@ -1,15 +1,17 @@
+import styles from './style.module.pcss';
+
 const template = `
-<div>
+<div class="${styles.container}">
   <h2>Example Page</h2>
   <p>This is Page with all components.</p>
   <p>Components:</p>
   {{> Button text="Just Button"}}
-  {{> Dropdown}}
   {{> Field}}
   {{> Input}}
-  {{> SearchInput placeholder="Search"}}
-  {{> SettingField}}
+  {{#each users}}
+    {{> UserCard user=this }} 
+  {{/each}}
 </div>
 `;
 
-export { template as AllComponentsPage };
+export { template as AllBlocks };

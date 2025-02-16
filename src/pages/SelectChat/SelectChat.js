@@ -1,5 +1,2 @@
-const template = `
-<h1>Select Chat</h1>
-`
-
-export { template as SelectChat };
+import styles from './style.module.pcss';
+export { default as SelectChat } from './SelectChat.hbs?raw';
