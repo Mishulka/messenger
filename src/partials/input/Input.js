@@ -1,5 +1,11 @@
 import styles from './style.module.pcss';
 
 
-export default `<button id="btn-test" class="${styles.button}">Input</button>`;
+export default 
+`<input 
+class="${styles.input}" 
+name="{{name}}"
+placeholder="{{placeholder}}" 
+type="{{type}}" 
+/>`;
 
