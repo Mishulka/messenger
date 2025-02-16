@@ -4,8 +4,8 @@ import styles from './style.module.pcss';
 export default `
 <button 
     id="{{id}}" 
-    type={{type}} 
-    onclick="{{Event}}" 
+    type="{{type}}" 
     class="${styles.button}"
+    data-page="{{data-page}}"
 >{{text}}</button>`;
 

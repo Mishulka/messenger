@@ -10,7 +10,7 @@ const template = `
     {{> Field text="Password" label-name="Password" type="password"}}
     </div>
     <div class="${styles.container}">
-    {{> Button text="Login"}}
+    {{> Button text="Login" type="button" data-page="SelectChat"}}
     <div class="login-footer">
     </div>
       {{> Link text="Нет аккаунта?" data-page="Signin"}}
