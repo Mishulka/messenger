@@ -26,15 +26,27 @@ Handlebars.registerPartial('UserCard', userCard);
 
 //users's data
 import user1 from './assets/vite.svg';
+import noAvatar from './assets/images/NoAvatar.png';
+
 const usersData = [
     {userName: 'Vite', userAvatar: user1},
-    {userName: 'Anonim'}
+    {userName: 'Anonim', noAvatar: noAvatar }
 ];
+
+const currentUser = {
+    userName: 'Current User',
+    userAvatar: user1
+};
+
 
 //pages contexts
 const pages = {
     'Login': [ Pages.Login, {} ], 
-    'SelectChat': [ Pages.SelectChat, { users: usersData }], 
+    'SelectChat': [ 
+        Pages.SelectChat, {
+        users: usersData,
+        currentUser: currentUser
+     }], 
     '505': [Pages.ServerError, {}], 
     'NewAvatar': [Pages.NewAvatar, {}], 
     'Profile': [Pages.Profile, {}], 
@@ -46,7 +58,7 @@ const pages = {
 export default class App {
     constructor() {
         this.state = {
-            currentPage: 'Login'
+            currentPage: 'SelectChat'
         }
         this.appElement = document.getElementById('app');
     };

@@ -1,10 +1,10 @@
 import styles from './style.module.pcss';
 
 
-export default `<input 
-type="search" 
-id="{{inputId}}" 
-class="${styles.input}"
-placeholder="{{placeholder}}">
-</input>`;
-
+export default `<div class="${styles.searchContainer}">
+  <input 
+    type="search" 
+    id="{{inputId}}" 
+    class="${styles.input}"
+    placeholder="{{placeholder}}">
+</div>`;
