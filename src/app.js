@@ -34,7 +34,7 @@ const usersData = [
 ];
 
 const currentUser = {
-    userName: 'Current User',
+    userName: 'Login',
     userAvatar: user1
 };
 
