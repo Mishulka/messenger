@@ -34,7 +34,7 @@ const usersData = [
 ];
 
 const currentUser = {
-    userName: 'Login',
+    userName: 'Current User',
     userAvatar: user1
 };
 
@@ -58,7 +58,7 @@ const pages = {
 export default class App {
     constructor() {
         this.state = {
-            currentPage: 'Profile'
+            currentPage: 'Login'
         }
         this.appElement = document.getElementById('app');
     };
