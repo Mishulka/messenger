@@ -1,4 +1,42 @@
-body {
-    font-family: 'Inter', Arial, sans-serif;
+body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, {
+  margin: 0;
+  padding: 0;
 }
 
+ul, ol {
+  list-style: none;
+}
+
+html {
+  font-size: 16px; 
+  font-family: 'Inter', Arial, sans-serif; 
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh; 
+  text-rendering: optimizeSpeed; 
+  line-height: 1.5; 
+  margin: 0px;
+  padding: 0px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+  height: auto;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+}

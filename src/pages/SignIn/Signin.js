@@ -2,12 +2,17 @@ import styles from './style.module.pcss';
 
 
 const template = `
-<div class="${styles.login_container}">
-  <form class="${styles.login_form}" id="login-form">
+<div class="${styles.signin_container}">
+  <form class="${styles.signin_form}" id="signin-form">
     <h2>Регистрация</h2>
     <div class="${styles.container}">
+    {{> Field text="Почта" label-name="Mail"}}
     {{> Field text="Login" label-name="Login"}}
-    {{> Field text="Password" label-name="Password" type="password"}}
+    {{> Field text="Имя" label-name="Name"}}
+    {{> Field text="Фамилия" label-name="Surname"}}
+    {{> Field text="Телефон" label-name="Phone"}}
+    {{> Field text="Пароль" label-name="Password" type="password"}}
+    {{> Field text="" label-name="Пароль (ещё раз)" type="re-password"}}
     </div>
     <div class="${styles.container}">
     {{> Button text="Login"}}
