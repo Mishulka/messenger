@@ -49,7 +49,7 @@ const pages = {
      }], 
     '505': [Pages.ServerError, {}], 
     'NewAvatar': [Pages.NewAvatar, {}], 
-    'Profile': [Pages.Profile, {}], 
+    'Profile': [Pages.Profile, { user: currentUser }], 
     'Signin': [Pages.Signin, {}], 
     'AllBlocks': [Pages.AllBlocks, { users: usersData }],
     'NotFound': [Pages.NotFound, {}] 
@@ -58,7 +58,7 @@ const pages = {
 export default class App {
     constructor() {
         this.state = {
-            currentPage: 'SelectChat'
+            currentPage: 'Profile'
         }
         this.appElement = document.getElementById('app');
     };

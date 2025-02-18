@@ -8,7 +8,7 @@ export default `
         class="${styles.field}" 
         type="{{type}}"
         name="{{name}}"
-        placeholder="{{name}}"
+        placeholder="{{placeholder}}"
         value="{{value}}"
         required>
 </div>`;
