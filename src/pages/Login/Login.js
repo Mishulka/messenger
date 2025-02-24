@@ -6,8 +6,8 @@ const template = `
   <form class="${styles.login_form}" id="login-form">
     <h2>Вход</h2>
     <div class="${styles.container}">
-    {{> Field text="Login" label-name="Login"}}
-    {{> Field text="Password" label-name="Password" type="password"}}
+    {{> Field text="Login" label-name="Login" name="login"}}
+    {{> Field text="Password" label-name="Password" type="password" name="password"}}
     </div>
     <div class="${styles.container}">
     {{> Button text="Login" type="button" data-page="SelectChat"}}

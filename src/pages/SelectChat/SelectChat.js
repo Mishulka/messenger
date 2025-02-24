@@ -24,7 +24,7 @@ const template = `
         </div>
         <div class="${styles.currentChat}"></div>
         <div class="${styles.messageInput}">
-            {{> Input placeholder="Сообщение" }}
+            {{> Input placeholder="Сообщение" name="message" }}
         </div>
     </div>
     
