@@ -11,8 +11,8 @@ const template = `
     {{> SettingField label-name="Имя в чате" placeholder="Ванек"}}
     {{> SettingField label-name="Телефон" placeholder="+7(900)900-90-90"}}
 <div class="${styles.profile_container}">
-    {{> SettingField label-name="Изменить данные" change=true}}
-    {{> SettingField label-name="Изменить Пароль" change=true}}
+    {{> Link text="Изменить данные" data-page="EditProfile"}}
+    {{> Link text="Изменить Пароль"}}
     {{> Link text="Выйти" data-page="SelectChat" exit=true}}
 </div>
 </div>
