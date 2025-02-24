@@ -50,6 +50,8 @@ const pages = {
     '505': [Pages.ServerError, {}], 
     'NewAvatar': [Pages.NewAvatar, {}], 
     'Profile': [Pages.Profile, { user: currentUser }], 
+    'EditProfile': [Pages.EditProfile, { user: currentUser }], 
+    'EditPassword': [Pages.EditPassword, { user: currentUser }], 
     'Signin': [Pages.Signin, {}], 
     'AllBlocks': [Pages.AllBlocks, { users: usersData }],
     'NotFound': [Pages.NotFound, {}] 

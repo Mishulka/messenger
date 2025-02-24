@@ -5,4 +5,6 @@ export { Signin } from './SignIn/Signin.js';
 export { Login } from './Login/Login.js';
 export { SelectChat } from './SelectChat/SelectChat.js';
 export { Profile } from './Profile/Profile.js';
+export { EditProfile } from './EditProfile/EditProfile.js';
+export { EditPassword } from './EditPassword/EditPassword.js';
 export { NewAvatar } from './NewAvatar/newAvatar.js';
