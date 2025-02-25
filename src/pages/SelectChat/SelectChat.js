@@ -23,9 +23,12 @@ const template = `
             <p>{{currentUser.userName}}</p>
         </div>
         <div class="${styles.currentChat}"></div>
-        <div class="${styles.messageInput}">
-            {{> Input placeholder="Сообщение" name="message" }}
-        </div>
+        <form>
+            <div class="${styles.messageInput}">
+                {{> Input placeholder="Сообщение" name="message" }}
+            </div>
+        </form>
+        
     </div>
     
 
