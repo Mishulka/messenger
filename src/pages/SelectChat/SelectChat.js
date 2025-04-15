@@ -16,7 +16,12 @@ const template = `
     <div class="${styles.chat}">
         <div class="${styles.chat_header}">
             {{#if currentUser.userAvatar}}
-                  <img class="${styles.userAvatar}" src="{{currentUser.userAvatar}}" height="50px" width="50px" alt="{{userName}}'s Avatar" />
+                  <img class="${styles.userAvatar}" 
+                  src="{{currentUser.userAvatar}}" 
+                  height="50px" 
+                  width="50px" 
+                  alt="{{userName}}'s Avatar" 
+                />
                 {{else}}
                   <img class="${styles.userAvatar}" src="{{noAvatar}}" alt="нет фото" />
                 {{/if}}
