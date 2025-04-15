@@ -23,8 +23,8 @@ Handlebars.registerPartial('UserCard', userCard);
 
 
 
-const user1 = require('./assets/vite.svg');
-const noAvatar = require('./assets/images/NoAvatar.png');
+import user1 from './assets/vite.svg';
+import noAvatar from './assets/images/NoAvatar.png';
 
 const usersData = [
     {userName: 'Vite', userAvatar: user1},
