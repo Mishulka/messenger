@@ -1,4 +1,4 @@
-import Handlebars from "handlebars/dist/handlebars.js"
+import Handlebars from "handlebars";
 import * as Pages from "./pages";
 
 
@@ -38,7 +38,7 @@ const currentUser = {
 
 
 //pages contexts
-const pages = {
+const pages: Record<string, [string,any]> = {
     'Login': [ Pages.Login, {} ], 
     'SelectChat': [ 
         Pages.SelectChat, {
@@ -57,6 +57,8 @@ const pages = {
 
 export default class App {
     private state: { currentPage: string };
+    // @ts-ignore
+    // appElement is used in constructor, but ts-check does not see it
     private appElement: HTMLElement | null;
 
     constructor() {
@@ -76,11 +78,14 @@ export default class App {
         this.attachEventListeners();
     }
 
-    renderPage(page) {
+    renderPage(page: string) {
         const [ source, context ] = pages[page];
         const container = document.getElementById('app');
         
         const temlpate = Handlebars.compile(source);
+        if (!container) {
+            throw new Error('Container not found');
+        }
         container.innerHTML = temlpate(context);
         console.log('AllBlocks context:', context);
     }
@@ -90,9 +95,10 @@ export default class App {
         const allButtons = document.querySelectorAll('button');
         const allLinks = document.querySelectorAll('a');
         allButtons.forEach(button => {
-            button.addEventListener('click', () => {
+            button.addEventListener('click', (event) => {
                 console.log("button click")
                 const pageName = button.dataset.page;
+
                 if (pageName) {
                     event.preventDefault();
                     event.stopImmediatePropagation();
@@ -102,7 +108,7 @@ export default class App {
             });
         });
         allLinks.forEach(link => {
-            link.addEventListener('click', () => {
+            link.addEventListener('click', (event) => {
                 const pageName = link.dataset.page;
                 if (pageName) {
                     event.preventDefault();
@@ -114,7 +120,7 @@ export default class App {
         });
     }
 
-    setPage(newState) {
+    setPage(newState: Partial<{currentPage: string}> ) {
         this.state = { ...this.state, ...newState };
         this.render();
     }
