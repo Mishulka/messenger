@@ -11,8 +11,9 @@
     "preview": "vite preview",
     "lint:css": "stylelint \"**/*.css\"",
     "lint:css-fix": "stylelint \"**/*.css\" --fix",
-    "lint:js": "eslint .",
-    "lint:js-fix": "eslint . --fix"
+    "lint:ts": "eslint \"**/*.ts\"",
+    "lint:ts-fix": "eslint \"**/*.ts\" --fix",
+    "type-check": "tsc --noEmit"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
