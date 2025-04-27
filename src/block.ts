@@ -1,6 +1,8 @@
 
 import EventBus from "./core/EventBus"
 
+export type TProps = Record<string, any>;
+
 class Block {
   static EVENTS = {
     INIT: "init",
@@ -8,11 +10,11 @@ class Block {
     FLOW_RENDER: "flow:render"
   };
 
-  _element: HTMLElement | null = null;
-  _meta: {tagName: string; props: Record<string,any>} | null = null;
+  private _element: HTMLElement | null = null;
+  private _meta: {tagName: string; props: Record<string,any>} | null = null;
   props: Record<string, any>;
   eventBus: () => EventBus;
-  _eventBus: () => EventBus;
+  private _eventBus: () => EventBus;
 
   constructor(tagName = "div", props = {}) {
   const eventBus = new EventBus();
@@ -30,21 +32,22 @@ class Block {
     eventBus.emit(Block.EVENTS.INIT);
   }
 
-  _registerEvents(eventBus: EventBus) {
+  private _registerEvents(eventBus: EventBus) {
     eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
-    //eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
-    //eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
+    eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
+    eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
-  _addEvents() {
+  private _addEvents() {
     const {events = {}} = this.props;
-
-    Object.keys(events).forEach(eventName => {
-      this._element.addEventListener(eventName, events[eventName]);
-    });
+    if (this._element) {
+      Object.keys(events).forEach(eventName => {
+        this._element!.addEventListener(eventName, events[eventName]);
+      });
+    }
   }
 
-  _createResources() {
+  private _createResources() {
     if (!this._meta) {
       throw new Error("No meta data");
     }
@@ -57,21 +60,23 @@ class Block {
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
 
-  // _componentDidMount() {
-  //   this.componentDidMount();
-  // }
+  _componentDidMount(): void {
+    this.componentDidMount();
+  }
 
-  componentDidMount(oldProps: undefined) {}
+  componentDidMount() {
+
+  }
 
     dispatchComponentDidMount() {
         this._eventBus().emit(Block.EVENTS.FLOW_CDM);
     }
 
-  _componentDidUpdate(oldProps: any, newProps: any) {
+  private _componentDidUpdate(oldProps: TProps, newProps: TProps): void {
     
   }
 
-  componentDidUpdate(oldProps: any, newProps: any) {
+  componentDidUpdate(oldProps: TProps, newProps: TProps): boolean {
     return true;
   }
 
@@ -84,22 +89,20 @@ class Block {
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   };
 
-  get element() {
+  get element(): HTMLElement | null {
     return this._element;
   }
 
-  _render() {
+  private _render() {
     const block = this.render();
-
-    // Удалить старые события через removeEventListener
-    if(this._element) { 
+    if (this._element) {
+      this._removeEvents();
       this._element.innerHTML = block;
-    }
-
-    this._addEvents();
+      this._addEvents();
+    }    
 } 
 
-    // Переопределяется пользователем. Необходимо вернуть разметку
+   
   render(): string {
     return '';
   }
@@ -108,17 +111,37 @@ class Block {
     return this.element;
   }
 
-  _makePropsProxy(props: {}) {
-    // Ещё один способ передачи this, но он больше не применяется с приходом ES6+
+  
+  private _makePropsProxy(props: TProps): TProps {
     const self = this;
+    
+    let proxyProps = new Proxy(props, {
+      get(target, prop: string){
+        return target[prop as keyof TProps];
+      },
+      set(target, prop: string, value){
+        target[prop as keyof TProps] = value;
+        self.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+        return true;
+      }
 
-        // Здесь вам предстоит реализовать метод
-    return props;
+    });
+        
+    return proxyProps;
   }
 
-  _createDocumentElement(tagName: any) {
+  private _createDocumentElement(tagName: string): HTMLElement {
     // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
     return document.createElement(tagName);
+  }
+
+  private _removeEvents() {
+    const {events = {}} = this.props;
+    if (this._element) {
+      Object.keys(events).forEach(eventName => {
+        this._element!.removeEventListener(eventName, events[eventName]);
+      });
+    }
   }
 
   show() {
