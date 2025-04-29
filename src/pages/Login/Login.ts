@@ -5,6 +5,7 @@ const template = `
 <div class="${styles.login_container}">
   <form class="${styles.login_form}" id="login-form">
     <h2>Вход</h2>
+    {{{button}}}
     <div class="${styles.container}">
     {{> Field text="Login" label-name="Login" name="login"}}
     {{> Field text="Password" label-name="Password" type="password" name="password"}}
