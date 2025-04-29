@@ -17,18 +17,15 @@ class Block {
   private _eventBus: () => EventBus;
 
   constructor(tagName = "div", props = {}) {
-  const eventBus = new EventBus();
-  this._eventBus = () => eventBus;
-  this._meta = {
-    tagName,
-    props
-  };
-
-  this.props = this._makePropsProxy(props);
-
-  this.eventBus = () => eventBus;
-
-  this._registerEvents(eventBus);
+    const eventBus = new EventBus();
+    this._eventBus = () => eventBus;
+    this._meta = {
+      tagName,
+      props
+    };
+    this.props = this._makePropsProxy(props);
+    this.eventBus = () => eventBus;
+    this._registerEvents(eventBus);
     eventBus.emit(Block.EVENTS.INIT);
   }
 
@@ -77,10 +74,10 @@ class Block {
   }
 
   componentDidUpdate(oldProps: TProps, newProps: TProps): boolean {
-    return true;
+    return JSON.stringify(oldProps) !== JSON.stringify(newProps);
   }
 
-  setProps = (nextProps: any) => {
+  setProps = (nextProps: unknown) => {
     if (!nextProps) {
       return;
     }
@@ -97,7 +94,11 @@ class Block {
     const block = this.render();
     if (this._element) {
       this._removeEvents();
-      this._element.innerHTML = block;
+      this._element.innerHTML = '';
+
+      const template = document.createElement('template');
+        template.innerHTML = block.trim(); // Убираем лишние пробелы
+        this._element.appendChild(template.content);
       this._addEvents();
     }    
 } 
@@ -131,6 +132,9 @@ class Block {
   }
 
   private _createDocumentElement(tagName: string): HTMLElement {
+    if (typeof tagName !== "string") {
+      throw new Error(`Invalid tagName: ${tagName}`);
+    }
     // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
     return document.createElement(tagName);
   }

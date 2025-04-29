@@ -1,9 +1,9 @@
-// У кнопки есть index.js, который экспортирует только нужное
+// У кнопки есть index.ts, который экспортирует только нужное
 import { ButtonBlock } from "./Component";
 import { render } from "../../utils/renderDOM";
 
 const Button = new ButtonBlock({
-        className: 'my-class',
+        classname: 'my-class',
         text: 'Click me',
 });
 
@@ -18,8 +18,9 @@ setTimeout(() => {
     className: 'otherClass',
     text: 'Click me, please',
   });
-}, 3000); 
+}, 1000); 
 setTimeout(() => {
+  console.log("Button props after setProps");
   console.log(Button.props.text);
-}, 4000);
+}, 2000);
 export const buttonHTML = Button.render();
