@@ -10,8 +10,8 @@ import styles from './style.module.pcss';
 // >{{text}}</button>`;
 
 export const template = `
-<div class="${styles.button}">
-    {{ child }}
-</div>
+<button class="${styles.button} {{className}}">
+    {{ text }}
+</button>
 `;
 
