@@ -1,6 +1,9 @@
-export function render(query,block) {
+export function render(query: string,block: any) {
     const root = document.querySelector(query);
-    root.AppendChild(block.getContent());   
+    if (!root) {
+        throw new Error(`Root element not found for selector "${query}"`);
+    }
+    root.appendChild(block.getContent());   
     block.dispatchComponentDidMount();
     return root;    
 }

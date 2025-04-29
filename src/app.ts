@@ -7,9 +7,11 @@ import Field from './partials/field/Field';
 import Input from './partials/input/Input';
 import SearchInput from './partials/searchInput/SearchInput';
 import SettingField from './partials/settingField/SettingField';
-import button from './partials/button/button';
+import { template as button } from './partials/button/button';
 import Link from './partials/link/Link';
 import userCard from './partials/userCard/userCard';
+
+import { buttonHTML } from './partials/button/index';
 
 
 Handlebars.registerPartial('Button', button);
@@ -39,7 +41,7 @@ const currentUser = {
 
 //pages contexts
 const pages: Record<string, [string,any]> = {
-    'Login': [ Pages.Login, {} ], 
+    'Login': [ Pages.Login, { button: buttonHTML } ], 
     'SelectChat': [ 
         Pages.SelectChat, {
         users: usersData,
@@ -72,7 +74,7 @@ export default class App {
         const pageName = this.state.currentPage;
         this.renderPage(pageName);
     }
-
+    
     render() {
         this.page();
         this.attachEventListeners();

@@ -1,19 +1,25 @@
 // У кнопки есть index.js, который экспортирует только нужное
-import { Button } from "./Component";
+import { ButtonBlock } from "./Component";
 import { render } from "../../utils/renderDOM";
 
-const button = new Button({
+const Button = new ButtonBlock({
         className: 'my-class',
-        child: 'Click me',
+        text: 'Click me',
 });
 
-// app — это class дива в корне DOM
-render(".app", button);
+console.log(Button.props.text)
+document.addEventListener("DOMContentLoaded", () => {
+  render("#app", Button);
+});
 
-// Через секунду контент изменится сам, достаточно обновить пропсы
+
 setTimeout(() => {
-  button.setProps({
+  Button.setProps({
     className: 'otherClass',
-    child: 'Click me, please',
+    text: 'Click me, please',
   });
-}, 1000); 
+}, 3000); 
+setTimeout(() => {
+  console.log(Button.props.text);
+}, 4000);
+export const buttonHTML = Button.render();
