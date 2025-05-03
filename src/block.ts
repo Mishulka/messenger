@@ -1,4 +1,4 @@
-
+import { compile as HBcompile } from "handlebars";
 import EventBus from "./core/EventBus"
 
 export type TProps = Record<string, any>;
@@ -9,14 +9,19 @@ class Block {
     FLOW_CDM: "flow:component-did-mount",
     FLOW_RENDER: "flow:render"
   };
-
+  public _id: string;
   private _element: HTMLElement | null = null;
   private _meta: {tagName: string; props: Record<string,any>} | null = null;
   props: Record<string, any>;
   eventBus: () => EventBus;
   private _eventBus: () => EventBus;
+  public children: Record<string, unknown> = {};
 
-  constructor(tagName = "div", props = {}) {
+  constructor(tagName = "div", propsAndChild = {}) {
+    const { children, props } = this._getChildren(propsAndChild);
+    this._id = this._generateId();
+    this.children = children;
+    this.props = props;
     const eventBus = new EventBus();
     this._eventBus = () => eventBus;
     this._meta = {
@@ -27,6 +32,10 @@ class Block {
     this.eventBus = () => eventBus;
     this._registerEvents(eventBus);
     eventBus.emit(Block.EVENTS.INIT);
+  }
+
+  private _generateId() {
+    return Date.now().toString(36) + Math.random().toString(36).slice(2);
   }
 
   private _registerEvents(eventBus: EventBus) {
@@ -97,7 +106,7 @@ class Block {
       this._element.innerHTML = '';
 
       const template = document.createElement('template');
-        template.innerHTML = block.trim(); // Убираем лишние пробелы
+        template.innerHTML = block.trim();
         this._element.appendChild(template.content);
       this._addEvents();
     }    
@@ -112,6 +121,30 @@ class Block {
     return this.element;
   }
 
+  _getChildren(propsAndChildren: Record<string, unknown>) {
+    const children: Record<string, unknown> = {};
+    const props: Record<string, unknown> = {};
+
+    Object.entries(propsAndChildren).forEach(([key, value]) => {
+      if (value instanceof Block) {
+                children[key] = value;
+      } else {
+                props[key] = value;
+              }
+      });
+
+      return { children, props };
+  }
+
+  compile(template: string, props: Record<string, Block | string >): string {
+    const propsAndStubs = { ...props};
+
+    Object.entries(this.children).forEach(([key, child]) => {
+      propsAndStubs[key] = `<div data-id=${(child as Block)._id}></div>`;
+    })
+
+    return HBcompile(template)(propsAndStubs);
+  }
   
   private _makePropsProxy(props: TProps): TProps {
     const self = this;
