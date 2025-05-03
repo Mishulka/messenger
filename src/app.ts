@@ -1,5 +1,6 @@
 import Handlebars from "handlebars";
 import * as Pages from "./pages";
+import Block from "./block";
 
 
 import Dropdown from './partials/dropdown/Dropdown';
@@ -7,14 +8,18 @@ import Field from './partials/field/Field';
 import Input from './partials/input/Input';
 import SearchInput from './partials/searchInput/SearchInput';
 import SettingField from './partials/settingField/SettingField';
-import { template as button } from './partials/button/button';
+//import { template as button } from './partials/button/button';
 import Link from './partials/link/Link';
 import userCard from './partials/userCard/userCard';
 
-import { buttonHTML } from './partials/button/index';
+//import { buttonHTML } from './partials/button/index';
 
+import { BlockPage } from './pages/BlockPage/BlockPage';
+import { ButtonBlock } from './partials/button/Component';
 
-Handlebars.registerPartial('Button', button);
+const button = new ButtonBlock({ text: 'Click me' });
+
+//Handlebars.registerPartial('Button', button);
 Handlebars.registerPartial('Dropdown', Dropdown);
 Handlebars.registerPartial('Field', Field);
 Handlebars.registerPartial('Input', Input);
@@ -40,8 +45,8 @@ const currentUser = {
 
 
 //pages contexts
-const pages: Record<string, [string,any]> = {
-    'Login': [ Pages.Login, { button: buttonHTML } ], 
+const pages: Record<string, [Block | string,any]> = {
+    'Login': [ Pages.Login, {} ], 
     'SelectChat': [ 
         Pages.SelectChat, {
         users: usersData,
@@ -54,7 +59,8 @@ const pages: Record<string, [string,any]> = {
     'EditPassword': [Pages.EditPassword, { user: currentUser }], 
     'Signin': [Pages.Signin, {}], 
     'AllBlocks': [Pages.AllBlocks, { users: usersData }],
-    'NotFound': [Pages.NotFound, {}] 
+    'NotFound': [Pages.NotFound, {}] ,
+    'BlockPage': [new BlockPage({ userName: 'John Doe', button }), {}]
 };
 
 export default class App {
@@ -65,7 +71,7 @@ export default class App {
 
     constructor() {
         this.state = {
-            currentPage: 'Login'
+            currentPage: 'BlockPage'
         }
         this.appElement = document.getElementById('app');
     };
@@ -84,12 +90,19 @@ export default class App {
         const [ source, context ] = pages[page];
         const container = document.getElementById('app');
         
-        const temlpate = Handlebars.compile(source);
+        //const template = Handlebars.compile(source);
         if (!container) {
             throw new Error('Container not found');
         }
-        container.innerHTML = temlpate(context);
-        console.log('AllBlocks context:', context);
+        if(typeof source === 'string') {
+            const template = Handlebars.compile(source);
+            container.innerHTML = template(context);
+        } else if (source instanceof Block) {
+            container.innerHTML = '';
+            container.appendChild(source.getContent() as HTMLElement);
+            source.dispatchComponentDidMount();
+        }
+        console.log('Rendered page:', page, 'with context:', context);
     }
     
 
