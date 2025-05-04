@@ -84,6 +84,7 @@ export default class App {
     render() {
         this.page();
         this.attachEventListeners();
+        new Http()
     }
 
     renderPage(page: string) {

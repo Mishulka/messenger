@@ -19,7 +19,7 @@ class Http  {
         return this.request(url, {...options, method: METHOD.GET});
     };
      
-    request<XMLHttpRequest>(url: string, options: Options = { method: METHOD.GET }): Promise<XMLHttpRequest> {
+    request<Request>(url: string, options: Options = { method: METHOD.GET }): Promise<XMLHttpRequest> {
     
         const {method, data} = options;
     
@@ -33,10 +33,6 @@ class Http  {
     
             xhr.onload = function() {
                 resolve(xhr);
-            }
-    
-            const handleError = (err: unknown) => {
-                console.log(err);
             }
     
             xhr.onabort = reject;
