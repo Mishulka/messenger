@@ -28,8 +28,6 @@ class Http  {
         
             xhr.open(method, url);
             xhr.setRequestHeader('Content-Type', 'text/plain', );
-            //key for test api. Will delete it later
-            xhr.setRequestHeader('x-api-key', 'reqres-free-v1', );
     
             xhr.onload = function() {
                 resolve(xhr);
