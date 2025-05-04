@@ -18,6 +18,22 @@ class Http  {
     get(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
         return this.request(url, {...options, method: METHOD.GET});
     };
+
+    post(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
+        return this.request(url, {...options, method: METHOD.POST});
+    };
+        
+    put(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
+        return this.request(url, {...options, method: METHOD.PUT});
+    };
+
+    delete(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
+        return this.request(url, {...options, method: METHOD.DELETE});
+    };
+
+    patch(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
+        return this.request(url, {...options, method: METHOD.PATCH});
+    };
      
     request<Request>(url: string, options: Options = { method: METHOD.GET }): Promise<XMLHttpRequest> {
     
