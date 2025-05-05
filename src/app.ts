@@ -13,11 +13,9 @@ import Link from './partials/link/Link';
 import userCard from './partials/userCard/userCard';
 
 //import { buttonHTML } from './partials/button/index';
+//import { Button } from './partials/button';
 
-import { BlockPage } from './pages/BlockPage/BlockPage';
-import { ButtonBlock } from './partials/button/Component';
-
-const button = new ButtonBlock({ text: 'Click me' });
+import Button from './partials/button/index';
 
 //Handlebars.registerPartial('Button', button);
 Handlebars.registerPartial('Dropdown', Dropdown);
@@ -46,21 +44,20 @@ const currentUser = {
 
 //pages contexts
 const pages: Record<string, [Block | string,any]> = {
-    'Login': [ Pages.Login, {} ], 
-    'SelectChat': [ 
-        Pages.SelectChat, {
-        users: usersData,
-        currentUser: currentUser
-     }], 
-    '505': [Pages.ServerError, {}], 
-    'NewAvatar': [Pages.NewAvatar, {}], 
-    'Profile': [Pages.Profile, { user: currentUser }], 
-    'EditProfile': [Pages.EditProfile, { user: currentUser }], 
-    'EditPassword': [Pages.EditPassword, { user: currentUser }], 
-    'Signin': [Pages.Signin, {}], 
-    'AllBlocks': [Pages.AllBlocks, { users: usersData }],
-    'NotFound': [Pages.NotFound, {}] ,
-    'BlockPage': [new BlockPage({ userName: 'John Doe', button }), {}]
+    'Login': [Pages.loginPage, {} ], 
+    // 'SelectChat': [ 
+    //     Pages.SelectChat, {
+    //     users: usersData,
+    //     currentUser: currentUser
+    //  }], 
+    // '505': [Pages.ServerError, {}], 
+    // 'NewAvatar': [Pages.NewAvatar, {}], 
+    // 'Profile': [Pages.Profile, { user: currentUser }], 
+    // 'EditProfile': [Pages.EditProfile, { user: currentUser }], 
+    // 'EditPassword': [Pages.EditPassword, { user: currentUser }], 
+    // 'Signin': [Pages.Signin, {}], 
+    // 'AllBlocks': [Pages.AllBlocks, { users: usersData }],
+    // 'NotFound': [Pages.NotFound, {}]
 };
 
 export default class App {
@@ -71,7 +68,7 @@ export default class App {
 
     constructor() {
         this.state = {
-            currentPage: 'BlockPage'
+            currentPage: 'Login'
         }
         this.appElement = document.getElementById('app');
     };
@@ -84,7 +81,6 @@ export default class App {
     render() {
         this.page();
         this.attachEventListeners();
-        new Http()
     }
 
     renderPage(page: string) {
