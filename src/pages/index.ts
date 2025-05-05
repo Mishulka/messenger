@@ -1,11 +1,10 @@
+export { loginPage } from './Login/Login';
 export { AllBlocks } from './examplePage/examplePage';
 export { NotFound } from './404/notFound';
 export { ServerError } from './505/ServerError';
 export { Signin } from './SignIn/Signin';
-export { Login } from './Login/Login';
 export { SelectChat } from './SelectChat/SelectChat';
 export { Profile } from './Profile/Profile';
 export { EditProfile } from './EditProfile/EditProfile';
 export { EditPassword } from './EditPassword/EditPassword';
 export { NewAvatar } from './NewAvatar/newAvatar';
-export { BlockPage } from './BlockPage/BlockPage';

@@ -1,4 +1,4 @@
-import { compile as HBcompile } from "handlebars";
+import { compile as HBcompile, TemplateDelegate } from "handlebars";
 import EventBus from "./core/EventBus"
 
 export type TProps = Record<string, any>;
@@ -68,6 +68,10 @@ class Block {
 
   _componentDidMount(): void {
     this.componentDidMount();
+
+    Object.values(this.children).forEach(child => {
+      (child as Block).dispatchComponentDidMount();
+    })  
   }
 
   componentDidMount() {
@@ -79,7 +83,9 @@ class Block {
     }
 
   private _componentDidUpdate(oldProps: TProps, newProps: TProps): void {
-    
+    if (this.componentDidUpdate(oldProps, newProps)) {
+      this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+    }
   }
 
   componentDidUpdate(oldProps: TProps, newProps: TProps): boolean {
@@ -91,6 +97,9 @@ class Block {
       return;
     }
 
+    const oldProps = { ...this.props };
+    console.log('setProps update:', nextProps);
+
     Object.assign(this.props, nextProps);
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   };
@@ -101,20 +110,19 @@ class Block {
 
   private _render() {
     const block = this.render();
-    if (this._element) {
-      this._removeEvents();
+    this._removeEvents();
+    
+    if (this._element){
       this._element.innerHTML = '';
+      this._element.appendChild(block);
+    }
 
-      const template = document.createElement('template');
-        template.innerHTML = block.trim();
-        this._element.appendChild(template.content);
-      this._addEvents();
-    }    
-} 
+    this._addEvents();
+  } 
 
    
-  render(): string {
-    return '';
+  render(): DocumentFragment {
+    return this.compile('<template>{{content}}</template>', this.props);
   }
 
   getContent() {
@@ -136,20 +144,32 @@ class Block {
       return { children, props };
   }
 
-  compile(template: string, props: Record<string, Block | string >): string {
+  compile(template: string, props: Record<string, Block | string >): DocumentFragment {
     const propsAndStubs = { ...props};
 
     Object.entries(this.children).forEach(([key, child]) => {
       propsAndStubs[key] = `<div data-id=${(child as Block)._id}></div>`;
     })
 
-    return HBcompile(template)(propsAndStubs);
+    const fragment = this._createDocumentElement("template") as HTMLTemplateElement;
+    fragment.innerHTML = HBcompile(template)(propsAndStubs);
+
+   
+    Object.values(this.children).forEach(child => {
+      const stub = fragment.content.querySelector(`[data-id="${(child as Block)._id}"]`);
+      if (!stub) {
+        throw new Error(`Stub for child ${child} not found`);
+      }
+      stub.replaceWith((child as Block).getContent()!);
+    });
+
+    return fragment.content;
   }
   
   private _makePropsProxy(props: TProps): TProps {
     const self = this;
     
-    let proxyProps = new Proxy(props, {
+    return new Proxy(props, {
       get(target, prop: string){
         return target[prop as keyof TProps];
       },
@@ -160,8 +180,6 @@ class Block {
       }
 
     });
-        
-    return proxyProps;
   }
 
   private _createDocumentElement(tagName: string): HTMLElement {

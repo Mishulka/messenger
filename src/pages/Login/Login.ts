@@ -1,23 +1,34 @@
-import styles from './style.module.pcss';
+import Block from '../../block';
+import template from './LoginTemplate';
+import Button from '../../partials/button/index';
 
+export interface ILoginPageProps {
+    button: Button;
+    buttonText?: string;
+  }
 
-const template = `
-<div class="${styles.login_container}">
-  <form class="${styles.login_form}" id="login-form">
-    <h2>Вход</h2>
-    {{{button}}}
-    <div class="${styles.container}">
-    {{> Field text="Login" label-name="Login" name="login"}}
-    {{> Field text="Password" label-name="Password" type="password" name="password"}}
-    </div>
-    <div class="${styles.container}">
-    {{> Button text="Login" type="button" data-page="SelectChat"}}
-    <div class="login-footer">
-    </div>
-      {{> Link text="Нет аккаунта?" data-page="Signin"}}
-    </div>
-  </form>
-</div>
-`
+class LoginPage extends Block {
+    constructor(props: ILoginPageProps) {
+        super('div', props);
+        
+    };
+    
+    render(): DocumentFragment {
+            return this.compile(template, this.props);
+    }
+}
 
-export { template as Login };
+export const loginPage = new LoginPage({
+    button: new Button({
+        text: 'Login',
+        type: 'submit',
+        events: {
+            click: () => console.log('Login button clicked')
+        }
+    })
+});
+
+setTimeout(() => {
+    (loginPage.children.button as Block).setProps({ text: 'Заходите' });
+}, 2000); 
+
