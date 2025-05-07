@@ -33,7 +33,6 @@ export const loginPage = new LoginPage({
                 const form = document.querySelector('form');
 
                 if (form) {
-                    form.dispatchEvent(new Event('submit'));
                     form.addEventListener('submit', (e) => {
                         e.preventDefault();
                         const form = e.target as HTMLFormElement;
@@ -57,7 +56,6 @@ export const loginPage = new LoginPage({
         value: '',
         text: 'Login',
         type: 'text',
-        error: null,
         events: {
             focus: () => console.log('Login field focused')
         }
@@ -69,6 +67,9 @@ export const loginPage = new LoginPage({
         value: '',
         text: 'Password',
         type: 'password',
+        events: {
+            focus: () => console.log('Password field focused')
+        }
     }),
     link_register: new Link({
         text: 'Register',
@@ -76,4 +77,6 @@ export const loginPage = new LoginPage({
     })
 });
 
-
+setTimeout(() => {
+    (loginPage.children.button as Block).setProps({ text: 'updated text' });
+}, 2000); 

@@ -1,6 +1,6 @@
 import { compile,} from 'handlebars';
 import Block from '../../block';
-import { template } from './field';
+import { template } from './Field';
 
 export default class Field extends Block {
     constructor(props: { 
@@ -11,21 +11,12 @@ export default class Field extends Block {
         value: string;
         text: string, 
         type: string, 
-        error?: string | null;
-        errors?: string[];
-        events?: {
-            blur?: () => void;
-            focus?: () => void;
-        }
+        events?: Record<string, () => void> 
     }) {
         super("div", props)
     }
-
     render(): DocumentFragment {
-        const htmlString = compile(template)({
-            ...this.props,
-            error: this.props.error || '',
-        });
+        const htmlString = compile(template)(this.props);
         const temp = document.createElement('template');
         temp.innerHTML = htmlString;
         return temp.content;
