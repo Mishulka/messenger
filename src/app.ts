@@ -3,28 +3,28 @@ import * as Pages from "./pages";
 import Block from "./block";
 
 
-import Dropdown from './partials/dropdown/Dropdown';
-import Field from './partials/field/Field';
-import Input from './partials/input/Input';
-import SearchInput from './partials/searchInput/SearchInput';
-import SettingField from './partials/settingField/SettingField';
+// import Dropdown from './partials/dropdown/Dropdown';
+// import Input from './partials/input/Input';
+// import SearchInput from './partials/searchInput/SearchInput';
+// import SettingField from './partials/settingField/SettingField';
 //import { template as button } from './partials/button/button';
-import Link from './partials/link/Link';
-import userCard from './partials/userCard/userCard';
+// import Link from './partials/link/link';
+// import userCard from './partials/userCard/userCard';
 
 //import { buttonHTML } from './partials/button/index';
 //import { Button } from './partials/button';
 
 import Button from './partials/button/index';
+import Field from './partials/field/index';
+import Link from './partials/link/index';
 
 //Handlebars.registerPartial('Button', button);
-Handlebars.registerPartial('Dropdown', Dropdown);
-Handlebars.registerPartial('Field', Field);
-Handlebars.registerPartial('Input', Input);
-Handlebars.registerPartial('SearchInput', SearchInput);
-Handlebars.registerPartial('SettingField', SettingField);
-Handlebars.registerPartial('Link', Link);
-Handlebars.registerPartial('UserCard', userCard);
+// Handlebars.registerPartial('Dropdown', Dropdown);
+// Handlebars.registerPartial('Input', Input);
+// Handlebars.registerPartial('SearchInput', SearchInput);
+// Handlebars.registerPartial('SettingField', SettingField);
+// Handlebars.registerPartial('Link', Link);
+// Handlebars.registerPartial('UserCard', userCard);
 
 
 

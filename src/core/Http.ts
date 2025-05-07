@@ -14,7 +14,7 @@ type Options = {
 
 type OptionsWithoutMethod = Omit<Options, 'method'>;
 
-class Http  {  
+class Http  {
     get(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
         return this.request(url, {...options, method: METHOD.GET});
     };
