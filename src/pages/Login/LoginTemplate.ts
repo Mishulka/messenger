@@ -6,13 +6,15 @@ const template = `
   <form class="${styles.login_form}" id="login-form">
     <h2>Вход</h2>
     <div class="${styles.container}">
-    
+      {{{field_login}}}
+      {{{field_password}}}
     </div>
-    <div class="${styles.container}"></div>
+    <div class="${styles.container}">
       <div class="login-footer">
-        {{{button}}}
-        
+        {{{button}}} 
+        {{{link_register}}}
       </div>
+    </div>
     </div>
   </form>
 </div>
