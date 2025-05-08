@@ -98,7 +98,6 @@ class Block {
     }
 
     const oldProps = { ...this.props };
-    console.log('setProps update:', nextProps);
 
     Object.assign(this.props, nextProps);
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);

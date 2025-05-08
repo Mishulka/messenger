@@ -27,5 +27,8 @@ export default defineConfig({
       'pages': fileURLToPath(new URL('./pages', import.meta.url)),
     }
   },
-  assetsInclude: ['**/*.hbs']
+  assetsInclude: ['**/*.hbs'],
+  define: {
+    'global.Http': 'window.Http',
+  },
 });
