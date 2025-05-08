@@ -25,6 +25,5 @@ export default function Validate(value: string, rule: string): string | null {
                 return 'Некорректное значение';
         }
     }
-
     return null;
 }

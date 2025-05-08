@@ -61,19 +61,10 @@ export const loginPage = new LoginPage({
         events: {
             focus: () => console.log('Login field focused')
         }
-    }),
-    field_password: new Field({
-        label_name: 'Password',
-        name: 'password',
-        placeholder: 'Enter your password',
-        value: '',
-        text: 'Password',
-        type: 'password',
-    }),
-    link_register: new Link({
-        text: 'Register',
-        type: 'link',
     })
 });
 
+setTimeout(() => {
+    (loginPage.children.button as Block).setProps({ text: 'Заходите' });
+}, 2000); 
 
