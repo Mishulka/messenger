@@ -1,6 +1,6 @@
 import Handlebars from "handlebars";
 import * as Pages from "./pages";
-import Block from "./block";
+import Block from "./core/block";
 
 
 // import Dropdown from './partials/dropdown/Dropdown';

@@ -1,4 +1,4 @@
-import Block from '../../block';
+import Block from '../../core/block';
 import template from './LoginTemplate';
 import Button from '../../partials/button/index';
 import Field from '../../partials/field/index';
@@ -58,13 +58,17 @@ export const loginPage = new LoginPage({
         text: 'Login',
         type: 'text',
         error: null,
-        events: {
-            focus: () => console.log('Login field focused')
-        }
-    })
+        events: {}
+    }),
+    field_password: new Field({
+        label_name: 'Password',
+        name: 'password',
+        placeholder: 'Enter your password',
+        value: '',
+        text: 'Password',
+        type: 'password',
+        error: null,
+    }),
 });
 
-setTimeout(() => {
-    (loginPage.children.button as Block).setProps({ text: 'Заходите' });
-}, 2000); 
 

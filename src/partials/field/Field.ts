@@ -4,14 +4,13 @@ export const template = `
 <div class="${styles.div_field}">
     <label class="${styles.label}" for="{{name}}">{{label_name}}</label>
     <input 
-        class="${styles.field}" 
+        class="${styles.field} {{#if error}}${styles.input_err}{{/if}}" 
         type="{{type}}"
         name="{{name}}"
         placeholder="{{placeholder}}"
         value="{{value}}"
         required
-        {{#if events.blur}}onblur="{{blurHandler}}"{{/if}}
+        {{#if events.focusout}}onfocusout="{{focusoutHandler}}"{{/if}} />
 </div>
-{{#each error}}<p class="${styles.field_err}">{{error}}</p>{{/each}}
+<p class="${styles.field_err}">{{#if error}}{{error}}{{/if}}</p>
 `;
-
