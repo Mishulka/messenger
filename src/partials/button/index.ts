@@ -1,5 +1,5 @@
 import { compile,} from 'handlebars';
-import Block from '../../block';
+import Block from '../../core/block';
 import { template } from './button';
 
 export default class Button extends Block {

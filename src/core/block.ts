@@ -1,5 +1,5 @@
 import { compile as HBcompile, TemplateDelegate } from "handlebars";
-import EventBus from "./core/EventBus"
+import EventBus from "./EventBus"
 
 export type TProps = Record<string, any>;
 
@@ -44,7 +44,7 @@ class Block {
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
-  private _addEvents() {
+  _addEvents() {
     const {events = {}} = this.props;
     if (this._element) {
       Object.keys(events).forEach(eventName => {
@@ -109,6 +109,7 @@ class Block {
 
   private _render() {
     const block = this.render();
+
     this._removeEvents();
     
     if (this._element){

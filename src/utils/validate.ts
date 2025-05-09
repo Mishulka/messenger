@@ -1,6 +1,6 @@
 export const  ValidationRules = {
-    login: /^[a-zA-Z0-9](?!){3,20}$/,
-    password: /^(?=[A-Z])(?=[А-Я])(?=\d){8,40}$/
+    login: /^(?=.*[A-Za-z])[A-Za-z0-9_-]{3,20}$/,
+    password: /^(?=.*[A-Z])(?=.*\d).{8,40}$/
 }
 
 type ValidationType = keyof typeof  ValidationRules;
