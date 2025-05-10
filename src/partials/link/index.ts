@@ -1,6 +1,6 @@
 import { compile,} from 'handlebars';
 import Block from '../../core/block';
-import { template } from './link';
+import { template } from './Link';
 
 export default class Link extends Block {
     constructor(props: { 

@@ -1,11 +1,12 @@
 import Block from '../../core/block';
-import template from './LoginTemplate';
+import template from './Template';
 import Button from '../../partials/button/index';
 import Field from '../../partials/field/index';
 import Link from '../../partials/link/index';
+import { signInPage } from '../SignIn/Signin';
 
-export interface ILoginPageProps {
-    button: Button;
+export interface IPageProps {
+    login_button?: Button;
     field_login?: Block;
     field_password?: Block;
     buttonText?: string;
@@ -13,7 +14,7 @@ export interface ILoginPageProps {
 }
 
 class LoginPage extends Block {
-    constructor(props: ILoginPageProps) {
+    constructor(props: IPageProps) {
         super('div', props);
         
     };
@@ -24,7 +25,7 @@ class LoginPage extends Block {
 }
 
 export const loginPage = new LoginPage({
-    button: new Button({
+    login_button: new Button({
         text: 'Login',
         type: 'submit',
         events: {
@@ -69,6 +70,23 @@ export const loginPage = new LoginPage({
         type: 'password',
         error: null,
     }),
+    link_register: new Link({
+        text: 'Register',
+        href: '/signin',
+        data_page: 'Signin',
+        type: 'button',
+        events: {
+            click: () => {
+                //console.log('Register link clicked');
+                const container = document.getElementById('app');
+                if (container) {
+                    container.innerHTML = '';
+                    container.appendChild(signInPage.getContent() as HTMLElement);
+                    signInPage.dispatchComponentDidMount();
+                }
+            }
+        }
+    })
 });
 
 

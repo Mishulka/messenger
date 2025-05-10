@@ -45,6 +45,7 @@ const currentUser = {
 //pages contexts
 const pages: Record<string, [Block | string,any]> = {
     'Login': [Pages.loginPage, {} ], 
+    'Signin': [Pages.signInPage, {}],
     // 'SelectChat': [ 
     //     Pages.SelectChat, {
     //     users: usersData,
@@ -99,7 +100,6 @@ export default class App {
             container.appendChild(source.getContent() as HTMLElement);
             source.dispatchComponentDidMount();
         }
-        console.log('Rendered page:', page, 'with context:', context);
     }
     
 

@@ -1,6 +1,11 @@
 export const  ValidationRules = {
     login: /^(?=.*[A-Za-z])[A-Za-z0-9_-]{3,20}$/,
-    password: /^(?=.*[A-Z])(?=.*\d).{8,40}$/
+    password: /^(?=.*[A-Z])(?=.*\d).{8,40}$/,
+    first_name: /^[A-ZА-ЯЁ][a-zа-яё-]+$/u,
+    second_name: /^[A-ZА-ЯЁ][a-zа-яё-]+$/u,
+    email: /^[A-Za-z0-9_-]+@[A-Za-z0-9_-]+\.[A_Za-z]$/,
+    phone: /^\+?\d{10,15}$/,
+    message: /^.+$/,
 }
 
 type ValidationType = keyof typeof  ValidationRules;
@@ -21,8 +26,16 @@ export default function Validate(value: string, rule: string): string | null {
                 return 'Логин должен содержать от 3 до 20 символов и не может содержать пробелы';
             case 'password':
                 return 'Пароль должен содержать от 8 до 40 символов, хотя бы одну заглавную букву и одну цифру';
+            case 'email':
+                return 'Некорректный email';
+            case 'first_name':
+                return ' латиница или кириллица, первая буква должна быть заглавной, без пробелов и без цифр';
+            case 'second_name':
+                return ' латиница или кириллица, первая буква должна быть заглавной, без пробелов и без цифр';
+            case 'phone':
+                return 'от 10 до 15 символов, состоит из цифр, может начинается с плюса.';
             default:
-                return 'Некорректное значение';
+                return '';
         }
     }
     return null;

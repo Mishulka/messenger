@@ -2,7 +2,7 @@ class EventBus {
     listeners: Record<string, Function[]>;
     constructor() {
         this.listeners = {};
-    }
+    } 
 
     on(event: string, callback: Function) {
         if (!this.listeners[event]) {
