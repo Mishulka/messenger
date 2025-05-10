@@ -4,6 +4,8 @@ import Button from '../../partials/button/index';
 import Field from '../../partials/field/index';
 import Link from '../../partials/link/index';
 import { signInPage } from '../SignIn/Signin';
+import { selectChatPage } from '../SelectChat/SelectChat';
+import { handleInputBlur } from '../../utils/handleInputBlur';
 
 export interface IPageProps {
     login_button?: Button;
@@ -16,7 +18,7 @@ export interface IPageProps {
 class LoginPage extends Block {
     constructor(props: IPageProps) {
         super('div', props);
-        
+        (window as any).handleInputBlur = handleInputBlur;
     }
     
     render(): DocumentFragment {
@@ -44,30 +46,29 @@ export const loginPage = new LoginPage({
                         formData.forEach((value, key) => {
                             data[key as string] = value.toString();
                         });
-                        console.log('Form data: ', data);
+
+                        const hasError = Array.from(form.elements).some((element) => {
+                            const input = element as HTMLInputElement;
+                            const errorValue = input.getAttribute('data-error');
+                            return errorValue && errorValue !== '';
+                        });
+
+                        if (!hasError) {
+                            console.log('Form data: ', data);
+
+                            const container = document.getElementById('app');
+                            if (container) {
+                                container.innerHTML = '';
+                                container.appendChild(selectChatPage.getContent() as HTMLElement);
+                                selectChatPage.dispatchComponentDidMount();
+                            }
+                            return;
+                        }
+
                     });
                 }
             }
         }
-    }),
-    field_login: new Field({
-        label_name: 'Login',
-        name: 'login',
-        placeholder: 'Enter your login',
-        value: '',
-        text: 'Login',
-        type: 'text',
-        error: null,
-        events: {}
-    }),
-    field_password: new Field({
-        label_name: 'Password',
-        name: 'password',
-        placeholder: 'Enter your password',
-        value: '',
-        text: 'Password',
-        type: 'password',
-        error: null,
     }),
     link_register: new Link({
         text: 'Register',
