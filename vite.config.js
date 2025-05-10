@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
-import postcss from 'postcss';
-import { resolve } from 'path';
+//import postcss from 'postcss';
+//import { resolve } from 'path';
 import handlebars from 'vite-plugin-handlebars';
 import { fileURLToPath, URL } from 'url';
 
@@ -27,6 +27,9 @@ export default defineConfig({
       'pages': fileURLToPath(new URL('./pages', import.meta.url)),
     }
   },
-  assetsInclude: ['**/*.hbs']
+  assetsInclude: ['**/*.hbs'],
+  define: {
+    'global.Http': 'window.Http',
+  },
 });
 

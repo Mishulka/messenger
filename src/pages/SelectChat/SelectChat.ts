@@ -16,16 +16,24 @@ const template = `
     <div class="${styles.chat}">
         <div class="${styles.chat_header}">
             {{#if currentUser.userAvatar}}
-                  <img class="${styles.userAvatar}" src="{{currentUser.userAvatar}}" height="50px" width="50px" alt="{{userName}}'s Avatar" />
+                  <img class="${styles.userAvatar}" 
+                  src="{{currentUser.userAvatar}}" 
+                  height="50px" 
+                  width="50px" 
+                  alt="{{userName}}'s Avatar" 
+                />
                 {{else}}
                   <img class="${styles.userAvatar}" src="{{noAvatar}}" alt="нет фото" />
                 {{/if}}
             <p>{{currentUser.userName}}</p>
         </div>
         <div class="${styles.currentChat}"></div>
-        <div class="${styles.messageInput}">
-            {{> Input placeholder="Сообщение" }}
-        </div>
+        <form>
+            <div class="${styles.messageInput}">
+                {{> Input placeholder="Сообщение" name="message" }}
+            </div>
+        </form>
+        
     </div>
     
 

@@ -1,7 +1,8 @@
 .field {
-    border-bottom: 1px solid #3369F3;
+    border: none;
+    border-bottom: 1px solid var(--main);
     width: 100%;
-    padding: 8px;
+    padding: 12px;
     border-radius: 0px;
     background: transparent;
     color: #1E1E1E;
@@ -13,9 +14,11 @@
 }
 
 .div_field {
+    display: flex;
     text-align: left;
     position: relative;
-    margin: 10px 0;
+    margin-top: 21px;
+    margin-bottom: 8px;
 }
 
 label {
@@ -25,4 +28,22 @@ label {
         top: -10px;
         left: 0; 
         transition-duration: 0.3s;
-    }
+}
+
+.field_err {
+    color: red;
+    font-size: 8px;
+    max-width: 300px;
+    min-height: 15px;
+    margin: 0;
+    text-align: left;
+}
+
+input {
+    max-width: 100%;
+}
+
+.input_err {
+    border-bottom: 1px solid red;
+    color: red;
+}
