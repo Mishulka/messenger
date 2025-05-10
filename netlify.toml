@@ -6,6 +6,7 @@
 # “publish” is the directory to publish (relative to the root of your repo).
 
 [build]
+  base="."
   NPM_CONFIG_PRODUCTION=false
   command = "npm run build" 
   publish = "dist" 
