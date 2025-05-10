@@ -9,8 +9,8 @@
     "build": "vite build",
     "start": "vite build && node server.cjs",
     "preview": "vite preview",
-    "lint:css": "stylelint \"**/*.css\"",
-    "lint:css-fix": "stylelint \"**/*.css\" --fix",
+    "lint:css": "stylelint \"**/*.pcss\"",
+    "lint:css-fix": "stylelint \"**/*.pcss\" --fix",
     "lint:ts": "eslint \"**/*.ts\"",
     "lint:ts-fix": "eslint \"**/*.ts\" --fix",
     "type-check": "tsc --noEmit"
@@ -18,7 +18,8 @@
   "devDependencies": {
     "@types/handlebars": "^4.1.0",
     "@types/node": "^22.14.0",
-    "@typescript-eslint/parser": "^8.30.1",
+    "@typescript-eslint/eslint-plugin": "^8.32.0",
+    "@typescript-eslint/parser": "^8.32.0",
     "autoprefixer": "^10.4.20",
     "babel-eslint": "^10.1.0",
     "cssnano": "^7.0.6",

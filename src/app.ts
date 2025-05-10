@@ -2,44 +2,18 @@ import Handlebars from "handlebars";
 import * as Pages from "./pages";
 import Block from "./core/block";
 
+// import user1 from './assets/vite.svg';
+// import noAvatar from './assets/images/NoAvatar.png';
 
-// import Dropdown from './partials/dropdown/Dropdown';
-// import Input from './partials/input/Input';
-// import SearchInput from './partials/searchInput/SearchInput';
-// import SettingField from './partials/settingField/SettingField';
-//import { template as button } from './partials/button/button';
-// import Link from './partials/link/link';
-// import userCard from './partials/userCard/userCard';
+// const usersData = [
+//     {userName: 'Vite', userAvatar: user1},
+//     {userName: 'Anonim', noAvatar: noAvatar }
+// ];
 
-//import { buttonHTML } from './partials/button/index';
-//import { Button } from './partials/button';
-
-import Button from './partials/button/index';
-import Field from './partials/field/index';
-import Link from './partials/link/index';
-
-//Handlebars.registerPartial('Button', button);
-// Handlebars.registerPartial('Dropdown', Dropdown);
-// Handlebars.registerPartial('Input', Input);
-// Handlebars.registerPartial('SearchInput', SearchInput);
-// Handlebars.registerPartial('SettingField', SettingField);
-// Handlebars.registerPartial('Link', Link);
-// Handlebars.registerPartial('UserCard', userCard);
-
-
-
-import user1 from './assets/vite.svg';
-import noAvatar from './assets/images/NoAvatar.png';
-
-const usersData = [
-    {userName: 'Vite', userAvatar: user1},
-    {userName: 'Anonim', noAvatar: noAvatar }
-];
-
-const currentUser = {
-    userName: 'Current User',
-    userAvatar: user1
-};
+// const currentUser = {
+//     userName: 'Current User',
+//     userAvatar: user1
+// };
 
 
 //pages contexts
@@ -72,7 +46,7 @@ export default class App {
             currentPage: 'Login'
         }
         this.appElement = document.getElementById('app');
-    };
+    }
     
     page() {
         const pageName = this.state.currentPage;

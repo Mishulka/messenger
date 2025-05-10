@@ -1,4 +1,4 @@
-import { compile as HBcompile, TemplateDelegate } from "handlebars";
+import { compile as HBcompile } from "handlebars";
 import EventBus from "./EventBus"
 
 export type TProps = Record<string, any>;
@@ -97,7 +97,7 @@ class Block {
       return;
     }
 
-    const oldProps = { ...this.props };
+    //const oldProps = { ...this.props };
 
     Object.assign(this.props, nextProps);
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);

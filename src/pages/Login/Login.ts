@@ -17,7 +17,7 @@ class LoginPage extends Block {
     constructor(props: IPageProps) {
         super('div', props);
         
-    };
+    }
     
     render(): DocumentFragment {
             return this.compile(template, this.props);
