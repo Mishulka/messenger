@@ -15,6 +15,6 @@ export default `
         name="{{name}}"
         placeholder="{{placeholder}}"
         value="{{value}}"
-        required>
+        {{required}}>
 </div>`;
 

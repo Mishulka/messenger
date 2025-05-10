@@ -14,6 +14,7 @@ export default class Field extends Block {
         type: string, 
         error?: string | null;
         errors?: string[];
+        required?: string;
         events?: {
             focusout?: (event: FocusEvent) => void;
             focus?: (event: FocusEvent) => void;
