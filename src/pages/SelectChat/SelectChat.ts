@@ -1,43 +1,47 @@
-import styles from './style.module.pcss';
+import Block from '../../core/block';
+import template from './Template';
+import Button from '../../partials/button/index';
+import Link from '../../partials/link/index';
+import Input from '../../partials/input';
 
+export interface ISelectChatProps {
+    header?: string;
+    create_chat_button?: Button;
+    link_profile?: Link;
+    field_message?: Block;
+}
 
-const template = `
-<div class="${styles.chats_container}">
-    <div class="${styles.chats_list}">
-        <div class="${styles.chats_list_link}">
-            {{> Link text="Профиль" data-page="Profile"}}
-        </div>
-        {{> SearchInput placeholder="Поиск" }}
-        {{#each users}}
-            {{> UserCard user=this }} 
-        {{/each}}
-    </div>
-    
-    <div class="${styles.chat}">
-        <div class="${styles.chat_header}">
-            {{#if currentUser.userAvatar}}
-                  <img class="${styles.userAvatar}" 
-                  src="{{currentUser.userAvatar}}" 
-                  height="50px" 
-                  width="50px" 
-                  alt="{{userName}}'s Avatar" 
-                />
-                {{else}}
-                  <img class="${styles.userAvatar}" src="{{noAvatar}}" alt="нет фото" />
-                {{/if}}
-            <p>{{currentUser.userName}}</p>
-        </div>
-        <div class="${styles.currentChat}"></div>
-        <form>
-            <div class="${styles.messageInput}">
-                {{> Input placeholder="Сообщение" name="message" }}
-            </div>
-        </form>
-        
-    </div>
-    
+class SelectChatPage extends Block {
+    constructor(props: ISelectChatProps) {
+        super('div', props);
+    }
 
-</div>
-`
+    render(): DocumentFragment {
+        return this.compile(template, this.props);
+    }
+}
 
-export { template as SelectChat };
+export const selectChatPage = new SelectChatPage({
+    link_profile: new Link({
+        text: 'Profile',
+        href: '/profile',
+        data_page: 'Profile',
+        type: 'button',
+        events: {
+            click: () => {
+                console.log('Переход к профилю');
+            }
+        }
+    }),
+    field_message: new Input({
+        label_name: 'Message',
+        name: 'message',
+        placeholder: 'Enter your message',
+        value: '',
+        text: 'Message',
+        type: 'text',
+        error: null,
+        required: '',
+        events: {}
+    })
+});

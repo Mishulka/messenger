@@ -1,9 +1,9 @@
 import { compile,} from 'handlebars';
 import Block from '../../core/block';
-import { template } from './Field';
+import { template } from './Input';
 import Validate from '../../utils/validate';
 
-export default class Field extends Block {
+export default class Input extends Block {
     constructor(props: { 
         classname?: string; 
         label_name: string;
@@ -21,11 +21,11 @@ export default class Field extends Block {
         }
     }) {
         super("div", props);
-        if (props.name === 'login') {
-        (window as any).loginField = this;
-        } else if (props.name === 'password') {
-            (window as any).passwordField = this;
-        }
+        // if (props.name === 'login') {
+        // (window as any).loginField = this;
+        // } else if (props.name === 'password') {
+        //     (window as any).passwordField = this;
+        // }
     }
 
      focusoutHandler = (event: FocusEvent) => {

@@ -20,6 +20,7 @@ import Block from "./core/block";
 const pages: Record<string, [Block | string,any]> = {
     'Login': [Pages.loginPage, {} ], 
     'Signin': [Pages.signInPage, {}],
+    'SelectChat': [ Pages.selectChatPage, {} ],
     // 'SelectChat': [ 
     //     Pages.SelectChat, {
     //     users: usersData,
