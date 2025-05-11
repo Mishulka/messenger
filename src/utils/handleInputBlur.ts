@@ -6,7 +6,8 @@ export function handleInputBlur(event: FocusEvent): void {
   const value = inputEl.value;
   const error = Validate(value, fieldName);
   
- 
+  inputEl.setAttribute('data-error', error || '');
+
   const errorEl = document.getElementById(`${fieldName}-error`);
   if (errorEl) {
     errorEl.textContent = error || "";

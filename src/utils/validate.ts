@@ -34,6 +34,8 @@ export default function Validate(value: string, rule: string): string | null {
                 return ' латиница или кириллица, первая буква должна быть заглавной, без пробелов и без цифр';
             case 'phone':
                 return 'от 10 до 15 символов, состоит из цифр, может начинается с плюса.';
+            case 'message':
+                return 'Сообщение не может быть пустым';
             default:
                 return '';
         }

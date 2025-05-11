@@ -1,10 +1,9 @@
 export { loginPage } from './Login/Login';
 export { signInPage } from './SignIn/Signin';
 export { selectChatPage } from './SelectChat/SelectChat';
-export { AllBlocks } from './examplePage/examplePage';
-export { NotFound } from './404/notFound';
-export { ServerError } from './505/ServerError';
-export { Profile } from './Profile/Profile';
-export { EditProfile } from './EditProfile/EditProfile';
-export { EditPassword } from './EditPassword/EditPassword';
-export { NewAvatar } from './NewAvatar/newAvatar';
+export { notFoundPage } from './404/notFound';
+export { serverErrorPage } from './505/ServerError';
+export { profilePage } from './Profile/Profile';
+export { editProfilePage } from './EditProfile/EditProfile';
+export { editPasswordPage } from './EditPassword/EditPassword';
+export { newAvatarPage } from './NewAvatar/newAvatar';

@@ -1,21 +1,77 @@
-import styles from './style.module.pcss';
 
-const template = `
-<div class="${styles.profile_container}">
-    <h1>Your Profile</h1>
-    <img src="{{user.userAvatar}}" alt="Фото профиля"/>
-    {{> SettingField label-name="Почта" placeholder="ivanivanov@mail.com"}}
-    {{> SettingField label-name="Логин" placeholder="ivan"}}
-    {{> SettingField label-name="Имя" placeholder="Иван"}}
-    {{> SettingField label-name="Фамилия" placeholder="Иванов"}}
-    {{> SettingField label-name="Имя в чате" placeholder="Ванек"}}
-    {{> SettingField label-name="Телефон" placeholder="+7(900)900-90-90"}}
-<div class="${styles.profile_container}">
-    {{> Link text="Изменить данные" data-page="EditProfile"}}
-    {{> Link text="Изменить Пароль"}}
-    {{> Link text="Выйти" data-page="SelectChat" exit=true}}
-</div>
-</div>
-`
+import Block from '../../core/block';
+import template from './Template';
+import Link from '../../partials/link/index';
+import { loginPage } from '../../pages/Login/Login';
+import editProfilePage from '../../pages/EditProfile/EditProfile';
+import editPasswordPage from '../../pages/EditPassword/EditPassword';
 
-export { template as Profile };
+export interface IPageProps {
+    link_edit_profile?: Link;
+    link_edit_password?: Link;
+    link_logout?: Link;
+}
+
+class Profile extends Block {
+  constructor(props: IPageProps) {
+    super('div', props);
+  }
+
+  render(): DocumentFragment  {
+    return this.compile(template, this.props);
+  }
+}
+
+export const profilePage = new Profile({
+    link_edit_profile: new Link({
+        text: 'Edit profile',
+        href: '/edit_profile',
+        data_page: 'EditProfile',
+        type: 'button',
+        events: {
+            click: () => {
+                (event as Event).preventDefault();
+                const container = document.getElementById('app');
+                    if (container) {
+                        container.innerHTML = '';
+                        container.appendChild(editProfilePage.getContent() as HTMLElement);
+                        editProfilePage.dispatchComponentDidMount();
+                    }
+            }
+        }
+    }),
+    link_edit_password: new Link({
+        text: 'Edit password',
+        href: '/edit_password',
+        data_page: 'EditPassword',
+        type: 'button',
+        events: {
+            click: () => {
+                (event as Event).preventDefault();
+                const container = document.getElementById('app');
+                    if (container) {
+                        container.innerHTML = '';
+                        container.appendChild(editPasswordPage.getContent() as HTMLElement);
+                        editPasswordPage.dispatchComponentDidMount();
+                    }
+            }
+        }
+    }),
+    link_logout: new Link({
+        text: 'Logout',
+        href: '/login',
+        data_page: 'Login',
+        type: 'button',
+        events: {
+            click: () => {
+                (event as Event).preventDefault();
+                const container = document.getElementById('app');
+                    if (container) {
+                        container.innerHTML = '';
+                        container.appendChild(loginPage.getContent() as HTMLElement);
+                        loginPage.dispatchComponentDidMount();
+                    }
+            }
+        }
+  })
+});
