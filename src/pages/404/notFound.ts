@@ -4,6 +4,7 @@ import Button from '../../partials/button/index';
 
 interface INotFoundProps {
   backButton: Button;
+  [key: string]: unknown;
 }
 
 class NotFound extends Block {

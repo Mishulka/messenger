@@ -1,7 +1,10 @@
 import { compile as HBcompile } from "handlebars";
 import EventBus from "./EventBus"
 
-export type TProps = Record<string, any>;
+export type TProps = Record<string, unknown> & {
+  events?: Record<string, EventListenerOrEventListenerObject>;
+  [key: string]: unknown;
+};
 
 class Block {
   static EVENTS = {
@@ -11,16 +14,16 @@ class Block {
   };
   public _id: string;
   private _element: HTMLElement | null = null;
-  private _meta: {tagName: string; props: Record<string,any>} | null = null;
-  props: Record<string, any>;
+  private _meta: {tagName: string; props: TProps} | null = null;
+  props: TProps;
   eventBus: () => EventBus;
   private _eventBus: () => EventBus;
-  public children: Record<string, unknown> = {};
+  public children: Record<string, Block> = {};
 
-  constructor(tagName = "div", propsAndChild = {}) {
+  constructor(tagName = "div", propsAndChild: TProps = {}) {
     const { children, props } = this._getChildren(propsAndChild);
     this._id = this._generateId();
-    this.children = children;
+    this.children = children as Record<string, Block>;
     this.props = props;
     const eventBus = new EventBus();
     this._eventBus = () => eventBus;
@@ -45,10 +48,13 @@ class Block {
   }
 
   _addEvents() {
-    const {events = {}} = this.props;
-    if (this._element) {
+    const { events } = this.props;
+    if (events && this._element) {
       Object.keys(events).forEach(eventName => {
-        this._element!.addEventListener(eventName, events[eventName]);
+        const listener = events[eventName];
+        if (typeof listener === 'function' && this._element) {
+          this._element.addEventListener(eventName, listener);
+        }
       });
     }
   }
@@ -82,11 +88,11 @@ class Block {
         this._eventBus().emit(Block.EVENTS.FLOW_CDM);
     }
 
-  private _componentDidUpdate(oldProps: TProps, newProps: TProps): void {
-    if (this.componentDidUpdate(oldProps, newProps)) {
-      this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
-    }
-  }
+  // private _componentDidUpdate(oldProps: TProps, newProps: TProps): void {
+  //   if (this.componentDidUpdate(oldProps, newProps)) {
+  //     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+  //   }
+  // }
 
   componentDidUpdate(oldProps: TProps, newProps: TProps): boolean {
     return JSON.stringify(oldProps) !== JSON.stringify(newProps);
@@ -126,59 +132,58 @@ class Block {
   }
 
   getContent() {
-    return this.element;
+    if (!this._element) {
+            throw new Error("Element is not initialized");
+        }
+        return this._element;
   }
 
-  _getChildren(propsAndChildren: Record<string, unknown>) {
-    const children: Record<string, unknown> = {};
-    const props: Record<string, unknown> = {};
+  _getChildren(propsAndChildren: TProps): { children: Record<string, Block>; props: TProps } {
+    const children: Record<string, Block> = {};
+    const props: TProps = {};
 
     Object.entries(propsAndChildren).forEach(([key, value]) => {
       if (value instanceof Block) {
-                children[key] = value;
+        children[key] = value;
       } else {
-                props[key] = value;
-              }
-      });
+        props[key] = value;
+      }
+    });
 
-      return { children, props };
+    return { children, props };
   }
 
-  compile(template: string, props: Record<string, Block | string >): DocumentFragment {
-    const propsAndStubs = { ...props};
+  compile(template: string, props: TProps): DocumentFragment {
+    const propsAndStubs = { ...props };
 
     Object.entries(this.children).forEach(([key, child]) => {
-      propsAndStubs[key] = `<div data-id=${(child as Block)._id}></div>`;
-    })
+      propsAndStubs[key] = `<div data-id=${child._id}></div>`;
+    });
 
     const fragment = this._createDocumentElement("template") as HTMLTemplateElement;
     fragment.innerHTML = HBcompile(template)(propsAndStubs);
 
-   
     Object.values(this.children).forEach(child => {
-      const stub = fragment.content.querySelector(`[data-id="${(child as Block)._id}"]`);
+      const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
       if (!stub) {
         throw new Error(`Stub for child ${child} not found`);
       }
-      stub.replaceWith((child as Block).getContent()!);
+      stub.replaceWith(child.getContent()!);
     });
 
     return fragment.content;
   }
-  
+
   private _makePropsProxy(props: TProps): TProps {
-    const self = this;
-    
     return new Proxy(props, {
-      get(target, prop: string){
+      get: (target, prop: string) => {
         return target[prop as keyof TProps];
       },
-      set(target, prop: string, value){
+      set: (target, prop: string, value) => {
         target[prop as keyof TProps] = value;
-        self.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+        this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
         return true;
       }
-
     });
   }
 
@@ -191,10 +196,13 @@ class Block {
   }
 
   private _removeEvents() {
-    const {events = {}} = this.props;
-    if (this._element) {
+    const { events } = this.props;
+    if (events && this._element) {
       Object.keys(events).forEach(eventName => {
-        this._element!.removeEventListener(eventName, events[eventName]);
+        const listener = events[eventName];
+        if (typeof listener === 'function' && this._element) {
+          this._element.removeEventListener(eventName, listener);
+        }
       });
     }
   }
@@ -218,4 +226,4 @@ class Block {
 }
 }
 
-export default Block; 
+export default Block;

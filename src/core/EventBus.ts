@@ -1,10 +1,10 @@
 class EventBus {
-    listeners: Record<string, Function[]>;
+    listeners: Record<string, Array<(...args: unknown[]) => void>>;
     constructor() {
         this.listeners = {};
     } 
 
-    on(event: string, callback: Function) {
+    on(event: string, callback: (...args: unknown[]) => void) {
         if (!this.listeners[event]) {
             this.listeners[event] = [];
         }
@@ -21,7 +21,7 @@ class EventBus {
         });
     }
 
-    off(event: string, callback: Function) {
+    off(event: string, callback: (...args: unknown[]) => void) {
         if (!this.listeners[event]) {
       throw new Error(`Event don't exist: ${event}`);
     }

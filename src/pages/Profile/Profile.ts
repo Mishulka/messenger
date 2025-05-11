@@ -10,6 +10,7 @@ export interface IPageProps {
     link_edit_profile?: Link;
     link_edit_password?: Link;
     link_logout?: Link;
+    [key: string]: unknown;
 }
 
 class Profile extends Block {

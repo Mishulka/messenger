@@ -7,6 +7,7 @@ import { selectChatPage } from '../SelectChat/SelectChat';
 import { handleInputBlur } from '../../utils/handleInputBlur';
 
 export interface IPageProps {
+    [key: string]: unknown;
     login_button?: Button;
     field_login?: Block;
     field_password?: Block;
@@ -17,7 +18,9 @@ export interface IPageProps {
 class LoginPage extends Block {
     constructor(props: IPageProps) {
         super('div', props);
-        (window as any).handleInputBlur = handleInputBlur;
+        // @ts-expect-error: Property 'handleInputBlur' 
+        // does not exist on type 'Window & typeof globalThis'.
+        (window).handleInputBlur = handleInputBlur;
     }
 
     componentDidMount(): void {

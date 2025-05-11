@@ -1,4 +1,4 @@
-import Block from '../../core/block';
+import Block, { TProps } from '../../core/block';
 import template from './Template';
 import Button from '../../partials/button/index';
 import { profilePage } from '../../pages/Profile/Profile';
@@ -18,7 +18,7 @@ interface IEditProfileProps {
 
 class EditProfile extends Block {
   constructor(props: IEditProfileProps) {
-    super('div', props);
+    super('div', props as unknown as TProps);
   }
 
   render(): DocumentFragment {
