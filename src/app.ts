@@ -18,7 +18,7 @@ const currentUser = {
 
 //pages contexts
 const pages: Record<string, [Block, TProps]> = {
-    'Login': [Pages.loginPage, {} ], 
+    'Login': [Pages.loginPage, {} ],
     'Signin': [Pages.signInPage, {}],
     'SelectChat': [ Pages.selectChatPage, {} ],
     'Profile': [ Pages.profilePage, {user: currentUser} ],
@@ -103,5 +103,4 @@ export default class App {
         this.state = { ...this.state, ...newState };
         this.render();
     }
-   
 }

@@ -74,7 +74,7 @@ export default class Input extends Block {
                   }
               }, 0);
             }
-    }
+        }
         });
       
         inputEl.addEventListener('focusout', (event: FocusEvent) => {
