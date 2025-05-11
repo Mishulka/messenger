@@ -1,26 +1,48 @@
-import styles from './style.module.pcss';
+import Block from '../../core/block';
+import template from './Template';
+import Button from '../../partials/button/index';
+import { profilePage } from '../../pages/Profile/Profile';
 
-const template = `
-<div class="${styles.profile_container}">
-    <h1>Edit Profile</h1>
-    <img src="{{user.userAvatar}}" alt="Фото профиля"/>
-    {{> SettingField 
-    label-name="Старый пароль" 
-    placeholder="_" name="old_password" 
-    type="password"}}
+interface IEditPasswordProps {
+  [key: string]: unknown;
+  oldPasswordValue: string;
+  newPasswordValue: string;
+  repeatPasswordValue: string;
+  oldPasswordError?: string;
+  newPasswordError?: string;
+  repeatPasswordError?: string;
+  button_save: Button;
+}
 
-    {{> SettingField label-name="Новый пароль" placeholder="_" name="new_password" type="password"}}
+class EditPassword extends Block {
+  constructor(props: IEditPasswordProps) {
+    super('div', props);
+  }
 
-    {{> SettingField 
-    label-name="Повторите новый пароль" 
-    placeholder="_" 
-    name="new_password" 
-    type="password"}}
-    
-<div class="${styles.profile_container}">
-    {{> Button text="Сохранить" data-page="Profile"}}
-</div>
-</div>
-`
+  render(): DocumentFragment {
+    return this.compile(template, this.props);
+  }
+}
 
-export { template as EditPassword };
+export const editPasswordPage = new EditPassword({
+  oldPasswordValue: '',
+  newPasswordValue: '',
+  repeatPasswordValue: '',
+  button_save: new Button({
+    text: 'Сохранить',
+    type: 'submit',
+    events: {
+      click: () => {
+        (event as Event).preventDefault();
+            const container = document.getElementById('app');
+            if (container) {
+                container.innerHTML = '';
+                container.appendChild(profilePage.getContent() as HTMLElement);
+                profilePage.dispatchComponentDidMount();
+            }
+      }
+    }
+  })
+});
+
+export default editPasswordPage;

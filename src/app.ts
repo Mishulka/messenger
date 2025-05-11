@@ -1,44 +1,37 @@
 import Handlebars from "handlebars";
 import * as Pages from "./pages";
-import Block from "./core/block";
+import Block, { TProps } from "./core/block";
 
-// import user1 from './assets/vite.svg';
-// import noAvatar from './assets/images/NoAvatar.png';
+import user1 from './assets/vite.svg';
+//import noAvatar from './assets/images/NoAvatar.png';
 
-// const usersData = [
+//const usersData = [
 //     {userName: 'Vite', userAvatar: user1},
 //     {userName: 'Anonim', noAvatar: noAvatar }
 // ];
 
-// const currentUser = {
-//     userName: 'Current User',
-//     userAvatar: user1
-// };
+const currentUser = {
+    userName: 'Current User',
+    userAvatar: user1
+};
 
 
 //pages contexts
-const pages: Record<string, [Block | string,any]> = {
-    'Login': [Pages.loginPage, {} ], 
+const pages: Record<string, [Block, TProps]> = {
+    'Login': [Pages.loginPage, {} ],
     'Signin': [Pages.signInPage, {}],
-    // 'SelectChat': [ 
-    //     Pages.SelectChat, {
-    //     users: usersData,
-    //     currentUser: currentUser
-    //  }], 
-    // '505': [Pages.ServerError, {}], 
-    // 'NewAvatar': [Pages.NewAvatar, {}], 
-    // 'Profile': [Pages.Profile, { user: currentUser }], 
-    // 'EditProfile': [Pages.EditProfile, { user: currentUser }], 
-    // 'EditPassword': [Pages.EditPassword, { user: currentUser }], 
-    // 'Signin': [Pages.Signin, {}], 
-    // 'AllBlocks': [Pages.AllBlocks, { users: usersData }],
-    // 'NotFound': [Pages.NotFound, {}]
+    'SelectChat': [ Pages.selectChatPage, {} ],
+    'Profile': [ Pages.profilePage, {user: currentUser} ],
+    'EditProfile': [ Pages.editProfilePage, {user: currentUser} ],
+    'EditPassword': [ Pages.editPasswordPage, {user: currentUser} ],
+    'NewAvatar': [ Pages.newAvatarPage, {user: currentUser} ],
+    '404': [ Pages.notFoundPage, {} ],
+    '505': [ Pages.serverErrorPage, {} ],
 };
 
 export default class App {
     private state: { currentPage: string };
-    // @ts-ignore
-    // appElement is used in constructor, but ts-check does not see it
+    // @ts-expect-error: appElement is used in constructor, but ts-check does not see it
     private appElement: HTMLElement | null;
 
     constructor() {
@@ -110,5 +103,4 @@ export default class App {
         this.state = { ...this.state, ...newState };
         this.render();
     }
-   
 }

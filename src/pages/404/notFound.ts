@@ -1,6 +1,32 @@
-const template = `
-<h1>Page not found</h1>
-<h2>404 Error</h2>
-`
+import Block from '../../core/block';
+import template from './Template';
+import Button from '../../partials/button/index';
 
-export { template as NotFound };
+interface INotFoundProps {
+  backButton: Button;
+  [key: string]: unknown;
+}
+
+class NotFound extends Block {
+  constructor(props: INotFoundProps) {
+    super('div', props);
+  }
+
+  render(): DocumentFragment {
+    return this.compile(template, this.props);
+  }
+}
+
+export const notFoundPage = new NotFound({
+  backButton: new Button({
+    text: 'Go back',
+    type: 'button',
+    events: {
+      click: () => {
+        console.log('Navigating back');
+      }
+    }
+  })
+});
+
+export default notFoundPage;

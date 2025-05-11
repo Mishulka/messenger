@@ -1,22 +1,57 @@
-import styles from './style.module.pcss';
+import Block, { TProps } from '../../core/block';
+import template from './Template';
+import Button from '../../partials/button/index';
+import { profilePage } from '../../pages/Profile/Profile';
 
-const template = `
-<div class="${styles.profile_container}">
-    <h1>Edit Profile</h1>
-    <img src="{{user.userAvatar}}" alt="Фото профиля"/>
-    <form>
-        {{> SettingField label-name="Почта" placeholder="ivanivanov@mail.com" name="email"}}
-        {{> SettingField label-name="Логин" placeholder="ivan" name="first_name"}}
-        {{> SettingField label-name="Имя" placeholder="Иван" name="login"}}
-        {{> SettingField label-name="Фамилия" placeholder="Иванов" name="second_name"}}
-        {{> SettingField label-name="Имя в чате" placeholder="Ванек" name="display_name"}}
-        {{> SettingField label-name="Телефон" placeholder="+7(900)900-90-90" name="phone"}}
-        <div class="${styles.profile_container}">
-            {{> Button text="Сохранить" data-page="Profile" type="submit"}}
-        </div>
-    </form>
-    
-</div>
-`
+interface IEditProfileProps {
+  user: {
+    userAvatar: string;
+    email: string;
+    first_name: string;
+    login: string;
+    second_name: string;
+    display_name: string;
+    phone: string;
+  };
+  button_save: Button;
+}
 
-export { template as EditProfile };
+class EditProfile extends Block {
+  constructor(props: IEditProfileProps) {
+    super('div', props as unknown as TProps);
+  }
+
+  render(): DocumentFragment {
+    return this.compile(template, this.props);
+  }
+}
+
+export const editProfilePage = new EditProfile({
+  user: {
+    userAvatar: '',
+    email: '',
+    first_name: '',
+    login: '',
+    second_name: '',
+    display_name: '',
+    phone: ''
+  },
+  button_save: new Button({
+    text: 'Сохранить',
+    type: 'submit',
+    events: {
+      click: () => {
+        (event as Event).preventDefault();
+            const container = document.getElementById('app');
+            if (container) {
+                container.innerHTML = '';
+                container.appendChild(profilePage.getContent() as HTMLElement);
+                profilePage.dispatchComponentDidMount();
+            }
+      }
+    }
+  })
+});
+
+export default editProfilePage;
+

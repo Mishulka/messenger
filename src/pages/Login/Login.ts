@@ -1,11 +1,13 @@
 import Block from '../../core/block';
 import template from './Template';
 import Button from '../../partials/button/index';
-import Field from '../../partials/field/index';
 import Link from '../../partials/link/index';
 import { signInPage } from '../SignIn/Signin';
+import { selectChatPage } from '../SelectChat/SelectChat';
+import { handleInputBlur } from '../../utils/handleInputBlur';
 
 export interface IPageProps {
+    [key: string]: unknown;
     login_button?: Button;
     field_login?: Block;
     field_password?: Block;
@@ -16,7 +18,45 @@ export interface IPageProps {
 class LoginPage extends Block {
     constructor(props: IPageProps) {
         super('div', props);
-        
+        // @ts-expect-error: Property 'handleInputBlur' 
+        // does not exist on type 'Window & typeof globalThis'.
+        (window).handleInputBlur = handleInputBlur;
+    }
+
+    componentDidMount(): void {
+        const form = document.querySelector('form');
+
+        if (form) {
+            form.addEventListener('submit', (e) => {
+                console.log('Отправка формы');
+                const form = e.target as HTMLFormElement;
+                const formData = new FormData(form);
+
+                const data: Record<string, string> = {};
+
+                formData.forEach((value, key) => {
+                    data[key as string] = value.toString();
+                });
+
+                const hasError = Array.from(form.elements).some((element) => {
+                    const input = element as HTMLInputElement;
+                    const errorValue = input.getAttribute('data-error');
+                    return errorValue && errorValue !== '';
+                });
+
+                if (!hasError) {
+                    console.log('Form data: ', data);
+                    const container = document.getElementById('app');
+                    if (container) {
+                      container.innerHTML = '';
+                      container.appendChild(selectChatPage.getContent() as HTMLElement);
+                      selectChatPage.dispatchComponentDidMount();
+                  }
+                    return;
+                }
+
+            });
+        }
     }
     
     render(): DocumentFragment {
@@ -30,45 +70,14 @@ export const loginPage = new LoginPage({
         type: 'submit',
         events: {
             click: () => {
-                
+                event?.preventDefault();
                 const form = document.querySelector('form');
-
                 if (form) {
-                    form.dispatchEvent(new Event('submit'));
-                    form.addEventListener('submit', (e) => {
-                        e.preventDefault();
-                        const form = e.target as HTMLFormElement;
-                        const formData = new FormData(form);
-
-                        const data: Record<string, string> = {};
-
-                        formData.forEach((value, key) => {
-                            data[key as string] = value.toString();
-                        });
-                        console.log('Form data: ', data);
-                    });
-                }
+                    form.dispatchEvent(new Event('submit', { cancelable: true }));
+                }  
+                
             }
         }
-    }),
-    field_login: new Field({
-        label_name: 'Login',
-        name: 'login',
-        placeholder: 'Enter your login',
-        value: '',
-        text: 'Login',
-        type: 'text',
-        error: null,
-        events: {}
-    }),
-    field_password: new Field({
-        label_name: 'Password',
-        name: 'password',
-        placeholder: 'Enter your password',
-        value: '',
-        text: 'Password',
-        type: 'password',
-        error: null,
     }),
     link_register: new Link({
         text: 'Register',

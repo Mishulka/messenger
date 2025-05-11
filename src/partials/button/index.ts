@@ -12,7 +12,6 @@ export default class Button extends Block {
         super("div", props)
     }
     render(): DocumentFragment {
-        const { text } = this.props;
         const htmlString = compile(template)(this.props);
         const temp = document.createElement('template');
         temp.innerHTML = htmlString;

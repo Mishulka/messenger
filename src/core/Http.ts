@@ -10,11 +10,13 @@ enum METHOD {
 type Options = {
     method: METHOD;
     data?: string;
+    headers?: Record<string, string>;
 };
 
 type OptionsWithoutMethod = Omit<Options, 'method'>;
 
 class Http  {
+
     get(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
         return this.request(url, {...options, method: METHOD.GET});
     }
@@ -34,8 +36,14 @@ class Http  {
     patch(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
         return this.request(url, {...options, method: METHOD.PATCH});
     }
+
+    private MakeQueryString(data: Record<string, string>): string {
+        return Object.entries(data)
+            .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+            .join('&');
+    }
      
-    request<Request>(
+    request(
         url: string, 
         options: Options = { method: METHOD.GET }
     ): Promise<XMLHttpRequest> {
@@ -45,8 +53,16 @@ class Http  {
         return new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
         
-            xhr.open(method, url);
-            xhr.setRequestHeader('Content-Type', 'text/plain', );
+            const isGET = method === METHOD.GET;
+            const query = isGET && data && typeof data === 'object' 
+                ? `?${this.MakeQueryString(data)}`
+                : '';
+
+            Object.entries(Headers).forEach(([key, value]) => {
+            xhr.setRequestHeader(key, value);
+            });
+
+            xhr.open(method, isGET ? `${url}${query}` : url);
     
             xhr.onload = function() {
                 resolve(xhr);
