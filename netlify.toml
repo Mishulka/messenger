@@ -8,5 +8,9 @@
 [build]
   base=""
   command = "npm run build"
+<<<<<<< HEAD
   publish = "dist"
 
+=======
+  publish = "dist"
+>>>>>>> adc07f4dcb7262ab9d72ee3de8a1e1c51a5944e6
