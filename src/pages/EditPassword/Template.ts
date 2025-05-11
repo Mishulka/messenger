@@ -1,7 +1,7 @@
-import styles from './style.module.pcss';
+import './style.pcss';
 
 const template = `
-<div class="${styles.profile_container}">
+<div class="profile_container">
     <h1>Edit Password</h1>
     <form>
         <div class="div_field">
@@ -43,7 +43,7 @@ const template = `
           />
           <p id="repeat_password-error" class="field_err"></p>
         </div>
-        <div class="${styles.profile_container}">
+        <div class="profile_container">
             {{{button_save}}}
         </div>
     </form>

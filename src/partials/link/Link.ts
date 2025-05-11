@@ -1,11 +1,11 @@
-import styles from './styles.module.pcss';
+import './styles.module.pcss';
 
 
 
 
 export const template = `
 <a 
-    class="${styles.a} ${styles.link_to_page} {{#if exit}}${styles.exit}{{/if}}" 
+    class="link_to_page {{#if exit}}exit{{/if}}" 
     href="{{href}}"
     onClick="{{Event}}"
     data-page="{{data_page}}"
