@@ -1,4 +1,4 @@
-import './styles.module.pcss';
+import './styles.pcss';
 
 
 
