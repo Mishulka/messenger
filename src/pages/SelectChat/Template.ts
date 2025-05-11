@@ -11,7 +11,7 @@ const template = `
         {{/each}}
     </div>
     
-    <div class="chat}">
+    <div class="chat">
         <div class="chat_header">
         </div>
         <div class="currentChat"></div>
