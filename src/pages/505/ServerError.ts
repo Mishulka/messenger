@@ -1,6 +1,31 @@
-const template = `
-<h1>We are fixing this already</h1>
-<h2>505 error</h2>
-`
+import Block from '../../core/block';
+import template from './Template';
+import Button from '../../partials/button/index';
 
-export { template as ServerError };
+interface IServerErrorProps {
+  backButton: Button;
+}
+
+class ServerError extends Block {
+  constructor(props: IServerErrorProps) {
+    super('div', props);
+  }
+
+  render(): DocumentFragment {
+    return this.compile(template, this.props);
+  }
+}
+
+export const serverErrorPage = new ServerError({
+  backButton: new Button({
+    text: 'Go back',
+    type: 'button',
+    events: {
+      click: () => {
+        console.log('Navigating back');
+      }
+    }
+  })
+});
+
+export default serverErrorPage;
