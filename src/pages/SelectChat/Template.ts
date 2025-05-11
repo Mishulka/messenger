@@ -1,4 +1,4 @@
-import './style.module.pcss';
+import './style.pcss';
 
 
 const template = `

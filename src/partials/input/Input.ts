@@ -1,4 +1,4 @@
-import styles from './style.module.pcss';
+import styles from './style.pcss';
 
 
 export const template =

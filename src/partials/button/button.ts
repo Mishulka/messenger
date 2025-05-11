@@ -1,4 +1,4 @@
-import './style.module.pcss';
+import './style.pcss';
 
 export const template = `
 <div class="button_container">
