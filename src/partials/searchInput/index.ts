@@ -8,6 +8,7 @@ export default class SearchInput extends Block {
   constructor(props: {
     placeholder?: string;
     buttonText?: string;
+    events?: Record<string, () => void>;
   }) {
     super('div', props);
   }
@@ -62,14 +63,6 @@ export default class SearchInput extends Block {
                 }, 0);
               }
       }
-          });
-        
-          inputEl.addEventListener('focusout', (event: FocusEvent) => {
-              if (this.props.events && this.props.events.focusout) {
-                  this.props.events.focusout(event);
-              } else {
-                  this.focusoutHandler(event);
-              }
           });
       }
     }

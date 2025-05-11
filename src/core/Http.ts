@@ -35,7 +35,7 @@ class Http  {
         return this.request(url, {...options, method: METHOD.PATCH});
     }
      
-    request<Request>(
+    request(
         url: string, 
         options: Options = { method: METHOD.GET }
     ): Promise<XMLHttpRequest> {

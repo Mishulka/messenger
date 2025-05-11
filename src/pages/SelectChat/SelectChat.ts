@@ -9,6 +9,7 @@ export interface ISelectChatProps {
     create_chat_button?: Button;
     link_profile?: Link;
     send_button?: Button;
+    [key: string]: unknown;
 }
 
 class SelectChatPage extends Block {

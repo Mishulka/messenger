@@ -1,14 +1,14 @@
 import Handlebars from "handlebars";
 import * as Pages from "./pages";
-import Block from "./core/block";
+import Block, { TProps } from "./core/block";
 
 import user1 from './assets/vite.svg';
-import noAvatar from './assets/images/NoAvatar.png';
+//import noAvatar from './assets/images/NoAvatar.png';
 
-const usersData = [
-    {userName: 'Vite', userAvatar: user1},
-    {userName: 'Anonim', noAvatar: noAvatar }
-];
+//const usersData = [
+//     {userName: 'Vite', userAvatar: user1},
+//     {userName: 'Anonim', noAvatar: noAvatar }
+// ];
 
 const currentUser = {
     userName: 'Current User',
@@ -17,7 +17,7 @@ const currentUser = {
 
 
 //pages contexts
-const pages: Record<string, [Block | string,any]> = {
+const pages: Record<string, [Block, TProps]> = {
     'Login': [Pages.loginPage, {} ], 
     'Signin': [Pages.signInPage, {}],
     'SelectChat': [ Pages.selectChatPage, {} ],
@@ -31,8 +31,7 @@ const pages: Record<string, [Block | string,any]> = {
 
 export default class App {
     private state: { currentPage: string };
-    // @ts-ignore
-    // appElement is used in constructor, but ts-check does not see it
+    // @ts-expect-error: appElement is used in constructor, but ts-check does not see it
     private appElement: HTMLElement | null;
 
     constructor() {

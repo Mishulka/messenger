@@ -8,6 +8,7 @@ export interface IPageProps {
     register_button?: Button;
     buttonText?: string;
     link_login?: Link;
+    [key: string]: unknown;
 }
 
 class SignIn extends Block {

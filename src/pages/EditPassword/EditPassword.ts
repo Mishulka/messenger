@@ -4,6 +4,7 @@ import Button from '../../partials/button/index';
 import { profilePage } from '../../pages/Profile/Profile';
 
 interface IEditPasswordProps {
+  [key: string]: unknown;
   oldPasswordValue: string;
   newPasswordValue: string;
   repeatPasswordValue: string;

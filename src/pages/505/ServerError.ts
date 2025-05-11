@@ -4,6 +4,7 @@ import Button from '../../partials/button/index';
 
 interface IServerErrorProps {
   backButton: Button;
+[key: string]: unknown;
 }
 
 class ServerError extends Block {

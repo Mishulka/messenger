@@ -15,10 +15,7 @@ export default class Input extends Block {
         error?: string | null;
         errors?: string[];
         required?: string;
-        events?: {
-            focusout?: (event: FocusEvent) => void;
-            focus?: (event: FocusEvent) => void;
-        }
+        events?: Record<string, EventListenerOrEventListenerObject>;
     }) {
         super("div", props);
         // if (props.name === 'login') {
@@ -80,8 +77,12 @@ export default class Input extends Block {
         });
       
         inputEl.addEventListener('focusout', (event: FocusEvent) => {
-            if (this.props.events && this.props.events.focusout) {
-                this.props.events.focusout(event);
+            const focusoutHandler = this.props.events?.focusout;
+
+            if (typeof focusoutHandler === 'function') {
+                focusoutHandler(event);
+            } else if (focusoutHandler && typeof focusoutHandler.handleEvent === 'function') {
+                focusoutHandler.handleEvent(event);
             } else {
                 this.focusoutHandler(event);
             }
