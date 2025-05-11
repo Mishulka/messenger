@@ -3,6 +3,7 @@ import { defineConfig } from 'vite';
 //import { resolve } from 'path';
 import handlebars from 'vite-plugin-handlebars';
 import { fileURLToPath, URL } from 'url';
+import autoprefixer from 'autoprefixer';
 
 export default defineConfig({
   build: {
@@ -14,7 +15,7 @@ export default defineConfig({
     },
     postcss: {
       plugins: [
-        require('autoprefixer')
+        autoprefixer
       ]
     }
   },
