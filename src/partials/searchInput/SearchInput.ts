@@ -1,10 +1,10 @@
-import styles from './style.module.pcss';
+import './style.pcss';
 
 
-export const template = `<div class="${styles.searchContainer}">
+export const template = `<div class="searchContainer">
   <input 
     type="search" 
     id="{{inputId}}" 
-    class="${styles.input}"
+    class="input"
     placeholder="{{placeholder}}">
 </div>`;

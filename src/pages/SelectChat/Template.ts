@@ -1,22 +1,22 @@
-import styles from './style.module.pcss';
+import './style.pcss';
 
 
 const template = `
-<div class="${styles.chats_container}">
-    <div class="${styles.chats_list}">
-        <div class="${styles.chats_list_link}">
+<div class="chats_container">
+    <div class="chats_list">
+        <div class="chats_list_link">
             {{{link_profile}}}
         </div>
         {{#each users}}
         {{/each}}
     </div>
     
-    <div class="${styles.chat}">
-        <div class="${styles.chat_header}">
+    <div class="chat}">
+        <div class="chat_header">
         </div>
-        <div class="${styles.currentChat}"></div>
-        <form class="${styles.messageForm}" id="message-form">
-            <div class="${styles.messageInput}">
+        <div class="currentChat"></div>
+        <form class="messageForm" id="message-form">
+            <div class="messageInput">
                <input
                 class="message_input"
                 name="message"

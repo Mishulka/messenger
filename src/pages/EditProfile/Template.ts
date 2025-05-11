@@ -1,7 +1,7 @@
-import styles from './style.module.pcss';
+import './style.pcss';
 
 const template = `
-<div class="${styles.profile_container}">
+<div class="profile_container">
     <h1>Edit Profile</h1>
     <img src="{{user.userAvatar}}" alt="Фото профиля"/>
     <form>
@@ -83,7 +83,7 @@ const template = `
           />
           <p id="phone-error" class="field_err"></p>
         </div>
-        <div class="${styles.profile_container}">
+        <div class="profile_container">
             {{{button_save}}}
         </div>
     </form>

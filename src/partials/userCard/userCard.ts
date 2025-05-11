@@ -1,18 +1,18 @@
-import styles from './style.module.pcss';
+import './style.pcss';
 
 
 export default `
-<div class="${styles.card}">
+<div class="card">
     {{#if userAvatar}}
       <img 
-        class="${styles.userAvatar}" 
+        class="userAvatar" 
         src="{{userAvatar}}" 
         height="50px" 
         width="50px" 
         alt="{{userName}}'s Avatar" 
         />
     {{else}}
-      <img class="${styles.userAvatar}" src="{{noAvatar}}" alt="нет фото" />
+      <img class="userAvatar" src="{{noAvatar}}" alt="нет фото" />
     {{/if}}
     <p>{{userName}}</p>
 </div>`;

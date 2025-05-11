@@ -1,9 +1,9 @@
-import styles from './style.module.pcss';
+import './style.pcss';
 
 
 const template = `
-<div class="${styles.signin_container}">
-  <form class="${styles.signin_form}" id="signin-form">
+<div class="signin_container">
+  <form class="signin_form" id="signin-form">
     <h2>Регистрация</h2>
     <div class="container">
 

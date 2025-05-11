@@ -1,18 +1,9 @@
-import styles from './style.module.pcss';
-
-
-// export default `
-// <button 
-//     id="{{id}}" 
-//     type="{{type}}" 
-//     class="${styles.button}"
-//     data-page="{{data-page}}"
-// >{{text}}</button>`;
+import './style.pcss';
 
 export const template = `
-<div class="${styles.button_container}">
+<div class="button_container">
 <button 
-    class="${styles.button} {{classname}}"
+    class="button {{classname}}"
     type="{{type}}" 
     data-page="{{data-page}}">
     {{text}}

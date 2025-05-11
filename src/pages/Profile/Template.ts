@@ -1,7 +1,7 @@
-import styles from './style.module.pcss';
+import './style.pcss';
 
 const template = `
-<div class="${styles.profile_container}">
+<div class="profile_container">
     <h1>Your Profile</h1>
     <img src="{{user.userAvatar}}" alt="Фото профиля"/>
 
@@ -58,7 +58,7 @@ const template = `
             type="text" 
             placeholder="+7(900)900-90-90" />
     </div>
-<div class="${styles.profile_container}">
+<div class="profile_container">
     {{{link_edit_profile}}}
     {{{link_edit_password}}}
     {{{link_logout}}}
