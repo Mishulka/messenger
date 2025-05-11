@@ -71,7 +71,7 @@ export default class Input extends Block {
                    if (selectionStart !== null) {
                     newInputEl?.setSelectionRange(selectionStart, selectionStart);
                   }
-              }, 0);
+                }, 0);
             }
         }
         });
