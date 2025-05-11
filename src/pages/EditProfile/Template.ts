@@ -1,4 +1,4 @@
-import styles from './style.pcss';
+import './style.pcss';
 
 const template = `
 <div class="profile_container">
