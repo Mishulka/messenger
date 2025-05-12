@@ -1,8 +1,9 @@
 import { defineConfig } from 'vite';
-import postcss from 'postcss';
-import { resolve } from 'path';
+//import postcss from 'postcss';
+//import { resolve } from 'path';
 import handlebars from 'vite-plugin-handlebars';
 import { fileURLToPath, URL } from 'url';
+import autoprefixer from 'autoprefixer';
 
 export default defineConfig({
   build: {
@@ -14,7 +15,7 @@ export default defineConfig({
     },
     postcss: {
       plugins: [
-        require('autoprefixer')
+        autoprefixer
       ]
     }
   },
@@ -27,5 +28,9 @@ export default defineConfig({
       'pages': fileURLToPath(new URL('./pages', import.meta.url)),
     }
   },
-  assetsInclude: ['**/*.hbs']
+  assetsInclude: ['**/*.hbs'],
+  define: {
+    'global.Http': 'window.Http',
+  },
 });
+
