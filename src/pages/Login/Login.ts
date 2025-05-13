@@ -22,7 +22,6 @@ class LoginPage extends Block {
         // @ts-expect-error: Property 'handleInputBlur' 
         // does not exist on type 'Window & typeof globalThis'.
         (window).handleInputBlur = handleInputBlur;
-        console.log('LoginPage props', props);
     }
 
     componentDidMount(): void {
@@ -89,8 +88,6 @@ export const loginPage = new LoginPage({
         events: {
             click: (e: Event) => {
                 e?.preventDefault();
-
-                console.log('click on link_register');
                 router.go('/signin');
             }
         }

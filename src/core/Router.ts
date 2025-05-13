@@ -39,7 +39,6 @@ class Router {
     }
 
     _onRoute(pathname: string): void {
-      console.log('onRoute', pathname);
         const route = this.getRoute(pathname);
 
         if(!route) {
@@ -76,6 +75,5 @@ class Router {
 }
 
 const router = new Router('#app');
-console.log('Router instance created');
 
 export default router;

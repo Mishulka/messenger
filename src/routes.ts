@@ -24,4 +24,3 @@ router
   .use('/404', Pages.notFoundPage)
   .use('/505', Pages.serverErrorPage)
   .start();
-console.log('Router started');
