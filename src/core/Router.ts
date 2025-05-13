@@ -31,7 +31,6 @@ class Router {
       window.onpopstate = event => {
         if(event.currentTarget){
           this._onRoute((event.currentTarget as Window).location.pathname);
-          console.log("CURRENT ROUTE: ",this._currentRoute)
         }
     };
 
@@ -51,12 +50,10 @@ class Router {
         }
 
         this._currentRoute = route;
-        console.log('currentRoute', this._currentRoute);
         route.render();
     }
 
     go(pathname: string): void {
-      console.log('go', pathname);
       this.history.pushState({}, "", pathname)
       this._onRoute(pathname);
     }

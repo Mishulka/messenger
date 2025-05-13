@@ -5,7 +5,6 @@ function isEqual(lhs: string, rhs: string): boolean {
 }
 
 function render(query: string, block: Block): Element | null {
-  console.log('render', query, block);
   const root = document.querySelector(query);
   if(root){
     root.innerHTML = ''; 
@@ -47,7 +46,6 @@ class Route {
     render(): void {
       if(!this._block) {
         this._block = this._blockClass();
-        console.error('Error: block is null');
       }
       if(this._block) {
         render(this._props.rootQuery, this._block);

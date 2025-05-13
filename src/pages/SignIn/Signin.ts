@@ -3,6 +3,7 @@ import template from './Template';
 import Button from '../../partials/button/index';
 import Link from '../../partials/link/index';
 import { loginPage } from '../Login/Login';
+import router from '../../core/Router';
 
 export interface IPageProps {
     register_button?: Button;
@@ -77,14 +78,9 @@ export const signInPage = new SignIn({
           data_page: 'Login',
           type: 'button',
           events: {
-              click: () => {
-                  //console.log('Register link clicked');
-                  const container = document.getElementById('app');
-                  if (container) {
-                      container.innerHTML = '';
-                      container.appendChild(loginPage.getContent() as HTMLElement);
-                      loginPage.dispatchComponentDidMount();
-                  }
+              click: (e: Event) => {
+                  e.preventDefault();
+                  router.go('/');
               }
           }
   })
