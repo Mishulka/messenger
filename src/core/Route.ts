@@ -5,20 +5,22 @@ function isEqual(lhs: string, rhs: string): boolean {
 }
 
 function render(query: string, block: Block): Element | null {
+  console.log('render', query, block);
   const root = document.querySelector(query);
   if(root){
-    root.textContent = block.getContent().toString();
+    root.innerHTML = ''; 
+    root.appendChild(block.getContent());
   }
   return root;
 }
 
 class Route {
-    private _pathname: string;
-    private _blockClass: typeof Block;
+    _pathname: string;
+    private _blockClass: () => Block;
     private _block!: Block | null;
     private _props: { rootQuery: string };
 
-    constructor(pathname: string, view: typeof Block, props: { rootQuery: string }) {
+    constructor(pathname: string, view: () => Block, props: { rootQuery: string }) {
         this._pathname = pathname;
         this._blockClass = view;
         //this._block = null;
@@ -44,14 +46,12 @@ class Route {
 
     render(): void {
       if(!this._block) {
-        this._block = new this._blockClass();
-        
-        if(this._block) {
-          render(this._props.rootQuery, this._block);
-        }
-        return;
+        this._block = this._blockClass();
+        console.error('Error: block is null');
       }
-
+      if(this._block) {
+        render(this._props.rootQuery, this._block);
+      }
       
       this._block.show();
     }

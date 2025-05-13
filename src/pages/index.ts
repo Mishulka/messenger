@@ -7,3 +7,4 @@ export { profilePage } from './Profile/Profile';
 export { editProfilePage } from './EditProfile/EditProfile';
 export { editPasswordPage } from './EditPassword/EditPassword';
 export { newAvatarPage } from './NewAvatar/newAvatar';
+

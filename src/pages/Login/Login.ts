@@ -2,9 +2,10 @@ import Block from '../../core/block';
 import template from './Template';
 import Button from '../../partials/button/index';
 import Link from '../../partials/link/index';
-import { signInPage } from '../SignIn/Signin';
+//import { signInPage } from '../SignIn/Signin';
 import { selectChatPage } from '../SelectChat/SelectChat';
 import { handleInputBlur } from '../../utils/handleInputBlur';
+import router from '../../core/Router';
 
 export interface IPageProps {
     [key: string]: unknown;
@@ -21,6 +22,7 @@ class LoginPage extends Block {
         // @ts-expect-error: Property 'handleInputBlur' 
         // does not exist on type 'Window & typeof globalThis'.
         (window).handleInputBlur = handleInputBlur;
+        console.log('LoginPage props', props);
     }
 
     componentDidMount(): void {
@@ -85,17 +87,15 @@ export const loginPage = new LoginPage({
         data_page: 'Signin',
         type: 'button',
         events: {
-            click: () => {
-                //console.log('Register link clicked');
-                const container = document.getElementById('app');
-                if (container) {
-                    container.innerHTML = '';
-                    container.appendChild(signInPage.getContent() as HTMLElement);
-                    signInPage.dispatchComponentDidMount();
-                }
+            click: (e: Event) => {
+                e?.preventDefault();
+
+                console.log('click on link_register');
+                router.go('/signin');
             }
         }
     })
 });
+
 
 

@@ -13,7 +13,7 @@ class Router {
             return Router.__instance;
         }
 
-        this.routes = [];
+        this.routes! = [];
         this.history = window.history;
         this._currentRoute = null;
         this._rootQuery = rootQuery;
@@ -21,8 +21,8 @@ class Router {
         Router.__instance = this;
     }
 
-    use(pathname: string, block: typeof Block): this {
-        const route = new Route(pathname, block, {rootQuery: this._rootQuery});
+    use(pathname: string, block: Block): this {
+        const route = new Route(pathname, () => block, {rootQuery: this._rootQuery});
         this.routes.push(route);
         return this;
     }
@@ -31,6 +31,7 @@ class Router {
       window.onpopstate = event => {
         if(event.currentTarget){
           this._onRoute((event.currentTarget as Window).location.pathname);
+          console.log("CURRENT ROUTE: ",this._currentRoute)
         }
     };
 
@@ -38,9 +39,11 @@ class Router {
     }
 
     _onRoute(pathname: string): void {
+      console.log('onRoute', pathname);
         const route = this.getRoute(pathname);
 
         if(!route) {
+          console.log('ERR: Route not found for pathname:', pathname);
           return;
         }
 
@@ -49,10 +52,12 @@ class Router {
         }
 
         this._currentRoute = route;
+        console.log('currentRoute', this._currentRoute);
         route.render();
     }
 
     go(pathname: string): void {
+      console.log('go', pathname);
       this.history.pushState({}, "", pathname)
       this._onRoute(pathname);
     }
@@ -70,4 +75,7 @@ class Router {
     }
 }
 
-export default Router;
+const router = new Router('#app');
+console.log('Router instance created');
+
+export default router;

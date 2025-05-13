@@ -1,6 +1,8 @@
 import Handlebars from "handlebars";
 import * as Pages from "./pages";
 import Block, { TProps } from "./core/block";
+import "./routes";
+
 
 import user1 from './assets/vite.svg';
 //import noAvatar from './assets/images/NoAvatar.png';
