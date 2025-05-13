@@ -81,7 +81,6 @@ class Block {
   }
 
   componentDidMount(): void {
-    console.log('Component did mount');
     return;
   }
 

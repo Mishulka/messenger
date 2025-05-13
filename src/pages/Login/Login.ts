@@ -27,7 +27,7 @@ class LoginPage extends Block {
 
     componentDidMount(): void {
         const form = document.querySelector('form');
-        console.log('LoginPage componentDidMount', form);
+
         if (form) {
             form.addEventListener('submit', (e) => {
                 const form = e.target as HTMLFormElement;

@@ -40,12 +40,17 @@ class Router {
     _onRoute(pathname: string): void {
         const route = this.getRoute(pathname);
 
-        if(!route) {
-          console.log('ERR: Route not found for pathname:', pathname);
-          return;
+        if (!route) {
+        const notFoundRoute = this.getRoute('/404');
+        if (notFoundRoute) {
+            console.log('ERR: Route not found for pathname:', pathname);
+            this._onRoute('/404');
         }
+        return;
+      }
 
-        if (this._currentRoute) {
+        if (this._currentRoute  && this._currentRoute !== route) {
+            console.log('Leaving route:', this._currentRoute);
             this._currentRoute.leave();
         }
 
@@ -56,6 +61,7 @@ class Router {
     go(pathname: string): void {
       this.history.pushState({}, "", pathname)
       this._onRoute(pathname);
+
     }
 
     back(): void {
