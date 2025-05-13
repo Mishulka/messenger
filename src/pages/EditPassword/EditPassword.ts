@@ -1,7 +1,7 @@
 import Block from '../../core/block';
 import template from './Template';
 import Button from '../../partials/button/index';
-import { profilePage } from '../../pages/Profile/Profile';
+import router from '../../core/Router';
 
 interface IEditPasswordProps {
   [key: string]: unknown;
@@ -32,15 +32,10 @@ export const editPasswordPage = new EditPassword({
     text: 'Сохранить',
     type: 'submit',
     events: {
-      click: () => {
-        (event as Event).preventDefault();
-            const container = document.getElementById('app');
-            if (container) {
-                container.innerHTML = '';
-                container.appendChild(profilePage.getContent() as HTMLElement);
-                profilePage.dispatchComponentDidMount();
+      click: (e: Event) => {
+                e.preventDefault();
+                router.go('/profile');
             }
-      }
     }
   })
 });

@@ -80,8 +80,9 @@ class Block {
     })  
   }
 
-  componentDidMount() {
-
+  componentDidMount(): void {
+    console.log('Component did mount');
+    return;
   }
 
     dispatchComponentDidMount() {

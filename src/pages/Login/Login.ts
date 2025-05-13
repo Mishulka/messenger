@@ -3,7 +3,7 @@ import template from './Template';
 import Button from '../../partials/button/index';
 import Link from '../../partials/link/index';
 //import { signInPage } from '../SignIn/Signin';
-import { selectChatPage } from '../SelectChat/SelectChat';
+//import { selectChatPage } from '../SelectChat/SelectChat';
 import { handleInputBlur } from '../../utils/handleInputBlur';
 import router from '../../core/Router';
 
@@ -22,15 +22,41 @@ class LoginPage extends Block {
         // @ts-expect-error: Property 'handleInputBlur' 
         // does not exist on type 'Window & typeof globalThis'.
         (window).handleInputBlur = handleInputBlur;
+        setTimeout(() => this.dispatchComponentDidMount(), 0);
     }
 
     componentDidMount(): void {
         const form = document.querySelector('form');
-
+        console.log('LoginPage componentDidMount', form);
         if (form) {
             form.addEventListener('submit', (e) => {
-                console.log('Отправка формы');
                 const form = e.target as HTMLFormElement;
+                
+                let hasEmptyFields = false;
+                let hasValidationErrors = false;
+                
+                Array.from(form.elements).forEach((element) => {
+                    const input = element as HTMLInputElement;
+                    if (input.tagName !== 'INPUT') return;
+
+                    if (!input.value.trim()) {
+                    hasEmptyFields = true;
+                    input.setAttribute('data-error', 'Поле не может быть пустым');
+                    // this.showError(input);
+                    }
+                    
+
+                    const errorValue = input.getAttribute('data-error');
+                    if (errorValue && errorValue !== '') {
+                    hasValidationErrors = true;
+                    }
+                });
+
+                if (hasEmptyFields || hasValidationErrors) {
+                    console.log('Error in validation – form not submitted');
+                    return;
+                }
+
                 const formData = new FormData(form);
 
                 const data: Record<string, string> = {};
@@ -47,12 +73,11 @@ class LoginPage extends Block {
 
                 if (!hasError) {
                     console.log('Form data: ', data);
-                    const container = document.getElementById('app');
-                    if (container) {
-                      container.innerHTML = '';
-                      container.appendChild(selectChatPage.getContent() as HTMLElement);
-                      selectChatPage.dispatchComponentDidMount();
-                  }
+                    router.go('/select-chat');
+                    return;
+                }
+                if (hasError) {
+                    console.log('Ошибка валидации – форма не отправляется');
                     return;
                 }
 
@@ -70,13 +95,15 @@ export const loginPage = new LoginPage({
         text: 'Login',
         type: 'submit',
         events: {
-            click: () => {
-                event?.preventDefault();
-                const form = document.querySelector('form');
-                if (form) {
-                    form.dispatchEvent(new Event('submit', { cancelable: true }));
-                }  
-                
+            click: (e: Event) => {
+                e?.preventDefault();
+                const event = new Event('submit', { bubbles: true });
+                if(event) {
+                    const form = document.querySelector('form');
+                    if (form) {
+                        form.dispatchEvent(event);
+                    }
+                }
             }
         }
     }),

@@ -2,9 +2,7 @@
 import Block from '../../core/block';
 import template from './Template';
 import Link from '../../partials/link/index';
-import { loginPage } from '../../pages/Login/Login';
-import editProfilePage from '../../pages/EditProfile/EditProfile';
-import editPasswordPage from '../../pages/EditPassword/EditPassword';
+import router from '../../core/Router';
 
 export interface IPageProps {
     link_edit_profile?: Link;
@@ -30,14 +28,9 @@ export const profilePage = new Profile({
         data_page: 'EditProfile',
         type: 'button',
         events: {
-            click: () => {
-                (event as Event).preventDefault();
-                const container = document.getElementById('app');
-                    if (container) {
-                        container.innerHTML = '';
-                        container.appendChild(editProfilePage.getContent() as HTMLElement);
-                        editProfilePage.dispatchComponentDidMount();
-                    }
+            click: (e: Event) => {
+                e.preventDefault();
+                router.go('/edit-profile');
             }
         }
     }),
@@ -47,14 +40,9 @@ export const profilePage = new Profile({
         data_page: 'EditPassword',
         type: 'button',
         events: {
-            click: () => {
-                (event as Event).preventDefault();
-                const container = document.getElementById('app');
-                    if (container) {
-                        container.innerHTML = '';
-                        container.appendChild(editPasswordPage.getContent() as HTMLElement);
-                        editPasswordPage.dispatchComponentDidMount();
-                    }
+            click: (e: Event) => {
+                e.preventDefault();
+                router.go('/edit-password');
             }
         }
     }),
@@ -64,14 +52,9 @@ export const profilePage = new Profile({
         data_page: 'Login',
         type: 'button',
         events: {
-            click: () => {
-                (event as Event).preventDefault();
-                const container = document.getElementById('app');
-                    if (container) {
-                        container.innerHTML = '';
-                        container.appendChild(loginPage.getContent() as HTMLElement);
-                        loginPage.dispatchComponentDidMount();
-                    }
+            click: (e: Event) => {
+                e.preventDefault();
+                router.go('/');
             }
         }
   })

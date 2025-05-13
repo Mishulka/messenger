@@ -2,7 +2,7 @@ import Block from '../../core/block';
 import template from './Template';
 import Button from '../../partials/button/index';
 import Link from '../../partials/link/index';
-import { profilePage } from '../../pages/Profile/Profile';
+import router from '../../core/Router';
 
 export interface ISelectChatProps {
     header?: string;
@@ -64,14 +64,9 @@ export const selectChatPage = new SelectChatPage({
         data_page: 'Profile',
         type: 'button',
         events: {
-            click: () => {
-                (event as Event).preventDefault();
-                const container = document.getElementById('app');
-                    if (container) {
-                        container.innerHTML = '';
-                        container.appendChild(profilePage.getContent() as HTMLElement);
-                        profilePage.dispatchComponentDidMount();
-                    }
+            click: (e: Event) => {
+                e.preventDefault();
+                router.go('/profile');
             }
         }
     }),
