@@ -2,9 +2,6 @@
 //       create() { throw new Error('Create not implemented'); }
 
 //       request() { throw new Error('Not implemented'); }
-//       public abstract request(...args: any[]): Promise<unknown> {
-//             throw new Error()
-//       };
 
 //       update() { throw new Error('Not implemented'); }
 

@@ -15,7 +15,7 @@ type Options = {
 type OptionsWithoutMethod = Omit<Options, 'method'>;
 
 class Http {
-    private readonly host = 'https://ya-praktikum.tech';
+    private readonly host = 'https://ya-praktikum.tech/api/v2';
     private baseUrl: string;
 
     constructor(baseUrl: string) {
@@ -26,25 +26,31 @@ class Http {
         return this.request(url, { ...options, method: METHOD.GET });
     }
 
-    async post<T>(url: string, data: unknown, headers?: Record<string, string>): Promise<T> {
+    async put<T>(url: string, data: unknown, headers?: Record<string, string>): Promise<T> {
+    const xhr = await this.request(url, {
+        method: METHOD.PUT,
+        data,
+        headers
+    });
+    return this.parseResponse<T>(xhr);
+    }
+
+    async delete<T>(url: string, data?: unknown, headers?: Record<string, string>): Promise<T> {
         const xhr = await this.request(url, {
-            method: METHOD.POST,
+            method: METHOD.DELETE,
             data,
             headers
         });
         return this.parseResponse<T>(xhr);
     }
 
-    put(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
-        return this.request(url, { ...options, method: METHOD.PUT });
-    }
-
-    delete(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
-        return this.request(url, { ...options, method: METHOD.DELETE });
-    }
-
-    patch(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
-        return this.request(url, { ...options, method: METHOD.PATCH });
+    async patch<T>(url: string, data: unknown, headers?: Record<string, string>): Promise<T> {
+        const xhr = await this.request(url, {
+            method: METHOD.PATCH,
+            data,
+            headers
+        });
+        return this.parseResponse<T>(xhr);
     }
 
     private makeQueryString(data: Record<string, string>): string {
