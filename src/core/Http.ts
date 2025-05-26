@@ -26,6 +26,15 @@ class Http {
         return this.request(url, { ...options, method: METHOD.GET });
     }
 
+    async post<T>(url: string, data?: unknown, headers?: Record<string, string>): Promise<T> {
+        const xhr = await this.request(url, {
+            method: METHOD.POST,
+            data,
+            headers
+        });
+        return this.parseResponse<T>(xhr);
+    }
+
     async put<T>(url: string, data: unknown, headers?: Record<string, string>): Promise<T> {
     const xhr = await this.request(url, {
         method: METHOD.PUT,
