@@ -21,7 +21,7 @@ const template = `
     </div>
    
    <div class="div_field">
-    <label class="label" for="login">Логин</label>
+    <label class="label" for="login">Пароль</label>
     <input class="field"
     id="password"
     name="password"

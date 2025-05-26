@@ -2,10 +2,10 @@ import Block from '../../core/block';
 import template from './Template';
 import Button from '../../partials/button/index';
 import Link from '../../partials/link/index';
-//import { signInPage } from '../SignIn/Signin';
-//import { selectChatPage } from '../SelectChat/SelectChat';
 import { handleInputBlur } from '../../utils/handleInputBlur';
 import router from '../../core/Router';
+// import connect from '../../core/Connect';
+import UserLoginController from '../../apiControllers/UserLoginController';
 
 export interface IPageProps {
     [key: string]: unknown;
@@ -14,22 +14,61 @@ export interface IPageProps {
     field_password?: Block;
     buttonText?: string;
     link_register?: Link;
+    loginError?: string;
 }
+
+
 
 class LoginPage extends Block {
     constructor(props: IPageProps) {
-        super('div', props);
+        super('div', {
+            ...props,
+            events: {
+                submit: (e: Event) => this.handleSubmit(e)
+            }
+        });
         // @ts-expect-error: Property 'handleInputBlur' 
         // does not exist on type 'Window & typeof globalThis'.
         (window).handleInputBlur = handleInputBlur;
         setTimeout(() => this.dispatchComponentDidMount(), 0);
     }
 
-    componentDidMount(): void {
+    private handleSubmit(e: Event): void {
+        e.preventDefault();
+        const form = document.querySelector('form');
+
+        // let hasErrors = false;
+        Array.from(form?.elements).forEach((element) => {
+            const input = element as HTMLInputElement;
+            if (input.tagName !== 'INPUT') return;
+
+            if (!input.value.trim()) {
+                input.setAttribute('data-error', 'Поле не может быть пустым');
+                // hasErrors = true;
+            }
+
+            if (input.getAttribute('data-error')) {
+                // hasErrors = true;
+            }
+        });
+        const formData = new FormData(form);
+        const data: Record<string, string> = {};
+        formData.forEach((value, key) => {
+            data[key] = value.toString();
+        });
+
+        // Отправка данных в контроллер
+        // UserLoginController.login(data).then(() => {
+        //     router.go('/select-chat');
+        // });
+    }
+
+    async componentDidMount(): Promise<void> {
         const form = document.querySelector('form');
 
         if (form) {
             form.addEventListener('submit', (e) => {
+                // await UserLoginController.login(data);
                 const form = e.target as HTMLFormElement;
                 
                 let hasEmptyFields = false;
@@ -86,9 +125,18 @@ class LoginPage extends Block {
     }
     
     render(): DocumentFragment {
-            return this.compile(template, this.props);
+            return this.compile(template, {
+                ...this.props,
+                loginError: this.props.loginError ? this.props.loginError : ''
+            });
     }
 }
+
+// const withUser = connect((state) => ({
+// loginError: state.login?.error
+// }));
+
+// const ConnectedLoginPage = withUser(LoginPage)
 
 export const loginPage = new LoginPage({
     login_button: new Button({
@@ -120,6 +168,4 @@ export const loginPage = new LoginPage({
         }
     })
 });
-
-
 

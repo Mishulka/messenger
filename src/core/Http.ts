@@ -6,81 +6,98 @@ enum METHOD {
     PATCH = 'PATCH'
 }
 
-
 type Options = {
     method: METHOD;
-    data?: string;
+    data?: unknown;
     headers?: Record<string, string>;
 };
 
 type OptionsWithoutMethod = Omit<Options, 'method'>;
 
-class Http  {
+class Http {
+    private readonly host = 'https://ya-praktikum.tech';
+    private baseUrl: string;
+
+    constructor(baseUrl: string) {
+        this.baseUrl = baseUrl;
+    }
 
     get(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
-        return this.request(url, {...options, method: METHOD.GET});
+        return this.request(url, { ...options, method: METHOD.GET });
     }
 
-    post(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
-        return this.request(url, {...options, method: METHOD.POST});
+    async post<T>(url: string, data: unknown, headers?: Record<string, string>): Promise<T> {
+        const xhr = await this.request(url, {
+            method: METHOD.POST,
+            data,
+            headers
+        });
+        return this.parseResponse<T>(xhr);
     }
-        
+
     put(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
-        return this.request(url, {...options, method: METHOD.PUT});
+        return this.request(url, { ...options, method: METHOD.PUT });
     }
 
     delete(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
-        return this.request(url, {...options, method: METHOD.DELETE});
+        return this.request(url, { ...options, method: METHOD.DELETE });
     }
 
     patch(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
-        return this.request(url, {...options, method: METHOD.PATCH});
+        return this.request(url, { ...options, method: METHOD.PATCH });
     }
 
-    private MakeQueryString(data: Record<string, string>): string {
+    private makeQueryString(data: Record<string, string>): string {
         return Object.entries(data)
             .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
             .join('&');
     }
-     
-    request(
-        url: string, 
+
+    private request(
+        endpoint: string,
         options: Options = { method: METHOD.GET }
     ): Promise<XMLHttpRequest> {
-    
-        const {method, data} = options;
-    
+        const { method, data, headers } = options;
+        const isGET = method === METHOD.GET;
+
+        const fullUrl = `${this.host}${this.baseUrl}${endpoint}`;
+        const urlWithQuery = isGET && data && typeof data === 'object'
+            ? `${fullUrl}?${this.makeQueryString(data as Record<string, string>)}`
+            : fullUrl;
+
         return new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
-        
-            const isGET = method === METHOD.GET;
-            const query = isGET && data && typeof data === 'object' 
-                ? `?${this.MakeQueryString(data)}`
-                : '';
+            xhr.open(method, urlWithQuery);
 
-            Object.entries(Headers).forEach(([key, value]) => {
-            xhr.setRequestHeader(key, value);
+            const finalHeaders = {
+                'Content-Type': 'application/json',
+                ...headers
+            };
+
+            Object.entries(finalHeaders).forEach(([key, value]) => {
+                xhr.setRequestHeader(key, value);
             });
 
-            xhr.open(method, isGET ? `${url}${query}` : url);
-    
-            xhr.onload = function() {
-                resolve(xhr);
-            }
-    
-            xhr.onabort = reject;
+            xhr.onload = () => resolve(xhr);
             xhr.onerror = reject;
+            xhr.onabort = reject;
             xhr.ontimeout = reject;
-    
-            if (method === METHOD.GET || !data) {
+
+            if (isGET || !data) {
                 xhr.send();
-            }else {
-                xhr.send((data));
+            } else {
+                xhr.send(JSON.stringify(data));
             }
-        })     
+        });
+    }
+
+    private parseResponse<T>(xhr: XMLHttpRequest): T {
+        try {
+            return JSON.parse(xhr.responseText) as T;
+        } catch {
+            throw new Error('Failed to parse response');
+        }
     }
 }
-
-
 
 export { Http, METHOD };
