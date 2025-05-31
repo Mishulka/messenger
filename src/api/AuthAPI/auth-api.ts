@@ -13,9 +13,8 @@ export class AuthAPI {
         this.http = new Http('/auth');
     }
 
-    public async signup(data: SignupRequest): Promise<string> {
-        const response = await this.http.post('/signup', data);
-        return JSON.parse(response.responseText);
+    public async signup(data: SignupRequest): Promise<SignupResponse> {
+        return this.http.post<SignupResponse>('/signup', { data });
     }
 
     public async signin(data: LoginRequest): Promise<void> {

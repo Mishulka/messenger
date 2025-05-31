@@ -1,7 +1,7 @@
-import { AuthAPI } from "api/AuthAPI/auth-api";
+import { AuthAPI } from "../../api/AuthAPI/auth-api";
 import Store from "../../core/Store";
 import router from "../../core/Router";
-import type { SignupRequest, LoginRequest } from "api/AuthAPI/types";
+import type { SignupRequest, LoginRequest } from "../../api/AuthAPI/types";
 
 class AuthController {
     private api: AuthAPI;
@@ -25,7 +25,7 @@ class AuthController {
         try {
             await this.api.signin(data);
             const user = await this.getUser();
-            Store.set('user', user as unknown as string);
+            Store.set('user', user);
             router.go('/chats');
         }catch (error) {
             Store.set('auth.error', await this.handleError(error));

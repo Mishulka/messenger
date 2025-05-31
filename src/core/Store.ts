@@ -1,19 +1,29 @@
 import set from "../utils/set";
 import EventBus from "./EventBus";
-import Indexed from "./types";
+import { User } from "./types";
 
 export enum StoreEvents {
     Updated = "updated",
 }
 
+// interface DefaultStoreState {
+//     user?: User;
+//     auth?: {
+//         error?: string;
+//     }
+// }
+
 class Store extends EventBus {
-    private state: Indexed = {};
+    private state: {
+        user?: User;
+        [key: string]: unknown;
+    } = {};
 
     public getState() {
         return this.state;
     }
 
-    public set(path: string, value: string) {
+    public set(path: string, value: unknown) {
         set(this.state, path, value);
         this.emit(StoreEvents.Updated);
     }
