@@ -6,13 +6,6 @@ export enum StoreEvents {
     Updated = "updated",
 }
 
-// interface DefaultStoreState {
-//     user?: User;
-//     auth?: {
-//         error?: string;
-//     }
-// }
-
 class Store extends EventBus {
     private state: {
         user?: User;

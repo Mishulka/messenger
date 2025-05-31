@@ -7,6 +7,7 @@ import router from '../../core/Router';
 // import connect from '../../core/Connect';
 // import UserLoginController from '../../apiControllers/UserLoginController';
 import AuthController from '../../apiControllers/AuthController/AuthController';
+import Store, { StoreEvents } from '../../core/Store';
 // import { LoginRequest } from 'api/AuthAPI/types';
 
 export interface IPageProps {
@@ -33,13 +34,24 @@ class LoginPage extends Block {
         // does not exist on type 'Window & typeof globalThis'.
         (window).handleInputBlur = handleInputBlur;
         setTimeout(() => this.dispatchComponentDidMount(), 0);
+
+
+        //submitting on updated Store
+        Store.on(StoreEvents.Updated, this.handleStoreUpdate)
+    }
+
+    private handleStoreUpdate = () => {
+        const { auth } = Store.getState();
+    }
+
+    componentWillUnmount() {
+        Store.off(StoreEvents.Updated, this.handleStoreUpdate);
     }
 
     private async handleSubmit(e: Event): Promise<void> {
         e.preventDefault();
         const form = e.target as HTMLFormElement;
 
-        // Валидация
         let isValid = true;
         Array.from(form.elements).forEach((element) => {
             const input = element as HTMLInputElement;
@@ -63,6 +75,7 @@ class LoginPage extends Block {
         };
 
         try {
+            console.log('login Form data prepared: ', data)
             await AuthController.signin(data);
         } catch (error) {
             console.error('Login failed:', error);

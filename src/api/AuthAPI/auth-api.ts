@@ -18,7 +18,14 @@ export class AuthAPI {
     }
 
     public async signin(data: LoginRequest): Promise<void> {
-        await this.http.post('/signin', data);
+        const response = await this.http.post<{ reason?: string }>('/signin', {
+            login: data.login,
+            password: data.password
+        });
+        
+        if (response?.reason) {
+            throw new Error(response.reason);
+        }
     }
 
     public async logout(): Promise<void> {

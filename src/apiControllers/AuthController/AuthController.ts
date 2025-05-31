@@ -15,7 +15,7 @@ class AuthController {
             const user = await this.api.signup(data);
             await this.getUser();
             Store.set('user', user);
-            router.go('/chats');
+            router.go('/select-chat');
         } catch (error) {
             const errMessage = await this.handleError(error);
             Store.set('auth.error', errMessage);
@@ -26,10 +26,11 @@ class AuthController {
             await this.api.signin(data);
             const user = await this.getUser();
             Store.set('user', user);
-            router.go('/chats');
         }catch (error) {
             Store.set('auth.error', await this.handleError(error));
         }
+        router.go('/select-chat');
+        
     }
     async logout() {
         try {
