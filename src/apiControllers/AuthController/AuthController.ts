@@ -22,16 +22,16 @@ class AuthController {
         }
     }
     async signin(data: LoginRequest): Promise<void> {
-        try {
-            await this.api.signin(data);
-            const user = await this.getUser();
-            Store.set('user', user);
-        }catch (error) {
-            Store.set('auth.error', await this.handleError(error));
-        }
+    try {
+        await this.api.signin(data);
+        const user = await this.getUser();
+        Store.set('user', user);
         router.go('/select-chat');
-        
+    } catch (error) {
+        console.error('❌ caught error in signin:', error);
+        Store.set('auth.error', await this.handleError(error));
     }
+}
     async logout() {
         try {
             await this.api.logout();

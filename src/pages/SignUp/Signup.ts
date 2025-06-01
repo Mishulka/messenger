@@ -4,6 +4,7 @@ import Button from '../../partials/button/index';
 import Link from '../../partials/link/index';
 import { loginPage } from '../Login/Login';
 import router from '../../core/Router';
+import Store, { StoreEvents } from '../../core/Store';
 
 export interface IPageProps {
     register_button?: Button;
@@ -12,7 +13,7 @@ export interface IPageProps {
     [key: string]: unknown;
 }
 
-class SignIn extends Block {
+class SignUp extends Block {
   constructor(props: IPageProps) {
     super('div', props);
   }
@@ -58,7 +59,7 @@ class SignIn extends Block {
   }
 }
 
-export const signInPage = new SignIn({
+export const signUpPage = new SignUp({
   register_button: new Button({
           text: 'Register',
           type: 'submit',

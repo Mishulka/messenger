@@ -93,7 +93,13 @@ class Http {
                 xhr.setRequestHeader(key, value);
             });
 
-            xhr.onload = () => resolve(xhr);
+            xhr.onload = () => {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    resolve(xhr);
+                } else {
+                    reject(new Error(`Request failed with status ${xhr.status}`));
+                }
+            };
             xhr.onerror = reject;
             xhr.onabort = reject;
             xhr.ontimeout = reject;
@@ -107,12 +113,29 @@ class Http {
     }
 
     private parseResponse<T>(xhr: XMLHttpRequest): T {
-        try {
-            return JSON.parse(xhr.responseText) as T;
-        } catch {
-            throw new Error('Failed to parse response');
-        }
+    if (xhr.status === 204) {
+        return null as unknown as T;
     }
+
+    if (!xhr.responseText || xhr.responseText.trim() === '') {
+        return null as unknown as T;
+    }
+
+    const contentType = xhr.getResponseHeader('Content-Type');
+    
+    try {
+        if (contentType?.includes('application/json') || 
+            (xhr.responseText.startsWith('{') || xhr.responseText.startsWith('['))) {
+            return JSON.parse(xhr.responseText) as T;
+        }
+        return xhr.responseText as unknown as T;
+    } catch (error) {
+        if (xhr.responseText) {
+            return xhr.responseText as unknown as T;
+        }
+        throw new Error(`Failed to parse response: ${(error as Error).message}`);
+    }
+}
 }
 
 export { Http, METHOD };

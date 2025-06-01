@@ -15,7 +15,7 @@ router
 //   .use('/505', Pages.serverErrorPage as unknown as typeof Block)
 //   .start();
   .use('/', Pages.loginPage)
-  .use('/signin', Pages.signInPage)
+  .use('/signup', Pages.signUpPage)
   .use('/select-chat', Pages.selectChatPage)
   .use('/profile', Pages.profilePage)
   .use('/edit-profile', Pages.editProfilePage)

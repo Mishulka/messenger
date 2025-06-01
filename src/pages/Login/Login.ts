@@ -4,11 +4,8 @@ import Button from '../../partials/button/index';
 import Link from '../../partials/link/index';
 import { handleInputBlur } from '../../utils/handleInputBlur';
 import router from '../../core/Router';
-// import connect from '../../core/Connect';
-// import UserLoginController from '../../apiControllers/UserLoginController';
 import AuthController from '../../apiControllers/AuthController/AuthController';
 import Store, { StoreEvents } from '../../core/Store';
-// import { LoginRequest } from 'api/AuthAPI/types';
 
 export interface IPageProps {
     [key: string]: unknown;
@@ -19,8 +16,6 @@ export interface IPageProps {
     link_register?: Link;
     loginError?: string;
 }
-
-
 
 class LoginPage extends Block {
     constructor(props: IPageProps) {
@@ -35,18 +30,16 @@ class LoginPage extends Block {
         (window).handleInputBlur = handleInputBlur;
         setTimeout(() => this.dispatchComponentDidMount(), 0);
 
-
-        //submitting on updated Store
-        Store.on(StoreEvents.Updated, this.handleStoreUpdate)
+        //Store.on(StoreEvents.Updated, this.handleStoreUpdate)
     }
 
-    private handleStoreUpdate = () => {
-        const { auth } = Store.getState();
-    }
+    // private handleStoreUpdate = () => {
+    //     const { auth } = Store.getState();
+    // }
 
-    componentWillUnmount() {
-        Store.off(StoreEvents.Updated, this.handleStoreUpdate);
-    }
+    // componentWillUnmount() {
+    //     Store.off(StoreEvents.Updated, this.handleStoreUpdate);
+    // }
 
     private async handleSubmit(e: Event): Promise<void> {
         e.preventDefault();
@@ -82,67 +75,6 @@ class LoginPage extends Block {
             this.setProps({ loginError: 'Неверный логин или пароль' });
         }
     }
-
-    // async componentDidMount(): Promise<void> {
-    //     const form = document.querySelector('form');
-
-    //     if (form) {
-    //         form.addEventListener('submit', (e) => {
-    //             // await UserLoginController.login(data);
-    //             const form = e.target as HTMLFormElement;
-                
-    //             let hasEmptyFields = false;
-    //             let hasValidationErrors = false;
-                
-    //             Array.from(form.elements).forEach((element) => {
-    //                 const input = element as HTMLInputElement;
-    //                 if (input.tagName !== 'INPUT') return;
-
-    //                 if (!input.value.trim()) {
-    //                 hasEmptyFields = true;
-    //                 input.setAttribute('data-error', 'Поле не может быть пустым');
-    //                 // this.showError(input);
-    //                 }
-                    
-
-    //                 const errorValue = input.getAttribute('data-error');
-    //                 if (errorValue && errorValue !== '') {
-    //                 hasValidationErrors = true;
-    //                 }
-    //             });
-
-    //             if (hasEmptyFields || hasValidationErrors) {
-    //                 console.log('Error in validation – form not submitted');
-    //                 return;
-    //             }
-
-    //             const formData = new FormData(form);
-
-    //             const data: Record<string, string> = {};
-
-    //             formData.forEach((value, key) => {
-    //                 data[key as string] = value.toString();
-    //             });
-
-    //             const hasError = Array.from(form.elements).some((element) => {
-    //                 const input = element as HTMLInputElement;
-    //                 const errorValue = input.getAttribute('data-error');
-    //                 return errorValue && errorValue !== '';
-    //             });
-
-    //             if (!hasError) {
-    //                 console.log('Form data: ', data);
-    //                 router.go('/select-chat');
-    //                 return;
-    //             }
-    //             if (hasError) {
-    //                 console.log('Ошибка валидации – форма не отправляется');
-    //                 return;
-    //             }
-
-    //         });
-    //     }
-    // }
     
     render(): DocumentFragment {
             return this.compile(template, {
@@ -151,12 +83,6 @@ class LoginPage extends Block {
             });
     }
 }
-
-// const withUser = connect((state) => ({
-// loginError: state.login?.error
-// }));
-
-// const ConnectedLoginPage = withUser(LoginPage)
 
 export const loginPage = new LoginPage({
     login_button: new Button({
@@ -177,13 +103,13 @@ export const loginPage = new LoginPage({
     }),
     link_register: new Link({
         text: 'Register',
-        href: '/signin',
+        href: '/signup',
         data_page: 'Signin',
         type: 'button',
         events: {
             click: (e: Event) => {
                 e?.preventDefault();
-                router.go('/signin');
+                router.go('/signup');
             }
         }
     })
