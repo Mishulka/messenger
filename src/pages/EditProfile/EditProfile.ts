@@ -2,6 +2,8 @@ import Block, { TProps } from '../../core/block';
 import template from './Template';
 import Button from '../../partials/button/index';
 import router from '../../core/Router';
+import AuthAPI from '../../api/AuthAPI/auth-api';
+import UserController from '../../apiControllers/UserController/UserController';
 
 interface IEditProfileProps {
   user: {
@@ -19,6 +21,24 @@ interface IEditProfileProps {
 class EditProfile extends Block {
   constructor(props: IEditProfileProps) {
     super('div', props as unknown as TProps);
+  }
+
+  async componentDidMount() {
+      try {
+        const user = await AuthAPI.getUser();
+        this.setProps({
+          userAvatar: user.avatar,
+          email: user.email,
+          first_name: user.first_name,
+          login: user.login,
+          second_name: user.second_name,
+          display_name: user.display_name,
+          phone: user.phone
+        })
+        console.log('user data fetched')
+      } catch(err) {
+        console.error('failed to get user', err);
+      }
   }
 
   render(): DocumentFragment {
@@ -40,9 +60,18 @@ export const editProfilePage = new EditProfile({
     text: 'Сохранить',
     type: 'submit',
     events: {
-      click: (e: Event) => {
+      click: async (e: Event) => {
         e.preventDefault();
-            router.go('/profile');
+
+        const form = (e.target as HTMLElement).closest('form') as HTMLFormElement | undefined
+        const formData = new FormData(form)
+        const data: Record<string, string> = {};
+        formData.forEach((value, key) => {
+          data[key] = value.toString();
+        });
+
+        await UserController.updateProfile(data)
+        router.go('/profile');
       }
     }
   })

@@ -14,7 +14,7 @@ export class AuthAPI {
     }
 
     public async signup(data: SignupRequest): Promise<SignupResponse> {
-        return this.http.post<SignupResponse>('/signup', { data });
+        return this.http.post<SignupResponse>('/signup', data);
     }
 
     public async signin(data: LoginRequest): Promise<void> {
@@ -37,3 +37,5 @@ export class AuthAPI {
         return JSON.parse(response.responseText);
     }
 }
+
+export default new AuthAPI()

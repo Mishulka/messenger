@@ -3,6 +3,7 @@ import Block from '../../core/block';
 import template from './Template';
 import Link from '../../partials/link/index';
 import router from '../../core/Router';
+import AuthController from '../../apiControllers/AuthController/AuthController';
 
 export interface IPageProps {
     link_edit_profile?: Link;
@@ -54,7 +55,7 @@ export const profilePage = new Profile({
         events: {
             click: (e: Event) => {
                 e.preventDefault();
-                router.go('/');
+                AuthController.logout();
             }
         }
   })

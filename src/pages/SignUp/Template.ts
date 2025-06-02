@@ -84,19 +84,6 @@ const template = `
          onblur="handleInputBlur(event)" />
   <p id="password-error" class="field_err"></p>
 </div>
-
-<div class="div_field">
-  <label class="label" for="password_repeat">Повтор пароля</label>
-  <input class="field"
-         id="password_repeat" 
-         name="password_repeat" 
-         type="password" 
-         placeholder="Confirm your password" 
-         value="{{password_repeatValue}}"
-         data-error="{{password_repeatError}}"
-         onblur="handleInputBlur(event)" />
-  <p id="password_repeat-error" class="field_err"></p>
-</div>
     </div>
     <div class="container">
     {{{register_button}}}

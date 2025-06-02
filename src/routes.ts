@@ -14,7 +14,7 @@ router
 //   .use('/404', Pages.notFoundPage as unknown as typeof Block)
 //   .use('/505', Pages.serverErrorPage as unknown as typeof Block)
 //   .start();
-  .use('/', Pages.loginPage)
+  .use('/login', Pages.loginPage)
   .use('/signup', Pages.signUpPage)
   .use('/select-chat', Pages.selectChatPage)
   .use('/profile', Pages.profilePage)
