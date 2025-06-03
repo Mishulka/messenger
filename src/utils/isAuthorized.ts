@@ -7,7 +7,6 @@ export default async function isAuthorized(): Promise<boolean> {
     if (user) {
         try {
             await AuthController.getUser()
-            console.log('user is in storage')
 
             const auth = document.cookie.includes('authCookie')
             if(auth)

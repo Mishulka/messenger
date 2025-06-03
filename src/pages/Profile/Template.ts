@@ -5,15 +5,15 @@ const template = `
     <h1>Your Profile</h1>
 
     <div class="profile-container">
-  <div class="profile-avatar">
-    {{#if user.avatar}}
-      <img src="{{user.avatar}}" alt="Аватар" class="avatar-img" />
-    {{else}}
-      <div class="avatar">No Avatar</div>
+    {{#if avatarUrl}}
+      <img src="{{avatarUrl}}" alt="Аватар" id="avatar-img"/>
+      {{else}}
+      <div class="avatar" id="avatar-img">No Avatar</div>
     {{/if}}
-    <div>{{user.display_name}}</div>
-  </div>
-
+    {{{avatar}}}
+  
+  <div>{{user.display_name}}</div>
+      
   <div class="profile-field">
     <span class="field-label">Почта</span>
     <span class="field-value">{{user.email}}</span>

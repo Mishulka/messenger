@@ -3,6 +3,7 @@ export default interface Indexed {
 }
 
 export type User = {
+  avatar: string;
   first_name: string;
   second_name: string;
   display_name: string;

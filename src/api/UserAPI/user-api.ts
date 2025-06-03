@@ -1,31 +1,30 @@
 import { Http } from "../../core/Http";
 
-
 export class UserAPI {
     private readonly http: Http;
 
     constructor() {
-        this.http = new Http('/auth');
+        this.http = new Http('/user');
     }
 
     updateProfile(data: Record<string, unknown>) {
-        return this.http.put('/user/profile', data)
+        return this.http.put('/profile', data)
     }
 
     updateAvatar(formData: FormData) {
-        return this.http.put('/user/profile/avatar', formData)
+        return this.http.put('/profile/avatar', formData)
     }
 
     updatePassword(data: Record<string, unknown>) {
-        return this.http.put('/user/password', data)
+        return this.http.put('/password', data)
     }
 
     getUserById(id: number) {
-        return this.http.get(`/user/${id}`)
+        return this.http.get(`/${id}`)
     }
 
     searchUser(login: string) {
-        return this.http.post('/user/search', { login })
+        return this.http.post('/search', { login })
     }
 }
 

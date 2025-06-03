@@ -7,11 +7,14 @@ import AuthController from '../../apiControllers/AuthController/AuthController';
 import Store, { StoreEvents } from '../../core/Store';
 import { User } from '../../core/types';
 import Button from '../../partials/button';
+import Avatar from '../../partials/avatar';
+//import UserController from '../../apiControllers/UserController/UserController';
 
 export interface IPageProps {
     link_edit_profile?: Link;
     link_edit_password?: Link;
     link_logout?: Link;
+    avatar?: Avatar;
     [key: string]: unknown;
 }
 
@@ -23,23 +26,53 @@ class Profile extends Block {
     });
 
     AuthController.getUser()
+    console.log('Store', Store.getState().user)
 
     Store.on(StoreEvents.Updated, () => {
         this.setProps({ user: Store.getState().user })
       });
-    console.log("USER: ",Store.getState().user);
-    console.log("StoreEvents: ",StoreEvents)
-    console.log("Store: ",Store)
   }
 
-  componentDidMount(): void {
-      AuthController.getUser().catch(error => {
-        console.error("Failed to fetch user data", error)
-      })
-  }
+//   initAvatarListeners() {
+//     const avatarOverlay = document.getElementById('avatar-overlay');
+//     const avatarImg = document.getElementById('avatar-img');
+//     const avatarInput = document.getElementById('avatar-input') as HTMLInputElement;
+
+//     if (avatarOverlay && avatarImg && avatarInput) {
+//         avatarImg.addEventListener('mouseenter', () => {
+//             console.log('avatar enter')
+//             avatarOverlay.style.display = 'flex';
+//         });
+//         avatarImg.addEventListener('mouseleave', () => {
+//             avatarOverlay.style.display = 'none';
+//         });
+//     }
+//   }
+
+//   async handleAvatarChange() {
+//     const input = document.getElementById('avatar-input') as HTMLInputElement;
+//     if (input) {
+//         if (!input.files?.length) return;
+//         if (!input?.files?.length) {
+//             console.warn('No file selected');
+//             return;
+//         }
+
+//         if (input.files != null) {
+//             const file = input.files[0];
+
+//             try {
+//                 await UserController.UpdateAvatar(file);
+//                 await AuthController.getUser();
+//             } catch (err) {
+//                 console.error('Avatar upload failed', err)
+//             }
+//         }
+//     }
+
+//   }
 
   render(): DocumentFragment {
-    
     return this.compile(template, {
         ...this.props,
         user: {
@@ -48,20 +81,15 @@ class Profile extends Block {
             email: (this.props.user as User)?.email  || 'Не указано',
             phone: (this.props.user as User)?.phone  || 'Не указано',
             login: (this.props.user as User)?.login  || 'Не указано',
-            display_name: (this.props.user as User)?.display_name  || 'Не указано',
+            display_name: (this.props.user as User)?.display_name  || '',
         }
     });
+    
   }
 }
 
-// first_name: string;
-//   last_name: string;
-//   login: string;
-//   email: string;
-//   phone: string;
-//   password: string;
-
 export const profilePage = new Profile({
+    avatar: new Avatar(),
     btn_edit_data: new Button({
         text: 'Изменить данные',
         type: 'link',
@@ -109,3 +137,9 @@ export const profilePage = new Profile({
         }
   })
 });
+
+// const root = document.getElementById('app');
+// if (root) {
+//     root.innerHTML = '';  // Очищаем содержимое root
+//     root.appendChild(avatar.getContent());  // Добавляем Avatar в DOM
+// }

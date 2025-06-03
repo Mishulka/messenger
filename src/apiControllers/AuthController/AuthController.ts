@@ -45,7 +45,6 @@ class AuthController {
     }
     async getUser(): Promise<User | void> {
         try {
-            console.log("getUser")
             const res = await this.api.getUser();
             const user = res;
             Store.set('user', user);
