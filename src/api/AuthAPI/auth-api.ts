@@ -1,3 +1,4 @@
+import { User } from 'core/types';
 import { Http } from '../../core/Http';
 import type { 
     SignupRequest, 
@@ -32,7 +33,7 @@ export class AuthAPI {
         await this.http.post('/logout');
     }
 
-    public async getUser(): Promise<UserResponse> {
+    public async getUser(): Promise<User> {
         const response = await this.http.get('/user');
         return JSON.parse(response.responseText);
     }

@@ -2,6 +2,7 @@ import { AuthAPI } from "../../api/AuthAPI/auth-api";
 import Store from "../../core/Store";
 import router from "../../core/Router";
 import type { SignupRequest, LoginRequest } from "../../api/AuthAPI/types";
+import { User } from "core/types";
 
 class AuthController {
     private api: AuthAPI;
@@ -26,6 +27,7 @@ class AuthController {
         await this.api.signin(data);
         const user = await this.getUser();
         Store.set('user', user);
+        localStorage.setItem('user', JSON.stringify(user));
         router.go('/select-chat');
     } catch (error) {
         console.error('❌ caught error in signin:', error);
@@ -41,10 +43,14 @@ class AuthController {
             Store.set('auth.error', await this.handleError(error));
         }
     }
-    async getUser(): Promise<void> {
+    async getUser(): Promise<User | void> {
         try {
-            const user = await this.api.getUser();
-            Store.set('user', user as unknown as string);
+            console.log("getUser")
+            const res = await this.api.getUser();
+            const user = res;
+            Store.set('user', user);
+            router.go('/select-chat')
+            return;
         } catch (error) {
             const errMessage = await this.handleError(error);
             Store.set('auth.error', errMessage);

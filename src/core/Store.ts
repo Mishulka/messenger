@@ -8,9 +8,17 @@ export enum StoreEvents {
 
 class Store extends EventBus {
     private state: {
-        user?: User;
+        user?: User | null;
+        auth: {
+            error: string | null;
+        }
         [key: string]: unknown;
-    } = {};
+    } = {
+        user: null,
+        auth: {
+            error: null
+        }
+    };
 
     public getState() {
         return this.state;
@@ -19,10 +27,21 @@ class Store extends EventBus {
     public set(path: string, value: unknown) {
         set(this.state, path, value);
         this.emit(StoreEvents.Updated);
+
+        console.log('Store updated: ', {
+            path,
+            value,
+            newState: this.state
+        })
     }
 
     public clearAll(): void {
-        this.state = {};
+        this.state = {
+            user: null,
+            auth: {
+                error: null
+            }
+        };
         this.emit(StoreEvents.Updated);
     }
 }

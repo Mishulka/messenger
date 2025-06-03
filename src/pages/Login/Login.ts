@@ -5,7 +5,7 @@ import Link from '../../partials/link/index';
 import { handleInputBlur } from '../../utils/handleInputBlur';
 import router from '../../core/Router';
 import AuthController from '../../apiControllers/AuthController/AuthController';
-import Store, { StoreEvents } from '../../core/Store';
+
 
 export interface IPageProps {
     [key: string]: unknown;

@@ -12,9 +12,7 @@ const template = `
                  name="email" 
                  type="text" 
                  placeholder="ivanivanov@mail.com" 
-                 value="{{user.email}}"
-                 data-error="{{emailError}}"
-                 onblur="handleInputBlur(event)" 
+                 value="{{user.email}}" 
           />
           <p id="email-error" class="field_err"></p>
         </div>
@@ -26,8 +24,6 @@ const template = `
                  type="text" 
                  placeholder="ivan" 
                  value="{{user.first_name}}"
-                 data-error="{{firstNameError}}"
-                 onblur="handleInputBlur(event)" 
           />
           <p id="first_name-error" class="field_err"></p>
         </div>
@@ -39,8 +35,6 @@ const template = `
                  type="text" 
                  placeholder="Иван" 
                  value="{{user.login}}"
-                 data-error="{{loginError}}"
-                 onblur="handleInputBlur(event)" 
           />
           <p id="login-error" class="field_err"></p>
         </div>
@@ -52,8 +46,6 @@ const template = `
                  type="text" 
                  placeholder="Иванов" 
                  value="{{user.second_name}}"
-                 data-error="{{secondNameError}}"
-                 onblur="handleInputBlur(event)" 
           />
           <p id="second_name-error" class="field_err"></p>
         </div>
@@ -65,8 +57,6 @@ const template = `
                  type="text" 
                  placeholder="Ванек" 
                  value="{{user.display_name}}"
-                 data-error="{{displayNameError}}"
-                 onblur="handleInputBlur(event)" 
           />
           <p id="display_name-error" class="field_err"></p>
         </div>
@@ -78,8 +68,6 @@ const template = `
                  type="text" 
                  placeholder="+7(900)900-90-90" 
                  value="{{user.phone}}"
-                 data-error="{{phoneError}}"
-                 onblur="handleInputBlur(event)" 
           />
           <p id="phone-error" class="field_err"></p>
         </div>

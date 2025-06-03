@@ -4,6 +4,9 @@ import template from './Template';
 import Link from '../../partials/link/index';
 import router from '../../core/Router';
 import AuthController from '../../apiControllers/AuthController/AuthController';
+import Store, { StoreEvents } from '../../core/Store';
+import { User } from '../../core/types';
+import Button from '../../partials/button';
 
 export interface IPageProps {
     link_edit_profile?: Link;
@@ -14,15 +17,61 @@ export interface IPageProps {
 
 class Profile extends Block {
   constructor(props: IPageProps) {
-    super('div', props);
+    super('div', {
+        ...props,
+        user: Store.getState().user || {}
+    });
+
+    AuthController.getUser()
+
+    Store.on(StoreEvents.Updated, () => {
+        this.setProps({ user: Store.getState().user })
+      });
+    console.log("USER: ",Store.getState().user);
+    console.log("StoreEvents: ",StoreEvents)
+    console.log("Store: ",Store)
   }
 
-  render(): DocumentFragment  {
-    return this.compile(template, this.props);
+  componentDidMount(): void {
+      AuthController.getUser().catch(error => {
+        console.error("Failed to fetch user data", error)
+      })
+  }
+
+  render(): DocumentFragment {
+    
+    return this.compile(template, {
+        ...this.props,
+        user: {
+            first_name: (this.props.user as User)?.first_name  || 'Не указано',
+            second_name: (this.props.user as User)?.second_name  || 'Не указано',
+            email: (this.props.user as User)?.email  || 'Не указано',
+            phone: (this.props.user as User)?.phone  || 'Не указано',
+            login: (this.props.user as User)?.login  || 'Не указано',
+            display_name: (this.props.user as User)?.display_name  || 'Не указано',
+        }
+    });
   }
 }
 
+// first_name: string;
+//   last_name: string;
+//   login: string;
+//   email: string;
+//   phone: string;
+//   password: string;
+
 export const profilePage = new Profile({
+    btn_edit_data: new Button({
+        text: 'Изменить данные',
+        type: 'link',
+        events: {
+            click: (e: Event) => {
+                e?.preventDefault();
+                router.go('/edit-profile')
+            }
+        }
+    }),
     link_edit_profile: new Link({
         text: 'Edit profile',
         href: '/edit_profile',
