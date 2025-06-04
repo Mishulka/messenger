@@ -69,6 +69,7 @@ export const editProfilePage = new EditProfile({
         formData.forEach((value, key) => {
           data[key] = value.toString();
         });
+        console.log('updating', formData)
 
         await UserController.updateProfile(data)
         router.go('/profile');

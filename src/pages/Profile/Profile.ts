@@ -140,6 +140,6 @@ export const profilePage = new Profile({
 
 // const root = document.getElementById('app');
 // if (root) {
-//     root.innerHTML = '';  // Очищаем содержимое root
-//     root.appendChild(avatar.getContent());  // Добавляем Avatar в DOM
+//     root.innerHTML = '';  
+//     root.appendChild(avatar.getContent()); 
 // }
