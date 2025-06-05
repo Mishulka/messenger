@@ -82,6 +82,7 @@ class Profile extends Block {
             phone: (this.props.user as User)?.phone  || 'Не указано',
             login: (this.props.user as User)?.login  || 'Не указано',
             display_name: (this.props.user as User)?.display_name  || '',
+            avatarUrl: (this.props.user as User)?.avatar || '',
         }
     });
     

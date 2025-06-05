@@ -1,61 +1,34 @@
-//import App from './app.js'
-import './routes.ts'
+import './routes.ts';
 import router from './core/Router.js';
-// import AuthController from 'apiControllers/AuthController/AuthController.js';
 import isAuthorized from './utils/isAuthorized.js';
 
-
 document.addEventListener('DOMContentLoaded', async () => {
-    // const app = new App();
-    // app.render();
-    router.start();
-    if (await isAuthorized()) {
-            router.go('/select-chat');
-        } else {
-            router.go('/login')
+    const path = window.location.pathname;
+
+    try {
+        const isAuth = await isAuthorized();
+
+        if (!isAuth && !['/login', '/signup'].includes(path)) {
+            // Сохраняем, куда хотел попасть пользователь
+            localStorage.setItem('redirectAfterLogin', path);
+            router.go('/login');
+            return;
         }
-})
 
+        if (isAuth && ['/login', '/signup', '/'].includes(path)) {
+            // После логина возвращаем пользователя на сохранённую страницу
+            const redirectPath = localStorage.getItem('redirectAfterLogin') || '/select-chat';
+            localStorage.removeItem('redirectAfterLogin');
+            if (path !== redirectPath) {
+                router.go(redirectPath);
+                return;
+            }
+        }
 
-// [vite] connecting...
-// isAuthorized.ts:5 null
-// AuthController.ts:48 getUser
-// client:912 [vite] connected.
-// Попадаю на страницу /select-chat но куки нет
+    } catch (e) {
+        router.go('/login');
+        return;
+    }
 
-// import AuthController from '../apiControllers/AuthController/AuthController.js';
-
-// export default async function isAuthorized(): Promise<boolean> {
-//     const user = localStorage.getItem("user");
-//     console.log(user);
-
-//     if (user) {
-//         try {
-//             await AuthController.getUser();
-//             return true;
-//         } catch (error) {
-//             console.error("Ошибка при проверке авторизации:", error);
-//             return false;
-//         }
-//     } else {
-//         return false;
-//     }
-// }
-
-// //import App from './app.js'
-// import './routes.ts'
-// import router from './core/Router.js';
-// // import AuthController from 'apiControllers/AuthController/AuthController.js';
-// import isAuthorized from './utils/isAuthorized.js';
-
-
-// document.addEventListener('DOMContentLoaded', () => {
-//     // const app = new App();
-//     // app.render();
-//     router.start();
-//     if(isAuthorized()) {
-//         router.go('/select-chat');
-//     } else {
-//         router.go('/login')
-//     }
-// })
+    router.start(); // Стартуем Роутер только когда уже точно решили куда идти
+});

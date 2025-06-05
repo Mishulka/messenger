@@ -5,13 +5,19 @@ const template = `
     <h1>Your Profile</h1>
 
     <div class="profile-container">
-    {{#if avatarUrl}}
-      <img src="{{avatarUrl}}" alt="Аватар" id="avatar-img"/>
-      {{else}}
-      <div class="avatar" id="avatar-img">No Avatar</div>
-    {{/if}}
-    {{{avatar}}}
-  
+      <div class="avatar-container">
+        {{#if user.avatarUrl}}
+        <img 
+        src="https://ya-praktikum.tech/api/v2/resources{{user.avatarUrl}}" 
+        alt="Аватар" 
+        id="avatar-img"
+        class="avatar"/>
+        {{else}}
+        <div class="avatar" id="avatar-img">No Avatar</div>
+      {{/if}}
+      {{{avatar}}}
+    </div>
+    
   <div>{{user.display_name}}</div>
       
   <div class="profile-field">

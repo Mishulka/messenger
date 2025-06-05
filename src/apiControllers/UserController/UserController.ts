@@ -27,9 +27,9 @@ class UserController {
         }
     }
 
-    async updatePassword(oldPassword: string, newPassword: string) {
+    async updatePassword(data: Record<string, unknown>) {
         try {
-            return await this.api.updatePassword({oldPassword, newPassword})
+            return await this.api.updatePassword(data)
         } catch (err) {
             console.error('Error on switching password', err)
         }

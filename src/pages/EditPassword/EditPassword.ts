@@ -2,6 +2,7 @@ import Block from '../../core/block';
 import template from './Template';
 import Button from '../../partials/button/index';
 import router from '../../core/Router';
+import UserController from '../../apiControllers/UserController/UserController';
 
 interface IEditPasswordProps {
   [key: string]: unknown;
@@ -32,10 +33,14 @@ export const editPasswordPage = new EditPassword({
     text: 'Сохранить',
     type: 'submit',
     events: {
-      click: (e: Event) => {
-                e.preventDefault();
-                router.go('/profile');
-            }
+      click: async (e: Event) => {
+        e.preventDefault();
+        let data;
+        console.log('updating', data)
+
+        await UserController.updatePassword(data);
+        router.go('/profile');
+      }
     }
   })
 });
