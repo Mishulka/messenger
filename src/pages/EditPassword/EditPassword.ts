@@ -35,13 +35,38 @@ export const editPasswordPage = new EditPassword({
     events: {
       click: async (e: Event) => {
         e.preventDefault();
-        let data;
-        console.log('updating', data)
+        const button = e.target as HTMLButtonElement; 
+        const form = button.closest('form') as HTMLFormElement;
+        let isValid = true;
 
-        await UserController.updatePassword(data);
+        const data: Record<string, string> = {}
+
+        Array.from(form.elements).forEach((element) => {
+            const input = element as HTMLInputElement;
+            if (input.tagName !== 'INPUT') return;
+
+            if (!input.value.trim()) {
+                input.setAttribute('data-error', 'Поле не может быть пустым');
+                isValid = false;
+            }
+            data[input.name] = input.value.trim();
+        });
+
+        if (!isValid) {
+            alert('Ошибка')
+            return;
+        }
+
+        try {
+            await UserController.updatePassword(data);
+            router.go('/profile')
+        } catch (error) {
+            console.error('Login failed:', error);
+        }
         router.go('/profile');
       }
     }
+
   })
 });
 

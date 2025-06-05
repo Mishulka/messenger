@@ -1,6 +1,8 @@
 export const ValidationRules = {
     login: /^(?=.*[A-Za-z])[A-Za-z0-9_-]{3,20}$/,
     password: /^(?=.*[A-Z])(?=.*\d).{8,40}$/,
+    new_password: /^(?=.*[A-Z])(?=.*\d).{8,40}$/,
+    repeat_password: /^(?=.*[A-Z])(?=.*\d).{8,40}$/,
     first_name: /^[A-ZА-ЯЁ][a-zа-яё-]+$/u,
     second_name: /^[A-ZА-ЯЁ][a-zа-яё-]+$/u,
     email: /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+\.[a-zA-Z]+$/,

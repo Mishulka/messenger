@@ -8,7 +8,7 @@ const template = `
           <label class="label" for="old_password">Старый пароль</label>
           <input class="field"
                  id="old_password" 
-                 name="old_password" 
+                 name="oldPassword" 
                  type="password" 
                  placeholder="Введите старый пароль" 
                  value="{{oldPasswordValue}}"
@@ -21,7 +21,7 @@ const template = `
           <label class="label" for="new_password">Новый пароль</label>
           <input class="field"
                  id="new_password" 
-                 name="new_password" 
+                 name="newPassword" 
                  type="password" 
                  placeholder="Введите новый пароль" 
                  value="{{newPasswordValue}}"
