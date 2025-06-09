@@ -50,7 +50,7 @@ const template = `
         <span class="field-value">{{user.phone}}</span>
     </div>
 
-    {{{btn_edit_data}}}
+    {{{link_to_chats}}}
     </div>
 <div class="profile_container">
     {{{link_edit_profile}}}

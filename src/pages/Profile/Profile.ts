@@ -6,7 +6,6 @@ import router from '../../core/Router';
 import AuthController from '../../apiControllers/AuthController/AuthController';
 import Store, { StoreEvents } from '../../core/Store';
 import { User } from '../../core/types';
-import Button from '../../partials/button';
 import Avatar from '../../partials/avatar';
 //import UserController from '../../apiControllers/UserController/UserController';
 
@@ -91,13 +90,13 @@ class Profile extends Block {
 
 export const profilePage = new Profile({
     avatar: new Avatar(),
-    btn_edit_data: new Button({
-        text: 'Изменить данные',
+    link_to_chats: new Link({
+        text: 'вернуться к чатам',
         type: 'link',
         events: {
             click: (e: Event) => {
                 e?.preventDefault();
-                router.go('/edit-profile')
+                router.go('/select-chat')
             }
         }
     }),

@@ -13,6 +13,16 @@ const template = `
     
     <div class="chat">
         <div class="chat_header">
+            <div class="chat-avatar-container">
+                {{#if user.avatarUrl}}
+                <img 
+                src="https://ya-praktikum.tech/api/v2/resources{{user.avatarUrl}}" 
+                alt="Аватар" 
+                id="avatar-img"
+                class="avatar"/>
+                {{/if}}
+                <div class="avatar" id="avatar-img">No Avatar</div>
+            </div>
         </div>
         <div class="currentChat"></div>
         <form class="messageForm" id="message-form">

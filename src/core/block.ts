@@ -19,6 +19,7 @@ class Block {
   eventBus: () => EventBus;
   private _eventBus: () => EventBus;
   public children: Record<string, Block> = {};
+  private _didMount: boolean = false;
 
   constructor(tagName = "div", propsAndChild: TProps = {}) {
     const { children, props } = this._getChildren(propsAndChild);
@@ -70,9 +71,14 @@ class Block {
   init() {
     this._createResources();
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+    this.dispatchComponentDidMount();
   }
 
   _componentDidMount(): void {
+    if (this._didMount) {
+      return;
+    }
+    this._didMount = true;
     this.componentDidMount();
 
     Object.values(this.children).forEach(child => {
@@ -121,6 +127,7 @@ class Block {
     if (this._element){
       this._element.innerHTML = '';
       this._element.appendChild(block);
+      //this.dispatchComponentDidMount();
     }
 
     this._addEvents();

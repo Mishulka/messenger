@@ -3,8 +3,7 @@ import { Http } from '../../core/Http';
 import type { 
     SignupRequest, 
     SignupResponse,
-    LoginRequest,
-    UserResponse
+    LoginRequest
 } from './types';
 
 export class AuthAPI {

@@ -54,6 +54,7 @@ export const editPasswordPage = new EditPassword({
 
         if (!isValid) {
             alert('Ошибка')
+            router.go('/profile');
             return;
         }
 

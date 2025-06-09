@@ -7,6 +7,9 @@ export const template = `
     type="{{type}}" 
     data-page="{{data-page}}">
     {{text}}
+    {{#if icon}}
+        <img src="{{icon}}" />
+    {{/if}}
 </button>
 </div>
 `;

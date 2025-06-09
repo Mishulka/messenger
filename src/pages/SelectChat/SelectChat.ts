@@ -3,6 +3,7 @@ import template from './Template';
 import Button from '../../partials/button/index';
 import Link from '../../partials/link/index';
 import router from '../../core/Router';
+import ChatsController from '../../apiControllers/ChatsController/ChatsController';
 
 export interface ISelectChatProps {
     header?: string;
@@ -14,10 +15,22 @@ export interface ISelectChatProps {
 
 class SelectChatPage extends Block {
     constructor(props: ISelectChatProps) {
-        super('div', props);
+        super('div', {
+            ...props
+        });
+    }
+
+    handleCreateChat() {
+        ChatsController.createChat('new chat');
     }
 
     componentDidMount(): void {
+
+        console.log('SelectChatPage mounted');
+        ChatsController.getChats().then((chats) => {
+            console.log('Chats from server:', chats);
+        });        
+
         const form = document.querySelector('form');
 
         if (form) {
@@ -71,15 +84,15 @@ export const selectChatPage = new SelectChatPage({
         }
     }),
     send_button: new Button({
-        text: 'Отправить',
-        type: 'button',
-        classname: 'send_chat_button',
+        text: '',
+        type: 'submit',
+        classname: 'send_chat_button one-icon',
+        icon: '../../assets/icons/send.svg',
         events: {
-            click: () => {
-                const form = document.querySelector('form');
-                if (form) {
-                    form.dispatchEvent(new Event('submit', { cancelable: true }));
-                }  
+            click: async (e) => {
+                e.preventDefault();
+                
+                await ChatsController.createChat('new chat')
             }
         }
     }),
