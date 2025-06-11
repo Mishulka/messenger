@@ -4,7 +4,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: rgba(255, 255, 255, 1);
+    background-color: rgb(255 255 255 / 100%);
     box-shadow: 0 0 6px 0 #00000024;
 }
 
@@ -16,7 +16,7 @@
     justify-content: center;
     align-items: center;
     margin-right: 10px;
-    background-color: rgba(255, 255, 255, 1);
+    background-color: rgb(255 255 255 / 100%);
 }
 
 .chats_list {
@@ -27,10 +27,10 @@
     border-right: 1px solid #ccc;
     padding: 10px;
     margin-right: 10px; 
-    background-color: rgba(251, 251, 251, 1);
+    background-color: rgb(251 251 251 / 100%);
 }
 
-@media (max-width: 800px) {
+@media (width <= 800px) {
     .chats_list{
         width: 45vw;
     }
@@ -80,7 +80,7 @@
     position: relative;
     margin: 2px 0;
     border-top: 1px solid  #EAEAEA;
-    border-bottom: 1px solid rgba(234, 234, 234, 1);
+    border-bottom: 1px solid rgb(234 234 234 / 100%);
 
     &:hover {
         box-shadow: 0 4px 8px rgb(0 0 0 / 20%);
@@ -99,7 +99,7 @@
 }
 
 .message_name {
-    font-family: Inter;
+    font-family: Inter, Arial, sans-serif;
     font-weight: 600;
     font-size: 13px;
     line-height: 13px;
@@ -107,17 +107,17 @@
 }
 
 .message_text {
-    font-family: Inter;
+    font-family: Inter, Arial, sans-serif;
     font-weight: 500;
     font-size: 12px;
     line-height: 15px;
     letter-spacing: 0%;
-    color: rgba(153, 153, 153, 1);
+    color: rgb(153 153 153 / 100%);
 }
 
 .chat-unread {
     color: white;
-    background-color: rgba(51, 105, 243, 1);
+    background-color: rgb(51 105 243 / 100%);
     border-radius: 100%;
     min-width: 20px;
 }
@@ -141,25 +141,30 @@
   flex-direction: column;
 }
 
+/* Объединённые стили chat-message */
 .chat-message {
     width: fit-content;
     background-color: var(--light-gray);
-    padding: 6px;
-    margin: 8px;
-    border-radius: 0.5rem;
+    padding: 6px 8px 8px 12px;
+    margin: 4px 0 8px 8px;
+    border-radius: 12px;
+    max-width: 70%;
+    display: flex;
+    flex-direction: column;
+    font-family: Inter, Arial, sans-serif;
 }
 
 .msg-user {
     font-size: 1.15rem;
     font-weight: bold;
+    font-family: Inter, Arial, sans-serif;
 }
 
-.msg-content {
-
-}
+/* Удалён пустой блок .msg-content */
 
 .msg-time {
     color: var(--gray);
+    font-family: Inter, Arial, sans-serif;
 }
 
 .my-message {
@@ -170,15 +175,6 @@
 .other-message {
   background: #f0f0f0;
   align-self: flex-start;
-}
-
-.chat-message {
-  margin: 4px 0;
-  padding: 8px 12px;
-  border-radius: 12px;
-  max-width: 70%;
-  display: flex;
-  flex-direction: column;
 }
 
 .remove_user_button {
