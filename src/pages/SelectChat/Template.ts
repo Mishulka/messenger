@@ -8,6 +8,7 @@ const template = `
         <div class="chats_list_link">
             {{{link_profile}}}
             </div>
+            {{{create_chat_button}}}
             {{#each users}}
             {{/each}}
 
@@ -61,13 +62,15 @@ const template = `
                 <div class="avatar" id="avatar-img">No Avatar</div>
             </div>
             {{{btn_add_user}}}
+            {{{btn_remove_user}}}
         </div>
 
         <div class="currentChat">
             <div class="messages-scroll">
                 {{#each messages}}
-                    <div class="chat-message {{#if (eq user_id ../user.id)}}my-message{{else}}other-message{{/if}}">
-                        <p class="msg-user">{{user_id}}</p>
+                    <div class="chat-message 
+                    {{#if (eq user_id ../user.id)}}my-message{{else}}other-message{{/if}}">
+                        <p class="msg-user">{{#if (eq user_id ../user.id)}}Вы{{else}}{{user_id}}{{/if}}</p>
                         <div class="d-flex">
                             <p class="msg-content">{{content}}</p>
                             <p class="msg-time">{{time}}</p>

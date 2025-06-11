@@ -116,13 +116,23 @@ class SelectChatPage extends Block {
         const chatCard = target.closest('.card[data-chat-id]');
         if (chatCard) {
             const chatId = chatCard.getAttribute('data-chat-id');
+            console.log("ВЫБРАН чат с ID:", chatId);
             if (chatId) {
-                const chatId = Store.getState().currentChatId ||
                 chatCard.getAttribute('data-chat-id');
                 Store.set('currentChatId', Number(chatId));
+                try {
+                    console.log('Очистка старого чата')
+                    this.messages = [];
+                    this.setProps({ messages: [] });
+                    if (this.socket) {
+                        this.socket.close();
+                        this.socket = null;
+                    }
 
+                } finally {
                 const token = await ChatsController.getToken(Number(chatId));
                 Store.set('token', token)
+                console.log('Подключаюсь к чату:', chatId);
                 this.socket = await WSConnect((messages) => {
                     console.log('Сокет инициализирован:', this.socket);
                     if (Array.isArray(messages)) {
@@ -142,46 +152,9 @@ class SelectChatPage extends Block {
                     }, 0); 
                 });
                 console.log('Текущий сокет:', this.socket);
+                }  
             }
         }});
-
-
-        // const form = document.querySelector('form');
-
-        // if (form) {
-        //     form.addEventListener('submit', (e) => {
-        //         e.preventDefault();
-        //         console.log('Отправка формы');
-        //         const input = form.querySelector('.message_input') as HTMLInputElement;
-        //         const messageText = input.value.trim();
-
-        //         console.log('Form data prepared: ');
-        //         if (messageText && this.socket) {
-        //             this.socket.send(JSON.stringify({
-        //                 content: messageText || '',
-        //                 type: 'message',
-        //             }))
-        //             input.value = '';
-        //         }
-
-        //         const hasError = Array.from(form.elements).some((element) => {
-        //             const input = element as HTMLInputElement;
-        //             const errorValue = input.getAttribute('data-error');
-        //             return errorValue && errorValue !== '';
-        //         });
-
-        //         if (!hasError) {
-        //             console.log('Form data: ');
-                    
-        //             return;
-        //         }
-        //         if (hasError) {
-        //             console.log('Ошибка валидации – форма не отправляется');
-        //             return;
-        //         }
-
-        //     });
-        // }
     }
 
     render(): DocumentFragment {
@@ -191,6 +164,19 @@ class SelectChatPage extends Block {
 
 export const selectChatPage = new SelectChatPage({
     chats,
+    create_chat_button: new Button({
+    text: 'new chat',
+    type: 'button',
+    classname: 'create_chat_button',
+    events: {
+        click: () => {
+            const title = prompt('Введите название чата:');
+            if (title) {
+                ChatsController.createChat(title);
+            }
+        }
+    }
+    }),
     link_profile: new Link({
         text: 'Profile',
         href: '/profile',
@@ -228,6 +214,24 @@ export const selectChatPage = new SelectChatPage({
                 }
             }
         }
+    }),
+    btn_remove_user: new Button({
+    text: 'Remove user',
+    type: 'button',
+    classname: 'remove_user_button',
+    events: {
+        click: () => {
+            const currentChatId = Store.getState().currentChatId;
+            if (!currentChatId) {
+                alert('Сначала выберите чат!');
+                return;
+            }
+            const userId = prompt('Введите ID пользователя для удаления:');
+            if (userId) {
+                ChatsController.removeUserFromChat(Number(userId), Number(currentChatId));
+            }
+        }
+    }
     }),
     send_button: new Button({
         text: '',

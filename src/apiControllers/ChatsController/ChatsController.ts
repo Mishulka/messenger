@@ -38,6 +38,15 @@ class ChatsController {
         }
     }
 
+    async removeUserFromChat(userId: number, chatId: number) {
+        try {
+            await this.api.removeUserFromChat(chatId, [userId]);
+            await this.getChats();
+        } catch (err) {
+            console.error('Error on removing user from chat', err);
+        }
+    }
+
     async deleteChat(chatId: number) {
         try {
             await this.api.deleteChat(chatId);
