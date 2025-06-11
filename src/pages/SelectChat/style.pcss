@@ -51,10 +51,6 @@
     box-sizing: border-box;
 }
 
-.currentChat {
-    height: 100%;
-}
-
 .messageInput {
     display: flex;
     justify-content: space-between;
@@ -124,4 +120,31 @@
     background-color: rgba(51, 105, 243, 1);
     border-radius: 100%;
     min-width: 20px;
+}
+
+
+.currentChat {
+    height: 100%;
+    width: 100%;
+}
+
+.chat-message {
+    width: fit-content;
+    background-color: var(--light-gray);
+    padding: 6px;
+    margin: 8px;
+    border-radius: 0.5rem;
+}
+
+.msg-user {
+    font-size: 1.15rem;
+    font-weight: bold;
+}
+
+.msg-content {
+
+}
+
+.msg-time {
+    color: var(--gray);
 }

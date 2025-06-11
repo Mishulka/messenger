@@ -12,6 +12,8 @@ export interface ISelectChatProps {
     create_chat_button?: Button;
     link_profile?: Link;
     send_button?: Button;
+    messages?: string[];
+    messageInput?: string;
     [key: string]: unknown;
 }
 
@@ -29,13 +31,18 @@ export interface Chat {
 }
 
 class SelectChatPage extends Block {
+    private socket: WebSocket | null = null;
+    private messages: string[] = [];
+
     constructor(props: ISelectChatProps) {
         super('div', {
-            ...props
+            ...props,
+            events: {
+                submit: (e: Event) => this.handleSendMessage(e)
+            }
         });
 
         Store.on(StoreEvents.Updated, () => {
-            console.log('Store updated, fetching chats from state');
             const chatsRaw = Store.getState().chats;
             const chats: Array<Chat> = Array.isArray(chatsRaw) ? chatsRaw : [];
             this.setProps({ chats });
@@ -52,6 +59,30 @@ class SelectChatPage extends Block {
             return;
         }
         ChatsController.addUserToChat(userId, chatId);
+    }
+     
+    handleSendMessage(e: Event): void {
+        e.preventDefault();
+        console.log(this.socket?.readyState === 1 ? 'WebSocket is open' : 'WebSocket is not open');
+        console.log('Отправка сообщения');
+        const form = e.target as HTMLFormElement;
+        const input = form.querySelector('.message_input') as HTMLInputElement;
+        console.log('Input value:', input.value);
+        const messageText = input.value.trim();
+        if (messageText && this.socket && this.socket.readyState === 1) {
+            console.log('Отправка сообщения:', messageText);
+            console.log(this.socket?.readyState === 1 ? 'WebSocket is open' : 'WebSocket is not open');
+            this.socket.send(JSON.stringify({
+                content: messageText,
+                type: 'message',
+            }));
+            input.value = '';
+        }
+        console.log('handleSendMessage, this.socket:', this.socket);
+        if (!this.socket || this.socket.readyState !== 1) {
+            alert('Соединение с чатом ещё не установлено. Попробуйте через секунду.');
+            return;
+        }
     }
 
     async componentDidMount(): Promise<void> {
@@ -80,47 +111,69 @@ class SelectChatPage extends Block {
             if (chatId) {
                 const chatId = Store.getState().currentChatId ||
                 chatCard.getAttribute('data-chat-id');
-
-                const token = ChatsController.getToken(Number(chatId));
-                Store.set('token', token)
                 Store.set('currentChatId', Number(chatId));
-                await WSConnect();
+
+                const token = await ChatsController.getToken(Number(chatId));
+                Store.set('token', token)
+                this.socket = await WSConnect((messages) => {
+                    console.log('Сокет инициализирован:', this.socket);
+                    if (Array.isArray(messages)) {
+                        this.messages = messages;
+                    } else {
+                        this.messages = [...(this.messages || []), messages];
+                    }
+                    this.setProps({ messages: this.messages });
+                    this.setProps({ messages: this.messages });
+
+                    this.setProps({ messages: this.messages });
+                    setTimeout(() => {
+                        const chatDiv = document.querySelector('.chat-messages');
+                        if (chatDiv) {
+                            chatDiv.scrollTop = chatDiv.scrollHeight;
+                        }
+                    }, 0); 
+                });
+                console.log('Текущий сокет:', this.socket);
             }
         }});
 
 
-        const form = document.querySelector('form');
+        // const form = document.querySelector('form');
 
-        if (form) {
-            form.addEventListener('submit', (e) => {
-                console.log('Отправка формы');
-                const form = e.target as HTMLFormElement;
-                const formData = new FormData(form);
+        // if (form) {
+        //     form.addEventListener('submit', (e) => {
+        //         e.preventDefault();
+        //         console.log('Отправка формы');
+        //         const input = form.querySelector('.message_input') as HTMLInputElement;
+        //         const messageText = input.value.trim();
 
-                const data: Record<string, string> = {};
+        //         console.log('Form data prepared: ');
+        //         if (messageText && this.socket) {
+        //             this.socket.send(JSON.stringify({
+        //                 content: messageText || '',
+        //                 type: 'message',
+        //             }))
+        //             input.value = '';
+        //         }
 
-                formData.forEach((value, key) => {
-                    data[key as string] = value.toString();
-                });
+        //         const hasError = Array.from(form.elements).some((element) => {
+        //             const input = element as HTMLInputElement;
+        //             const errorValue = input.getAttribute('data-error');
+        //             return errorValue && errorValue !== '';
+        //         });
 
-                const hasError = Array.from(form.elements).some((element) => {
-                    const input = element as HTMLInputElement;
-                    const errorValue = input.getAttribute('data-error');
-                    return errorValue && errorValue !== '';
-                });
-
-                if (!hasError) {
-                    console.log('Form data: ', data);
+        //         if (!hasError) {
+        //             console.log('Form data: ');
                     
-                    return;
-                }
-                if (hasError) {
-                    console.log('Ошибка валидации – форма не отправляется');
-                    return;
-                }
+        //             return;
+        //         }
+        //         if (hasError) {
+        //             console.log('Ошибка валидации – форма не отправляется');
+        //             return;
+        //         }
 
-            });
-        }
+        //     });
+        // }
     }
 
     render(): DocumentFragment {
@@ -176,8 +229,13 @@ export const selectChatPage = new SelectChatPage({
         events: {
             click: async (e) => {
                 e.preventDefault();
-                
-                await ChatsController.createChat('new chat')
+                const form = (e.target as HTMLElement).closest('form') as HTMLFormElement | null;
+                if (form) {
+                    selectChatPage.handleSendMessage({ 
+                        preventDefault: () => {}, 
+                        target: form 
+                    } as unknown as Event);
+                }
             }
         }
     }),

@@ -14,5 +14,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     //     } else {
     //         router.go('/login')
     //     }
-    router.go('/profile')
 })
