@@ -1,4 +1,4 @@
-type StringIndexed = Record<string, any>;
+type StringIndexed = Record<string, unknown>;
 
 function queryStringify(data: StringIndexed): string | never {
   // Проверка что входные данные - объект
@@ -8,7 +8,7 @@ function queryStringify(data: StringIndexed): string | never {
 
   const params: string[] = [];
 
-  function processObject(obj: any, prefix: string = ''): void {
+  function processObject(obj: unknown, prefix: string = ''): void {
     if (Array.isArray(obj)) {
       // Обработка массивов
       obj.forEach((value, index) => {
@@ -16,22 +16,20 @@ function queryStringify(data: StringIndexed): string | never {
         if (typeof value === 'object' && value !== null) {
           processObject(value, key);
         } else {
-          params.push(`${key}=${encodeURIComponent(value)}`);
+          params.push(`${key}=${encodeURIComponent(String(value))}`);
         }
       });
     } else if (typeof obj === 'object' && obj !== null) {
       // Обработка объектов
       Object.keys(obj).forEach((key) => {
         const newPrefix = prefix ? `${prefix}[${key}]` : key;
-        if (typeof obj[key] === 'object' && obj[key] !== null) {
-          processObject(obj[key], newPrefix);
+        const val = (obj as StringIndexed)[key];
+        if (typeof val === 'object' && val !== null) {
+          processObject(val, newPrefix);
         } else {
-          params.push(`${newPrefix}=${encodeURIComponent(obj[key])}`);
+          params.push(`${newPrefix}=${encodeURIComponent(String(val))}`);
         }
       });
-    } else {
-      // Примитивы
-      params.push(`${prefix}=${encodeURIComponent(obj)}`);
     }
   }
 

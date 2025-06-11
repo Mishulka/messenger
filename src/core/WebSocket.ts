@@ -4,7 +4,9 @@ import { User } from "./types";
 
 
 
-export async function WSConnect(onMessages: (message: string[]) => void): Promise<WebSocket | null> {
+export async function WSConnect(
+  onMessages: (message: string[]) => void
+): Promise<WebSocket | null> {
     const user = (Store.getState().user as User);
     const chatId: number  = (Store.getState().currentChatId as number);
 
@@ -12,7 +14,9 @@ export async function WSConnect(onMessages: (message: string[]) => void): Promis
 
     console.log('\n WSConnect called with user:', user, 'chatId:', chatId, 'token:', token + '\n');
     return new Promise((resolve) => {
-        const socket = new WebSocket(`wss://ya-praktikum.tech/ws/chats/${user.id}/${chatId}/${token}`);
+        const socket = new WebSocket(
+      `wss://ya-praktikum.tech/ws/chats/${user.id}/${chatId}/${token}`
+    );
 
     socket.addEventListener('open', () => {
         console.log('Соединение установлено');
@@ -35,8 +39,9 @@ export async function WSConnect(onMessages: (message: string[]) => void): Promis
     });
 
     socket.addEventListener('message', event => {
+        // eslint-disable-next-line max-len
         console.log('Получены данные', event.data);
-         try {
+        try {
             const data = JSON.parse(event.data);
             if (Array.isArray(data)) {
                 onMessages(data.reverse());

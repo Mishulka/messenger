@@ -3,22 +3,18 @@ type Indexed<T = unknown> = {
 };
 function merge(lhs: Indexed, rhs: Indexed): Indexed {
   for (const key in rhs) {
-    if (!rhs.hasOwnProperty(key)) {
+    if (!Object.prototype.hasOwnProperty.call(rhs, key)) {
       continue;
     }
-
-    try {
-      if (typeof rhs[key] === 'object' && rhs[key] !== null && 
-          typeof lhs[key] === 'object' && lhs[key] !== null) {
-        lhs[key] = merge(lhs[key] as Indexed, rhs[key] as Indexed);
-      } else {
-        lhs[key] = rhs[key];
-      }
-    } catch (e) {
+    if (
+      typeof rhs[key] === 'object' && rhs[key] !== null &&
+      typeof lhs[key] === 'object' && lhs[key] !== null
+    ) {
+      lhs[key] = merge(lhs[key] as Indexed, rhs[key] as Indexed);
+    } else {
       lhs[key] = rhs[key];
     }
   }
-
   return lhs;
 }
 

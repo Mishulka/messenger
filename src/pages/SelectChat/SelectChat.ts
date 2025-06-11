@@ -76,13 +76,23 @@ class SelectChatPage extends Block {
         const input = form.querySelector('.message_input') as HTMLInputElement;
         console.log('Input value:', input.value);
         const messageText = input.value.trim();
-        if (messageText && this.socket && this.socket.readyState === 1) {
+        if (
+            messageText &&
+            this.socket &&
+            this.socket.readyState === 1
+        ) {
             console.log('Отправка сообщения:', messageText);
-            console.log(this.socket?.readyState === 1 ? 'WebSocket is open' : 'WebSocket is not open');
-            this.socket.send(JSON.stringify({
-                content: messageText,
-                type: 'message',
-            }));
+            console.log(
+                this.socket?.readyState === 1
+                    ? 'WebSocket is open'
+                    : 'WebSocket is not open'
+            );
+            this.socket.send(
+                JSON.stringify({
+                    content: messageText,
+                    type: 'message',
+                })
+            );
             input.value = '';
         }
         console.log('handleSendMessage, this.socket:', this.socket);

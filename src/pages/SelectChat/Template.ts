@@ -43,7 +43,9 @@ const template = `
                     <div class="message_text"></div>
                     {{/if}}
                 </div>
-                <div class="chat-unread d-flex jc-center ai-center">{{unread_count}}</div>
+                <div class="chat-unread d-flex jc-center ai-center">
+                  {{unread_count}}
+                </div>
             </div>
             {{/each}}
 
@@ -70,7 +72,13 @@ const template = `
                 {{#each messages}}
                     <div class="chat-message 
                     {{#if (eq user_id ../user.id)}}my-message{{else}}other-message{{/if}}">
-                        <p class="msg-user">{{#if (eq user_id ../user.id)}}Вы{{else}}{{user_id}}{{/if}}</p>
+                        <p class="msg-user">
+                          {{#if (eq user_id ../user.id)}}
+                            Вы
+                          {{else}}
+                            {{user_id}}
+                          {{/if}}
+                        </p>
                         <div class="d-flex">
                             <p class="msg-content">{{content}}</p>
                             <p class="msg-time">{{time}}</p>

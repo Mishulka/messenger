@@ -1,4 +1,4 @@
-type PlainObject<T = any> = {
+type PlainObject<T = unknown> = {
     [k in string]: T;
 };
 
@@ -9,11 +9,11 @@ function isPlainObject(value: unknown): value is PlainObject {
         && Object.prototype.toString.call(value) === '[object Object]';
 }
 
-function isArray(value: unknown): value is [] {
+function isArray(value: unknown): value is unknown[] {
     return Array.isArray(value);
 }
 
-function isArrayOrObject(value: unknown): value is [] | PlainObject {
+function isArrayOrObject(value: unknown): value is unknown[] | PlainObject {
     return isPlainObject(value) || isArray(value);
 }
 
@@ -21,21 +21,20 @@ function isEqual(lhs: PlainObject, rhs: PlainObject) {
     if (Object.keys(lhs).length !== Object.keys(rhs).length) {
         return false;
     }
-
-    for (const [key, value] of Object.entries(lhs)) {
-        const rightValue = rhs[key];
-        if (isArrayOrObject(value) && isArrayOrObject(rightValue)) {
-            if (isEqual(value, rightValue)) {
-                continue;
-            }
-            return false;
+    for (const key in lhs) {
+        if (!Object.prototype.hasOwnProperty.call(lhs, key)) {
+            continue;
         }
-
-        if (value !== rightValue) {
+        const l = lhs[key];
+        const r = rhs[key];
+        if (isArrayOrObject(l) && isArrayOrObject(r)) {
+            if (!isEqual(l as PlainObject, r as PlainObject)) {
+                return false;
+            }
+        } else if (l !== r) {
             return false;
         }
     }
-
     return true;
 }
 
