@@ -33,19 +33,26 @@ export interface Chat {
 class SelectChatPage extends Block {
     private socket: WebSocket | null = null;
     private messages: string[] = [];
+    
 
     constructor(props: ISelectChatProps) {
         super('div', {
             ...props,
+            user: Store.getState().user,
             events: {
                 submit: (e: Event) => this.handleSendMessage(e)
             }
         });
+        console.log('user from Store:', Store.getState().user);
+        this.setProps({ user: Store.getState().user });
 
         Store.on(StoreEvents.Updated, () => {
             const chatsRaw = Store.getState().chats;
             const chats: Array<Chat> = Array.isArray(chatsRaw) ? chatsRaw : [];
-            this.setProps({ chats });
+            this.setProps({ 
+                chats,
+                user: Store.getState().user
+             });
         });
     }
 
@@ -86,6 +93,7 @@ class SelectChatPage extends Block {
     }
 
     async componentDidMount(): Promise<void> {
+        
         ChatsController.getChats().then((chats) => {
             console.log('Chats from server:', chats);
             console.log('Chats in store:', Store.getState().chats);

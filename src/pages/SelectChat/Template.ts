@@ -1,5 +1,6 @@
 import './style.pcss';
-
+import Handlebars from 'handlebars';
+Handlebars.registerHelper('eq', (a, b) => a === b);
 
 const template = `
 <div class="chats_container">
@@ -61,17 +62,21 @@ const template = `
             </div>
             {{{btn_add_user}}}
         </div>
+
         <div class="currentChat">
-            {{#each messages}}
-            <div class="chat-message">
-                <p class="msg-user">{{user_id}}</p>
-                <div class="d-flex">
-                    <p class="msg-content">{{content}}</p>
-                    <p class="msg-time">{{time}}</p>
-                </div>
+            <div class="messages-scroll">
+                {{#each messages}}
+                    <div class="chat-message {{#if (eq user_id ../user.id)}}my-message{{else}}other-message{{/if}}">
+                        <p class="msg-user">{{user_id}}</p>
+                        <div class="d-flex">
+                            <p class="msg-content">{{content}}</p>
+                            <p class="msg-time">{{time}}</p>
+                        </div>
+                    </div>
+                {{/each}}
             </div>
-            {{/each}}
         </div>
+
         <form class="messageForm" id="message-form">
             <div class="messageInput">
                <input
