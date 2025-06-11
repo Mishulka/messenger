@@ -21,27 +21,3 @@ export default  function connect(mapStateToProps: (state: Indexed) => Indexed) {
         }
     }
 }
-
-// function mapUserToProps(state) {
-//   return {
-//     name: state.user.name,
-//     avatar: state.user.avatar,
-//   };
-// }
-
-
-// сравнение старого и нового состояния
-//  const newState = mapStateToProps(state);
-    
-//     if (!isEqual(oldState, newState)) {
-//        обновляем компонент
-//     }
-
-//example of usage
-// connect(UserProfile, mapUserToProps);
-
-//каррирование функции
-//const withUser = connect(state => ({ user: state.user }));
-
-// withUser(UserProfile);
-// withUser(SettingsPage); 

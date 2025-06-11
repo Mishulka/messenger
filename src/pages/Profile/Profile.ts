@@ -32,45 +32,6 @@ class Profile extends Block {
       });
   }
 
-//   initAvatarListeners() {
-//     const avatarOverlay = document.getElementById('avatar-overlay');
-//     const avatarImg = document.getElementById('avatar-img');
-//     const avatarInput = document.getElementById('avatar-input') as HTMLInputElement;
-
-//     if (avatarOverlay && avatarImg && avatarInput) {
-//         avatarImg.addEventListener('mouseenter', () => {
-//             console.log('avatar enter')
-//             avatarOverlay.style.display = 'flex';
-//         });
-//         avatarImg.addEventListener('mouseleave', () => {
-//             avatarOverlay.style.display = 'none';
-//         });
-//     }
-//   }
-
-//   async handleAvatarChange() {
-//     const input = document.getElementById('avatar-input') as HTMLInputElement;
-//     if (input) {
-//         if (!input.files?.length) return;
-//         if (!input?.files?.length) {
-//             console.warn('No file selected');
-//             return;
-//         }
-
-//         if (input.files != null) {
-//             const file = input.files[0];
-
-//             try {
-//                 await UserController.UpdateAvatar(file);
-//                 await AuthController.getUser();
-//             } catch (err) {
-//                 console.error('Avatar upload failed', err)
-//             }
-//         }
-//     }
-
-//   }
-
   render(): DocumentFragment {
     return this.compile(template, {
         ...this.props,
@@ -138,9 +99,3 @@ export const profilePage = new Profile({
         }
   })
 });
-
-// const root = document.getElementById('app');
-// if (root) {
-//     root.innerHTML = '';  
-//     root.appendChild(avatar.getContent()); 
-// }
