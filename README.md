@@ -43,12 +43,12 @@ https://mishagro-messenger.netlify.app/
 
 ## **Тестовые данные пользователей для входа**
 
-| Логин (email)              | Пароль           | Имя      | Фамилия   | Телефон         | id    |
-|----------------------------|------------------|----------|-----------|-----------------|-------|
-| mishagrotest@test.com      | pasS100secret    | Миша     | Фамилия   | +902453454354   |       |
-| test2useermishg@test.com   | pasS100secret!   | Чел      | Челов     | 9024539543200   |       |
-| testfffgrreec@test.com     | pasS100secret    | Man      | Фамилия   | 9024534543200   | 4199  |
-| messengerotest@test.com    | 8*fghhJUgb300    | Чувак    | Обычнов   | 9245694866289   |       |
+| Логин (email)              | Пароль           | Логин (username)     | Фамилия   | Телефон         | id    |
+|----------------------------|------------------|----------------------|-----------|-----------------|-------|
+| mishagrotest@test.com      | pasS100secret    | Mishulkin            | Фамилия   | +902453454354   |       |
+| test2useermishg@test.com   | pasS100secret!   | ChatterChatov        | Челов     | 9024539543200   |       |
+| testfffgrreec@test.com     | pasS100secret    | Man                  | Фамилия   | 9024534543200   | 4199  |
+| messengerotest@test.com    | 8*fghhJUgb300    | TestoviPolzovatel    | Обычнов   | 9245694866289   |       |
 
 ---
 
