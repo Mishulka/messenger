@@ -39,7 +39,14 @@ export class ChatsAPI {
         })
     }
 
-    getToken(chatId: number) {
-        return this.http.post(`/token/${chatId}`)
+    async getToken(chatId: number): Promise<string> {
+        try {
+            const data = await this.http.post<{token: string}>(`/token/${chatId}`);
+            return data.token;
+        } catch (err) {
+            console.error('Error on getting chat token', err);
+            throw err;
+        }
+        
     }
 }

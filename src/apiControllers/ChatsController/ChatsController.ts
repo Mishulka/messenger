@@ -1,3 +1,4 @@
+import Store from "../../core/Store";
 import { ChatsAPI } from "../../api/ChatsAPI/chats-api";
 
 
@@ -10,8 +11,9 @@ class ChatsController {
 
     async getChats() {
         try {
-            const chats = await this.api.getChats();
-            return chats;
+            const res = await this.api.getChats();
+            const data = JSON.parse(res.responseText);
+            Store.set('chats', data);
         } catch (err) {
             console.error('Error on getting chats', err);
         }
@@ -27,6 +29,15 @@ class ChatsController {
         }
     }
 
+    async addUserToChat(userId: number, chatId: number) {
+        try {
+            await this.api.addUserToChat(chatId, [userId]);
+            await this.getChats();
+        } catch (err) {
+            console.error('Error on adding user to chat', err);
+        }
+    }
+
     async deleteChat(chatId: number) {
         try {
             await this.api.deleteChat(chatId);
@@ -36,9 +47,10 @@ class ChatsController {
         }
     }
 
-    async getToken(chatId: number) {
+    async getToken(chatId: number): Promise<string | undefined> {
         try {
             const token = await this.api.getToken(chatId);
+            Store.set('chatToken', token);
             return token;
         } catch (err) {
             console.error('Error on getting chat token', err);

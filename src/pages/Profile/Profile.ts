@@ -132,6 +132,7 @@ export const profilePage = new Profile({
         events: {
             click: (e: Event) => {
                 e.preventDefault();
+                router.go('/login');
                 AuthController.logout();
             }
         }
