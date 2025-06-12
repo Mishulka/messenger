@@ -13,7 +13,7 @@ class EventBus {
 
     emit(event: string, ...args: unknown[]) {
         if (!this.listeners[event]) {
-            throw new Error(`Event don't exist: ${event}`);
+            return;
         }
 
         this.listeners[event].forEach(listener => {
