@@ -25,3 +25,4 @@ router
   .use('/new-avatar', protectRoute(Pages.newAvatarPage))
   .use('/404', Pages.notFoundPage)
   .use('/505', Pages.serverErrorPage);
+
