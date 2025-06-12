@@ -14,4 +14,4 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
     router.start();
-})();
+});

@@ -4,20 +4,11 @@ import Store from "./core/Store";
 import Block from "./core/block";
 
 
-// const protectedRoutes = [
-//   '/messenger',
-//   '/settings',
-//   '/edit-profile',
-//   '/edit-password',
-//   '/new-avatar'
-// ];
-
 function protectRoute(page: Block | null) {
   return () => {
     const user = Store.getState().user;
     if (!user) {
       router.go('/');
-      // Возвращаем пустой блок-заглушку, чтобы не было ошибки
       return new Block('div', { class: 'empty-protected' });
     }
     return page;

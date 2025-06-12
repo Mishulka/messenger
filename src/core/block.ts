@@ -94,12 +94,6 @@ class Block {
         this._eventBus().emit(Block.EVENTS.FLOW_CDM);
     }
 
-  // private _componentDidUpdate(oldProps: TProps, newProps: TProps): void {
-  //   if (this.componentDidUpdate(oldProps, newProps)) {
-  //     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
-  //   }
-  // }
-
   componentDidUpdate(oldProps: TProps, newProps: TProps): boolean {
     return JSON.stringify(oldProps) !== JSON.stringify(newProps);
   }
@@ -108,8 +102,6 @@ class Block {
     if (!nextProps) {
       return;
     }
-
-    //const oldProps = { ...this.props };
 
     Object.assign(this.props, nextProps);
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
@@ -198,7 +190,6 @@ class Block {
     if (typeof tagName !== "string") {
       throw new Error(`Invalid tagName: ${tagName}`);
     }
-    // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
     return document.createElement(tagName);
   }
 
@@ -230,7 +221,7 @@ class Block {
   } else {
       throw new Error("Content is not initialized");
   }
-}
+  }
 }
 
 export default Block;

@@ -1,4 +1,3 @@
-// AvatarInput.ts
 import Block from '../../core/block';
 import { compile } from 'handlebars';
 import { template } from './avatar';
@@ -32,7 +31,6 @@ export default class AvatarInput extends Block {
             console.error('Ошибка при обновлении аватара:', err);
             alert('Ошибка при обновлении аватара');
         } finally {
-            // Сброс значения input для возможности повторной загрузки того же файла
             input.value = '';
         }
     }

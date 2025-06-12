@@ -2,7 +2,6 @@ type Indexed<T = unknown> = {
   [k in string | symbol]: T;
 };
 
-// eslint-disable-next-line max-len
 function cloneDeep<T extends Indexed>(obj: T): T | Date | Set<unknown> | Map<unknown, unknown> | object | T[] {
   return (function _cloneDeep(item: unknown): unknown {
     if (item === null || typeof item !== "object") {

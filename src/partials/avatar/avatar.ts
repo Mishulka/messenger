@@ -1,4 +1,3 @@
-// src/partials/avatar/avatar.ts
 import './style.pcss';
 
 export const template = `

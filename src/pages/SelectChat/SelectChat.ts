@@ -74,7 +74,6 @@ class SelectChatPage extends Block {
         const input = form.querySelector('.message_input') as HTMLInputElement;
         const messageText = input.value.trim();
         if (!messageText) {
-            // Не отправлять пустое сообщение
             alert('Нельзя отправить пустое сообщение!');
             return;
         }

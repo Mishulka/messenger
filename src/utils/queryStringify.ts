@@ -1,7 +1,6 @@
 type StringIndexed = Record<string, unknown>;
 
 function queryStringify(data: StringIndexed): string | never {
-  // Проверка что входные данные - объект
   if (typeof data !== 'object' || data === null) {
     throw new Error('input must be an object');
   }
@@ -10,7 +9,6 @@ function queryStringify(data: StringIndexed): string | never {
 
   function processObject(obj: unknown, prefix: string = ''): void {
     if (Array.isArray(obj)) {
-      // Обработка массивов
       obj.forEach((value, index) => {
         const key = `${prefix}[${index}]`;
         if (typeof value === 'object' && value !== null) {
@@ -20,7 +18,6 @@ function queryStringify(data: StringIndexed): string | never {
         }
       });
     } else if (typeof obj === 'object' && obj !== null) {
-      // Обработка объектов
       Object.keys(obj).forEach((key) => {
         const newPrefix = prefix ? `${prefix}[${key}]` : key;
         const val = (obj as StringIndexed)[key];
