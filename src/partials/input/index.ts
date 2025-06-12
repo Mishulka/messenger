@@ -18,11 +18,6 @@ export default class Input extends Block {
         events?: Record<string, EventListenerOrEventListenerObject>;
     }) {
         super("div", props);
-        // if (props.name === 'login') {
-        // (window as any).loginField = this;
-        // } else if (props.name === 'password') {
-        //     (window as any).passwordField = this;
-        // }
     }
 
      focusoutHandler = (event: FocusEvent) => {

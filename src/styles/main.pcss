@@ -1,11 +1,13 @@
 :root {
   --main: #3369F3;
   --main-hover: #0056b3;
+  --light-blue: rgb(169 194 255 / 100%);
   --light-gray: #EFEFEF;
+  --gray: rgb(153 153 153 / 100%);
 }
 
 body, h1, h2, h3, h4, h5, h6, p, ul, ol, li {
-  margin: 0 !important;
+  margin: 0;
   padding: 0;
 }
 
@@ -14,15 +16,15 @@ ul, ol {
 }
 
 html {
-  font-size: 16px; 
-  font-family: Inter, Arial, sans-serif; 
+  font-size: 16px;
+  font-family: Inter, Arial, sans-serif;
   scroll-behavior: smooth;
 }
 
 body {
-  min-height: 100vh; 
-  text-rendering: optimizespeed; 
-  line-height: 1.5; 
+  min-height: 100vh;
+  text-rendering: optimizespeed;
+  line-height: 1.5;
   margin: 0;
   padding: 0;
   overflow-x: hidden;
@@ -113,8 +115,43 @@ input {
   padding: 20px;
 }
 
-.send_chat_button {
-  width: 100px !important;
-  height: 28px !important;
-  background-color: var(--main);
+.d-flex {
+  display: flex;
 }
+
+.m-1 { margin: 0.25rem; }
+.m-2 { margin: 0.5rem; }
+.m-3 { margin: 1rem; }
+.m-4 { margin: 1.5rem; }
+.m-5 { margin: 3rem; }
+
+.p-1 { padding: 0.25rem; }
+.p-2 { padding: 0.5rem; }
+.p-3 { padding: 1rem; }
+.p-4 { padding: 1.5rem; }
+.p-5 { padding: 3rem; }
+
+.jc-start { justify-content: flex-start; }
+.jc-end { justify-content: flex-end; }
+.jc-center { justify-content: center; }
+.jc-between { justify-content: space-between; }
+.jc-around { justify-content: space-around; }
+.jc-evenly { justify-content: space-evenly; }
+
+.ai-start { align-items: flex-start; }
+.ai-end { align-items: flex-end; }
+.ai-center { align-items: center; }
+.ai-baseline { align-items: baseline; }
+.ai-stretch { align-items: stretch; }
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.fw-nowrap { flex-wrap: nowrap; }
+.fw-wrap { flex-wrap: wrap; }
+.fw-wrap-reverse { flex-wrap: wrap-reverse; }
+

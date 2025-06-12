@@ -1,6 +1,7 @@
 import Block from '../../core/block';
 import template from './Template';
 import Button from '../../partials/button/index';
+import router from '../../core/Router';
 
 interface INotFoundProps {
   backButton: Button;
@@ -22,8 +23,9 @@ export const notFoundPage = new NotFound({
     text: 'Go back',
     type: 'button',
     events: {
-      click: () => {
-        console.log('Navigating back');
+      click: (e: Event) => {
+        e.preventDefault();
+        router.back();
       }
     }
   })

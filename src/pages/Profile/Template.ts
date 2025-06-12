@@ -3,60 +3,54 @@ import './style.pcss';
 const template = `
 <div class="profile_container">
     <h1>Your Profile</h1>
-    <img src="{{user.userAvatar}}" alt="Фото профиля"/>
 
-    <div class="div_field">
-    <label class="label" for="email">Почта</label>
-    <input class="field"
-            id="email" 
-            name="email" 
-            type="text" 
-            placeholder="ivanivanov@mail.com" />
+    <div class="profile-container">
+      <div class="avatar-container">
+        {{#if user.avatarUrl}}
+        <img 
+        src="https://ya-praktikum.tech/api/v2/resources{{user.avatarUrl}}" 
+        alt="Аватар" 
+        id="avatar-img"
+        class="avatar"/>
+        {{else}}
+        <div class="avatar" id="avatar-img">No Avatar</div>
+      {{/if}}
+      {{{avatar}}}
+    </div>
+    
+  <div>{{user.display_name}}</div>
+      
+  <div class="profile-field">
+    <span class="field-label">Почта</span>
+    <span class="field-value">{{user.email}}</span>
+  </div>
+
+  <div class="profile-field">
+    <span class="field-label">Логин</span>
+    <span class="field-value">{{user.login}}</span>
+  </div>
+
+  <div class="profile-field">
+    <span class="field-label">Имя</span>
+    <span class="field-value">{{user.first_name}}</span>
+  </div>
+
+  <div class="profile-field">
+    <span class="field-label">Фамилия</span>
+    <span class="field-value">{{user.second_name}}</span>
+  </div>
+
+  <div class="profile-field">
+        <span class="field-label">Имя в чате</span>
+        <span class="field-value">{{user.display_name}}</span>
+  </div>
+
+    <div class="profile-field">
+        <span class="field-label">Телефон</span>
+        <span class="field-value">{{user.phone}}</span>
     </div>
 
-    <div class="div_field">
-    <label class="label" for="login">Логин</label>
-    <input class="field"
-            id="login" 
-            name="login" 
-            type="text" 
-            placeholder="ivan" />
-    </div>
-
-    <div class="div_field">
-    <label class="label" for="first_name">Имя</label>
-    <input class="field"
-            id="first_name" 
-            name="first_name" 
-            type="text" 
-            placeholder="Иван" />
-    </div>
-
-    <div class="div_field">
-    <label class="label" for="second_name">Фамилия</label>
-    <input class="field"
-            id="second_name" 
-            name="second_name" 
-            type="text" 
-            placeholder="Иванов" />
-    </div>
-
-    <div class="div_field">
-    <label class="label" for="chat_name">Имя в чате</label>
-    <input class="field"
-            id="chat_name" 
-            name="chat_name" 
-            type="text" 
-            placeholder="Ванек" />
-    </div>
-
-    <div class="div_field">
-    <label class="label" for="phone">Телефон</label>
-    <input class="field"
-            id="phone" 
-            name="phone" 
-            type="text" 
-            placeholder="+7(900)900-90-90" />
+    {{{link_to_chats}}}
     </div>
 <div class="profile_container">
     {{{link_edit_profile}}}

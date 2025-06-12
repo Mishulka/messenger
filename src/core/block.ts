@@ -19,6 +19,7 @@ class Block {
   eventBus: () => EventBus;
   private _eventBus: () => EventBus;
   public children: Record<string, Block> = {};
+  private _didMount: boolean = false;
 
   constructor(tagName = "div", propsAndChild: TProps = {}) {
     const { children, props } = this._getChildren(propsAndChild);
@@ -70,9 +71,14 @@ class Block {
   init() {
     this._createResources();
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+    this.dispatchComponentDidMount();
   }
 
   _componentDidMount(): void {
+    if (this._didMount) {
+      return;
+    }
+    this._didMount = true;
     this.componentDidMount();
 
     Object.values(this.children).forEach(child => {
@@ -80,19 +86,13 @@ class Block {
     })  
   }
 
-  componentDidMount() {
-
+  componentDidMount(): void {
+    return;
   }
 
     dispatchComponentDidMount() {
         this._eventBus().emit(Block.EVENTS.FLOW_CDM);
     }
-
-  // private _componentDidUpdate(oldProps: TProps, newProps: TProps): void {
-  //   if (this.componentDidUpdate(oldProps, newProps)) {
-  //     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
-  //   }
-  // }
 
   componentDidUpdate(oldProps: TProps, newProps: TProps): boolean {
     return JSON.stringify(oldProps) !== JSON.stringify(newProps);
@@ -102,8 +102,6 @@ class Block {
     if (!nextProps) {
       return;
     }
-
-    //const oldProps = { ...this.props };
 
     Object.assign(this.props, nextProps);
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
@@ -121,6 +119,7 @@ class Block {
     if (this._element){
       this._element.innerHTML = '';
       this._element.appendChild(block);
+      //this.dispatchComponentDidMount();
     }
 
     this._addEvents();
@@ -191,7 +190,6 @@ class Block {
     if (typeof tagName !== "string") {
       throw new Error(`Invalid tagName: ${tagName}`);
     }
-    // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
     return document.createElement(tagName);
   }
 
@@ -223,7 +221,7 @@ class Block {
   } else {
       throw new Error("Content is not initialized");
   }
-}
+  }
 }
 
 export default Block;
