@@ -8,6 +8,5 @@ export const template = `
     class="link_to_page {{#if exit}}exit{{/if}}" 
     href="{{href}}"
     onClick="{{Event}}"
-    data-page="{{data_page}}"
 >{{text}}</a>`;
 

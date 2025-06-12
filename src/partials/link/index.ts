@@ -10,7 +10,7 @@ export default class Link extends Block {
         data_page?: string,
         type?: string, 
         Event?: string,
-        events?: Record<string, () => void> 
+        events?: Record<string, (e: Event) => void> 
     }) {
         super("div", props)
     }

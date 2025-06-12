@@ -7,7 +7,8 @@ export default class Button extends Block {
         classname?: string; 
         text: string, 
         type: string, 
-        events?: Record<string, () => void> 
+        icon?: string,
+        events?: Record<string, (e: Event) => void> 
     }) {
         super("div", props)
     }
