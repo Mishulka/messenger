@@ -4,6 +4,8 @@ import Button from '../../partials/button/index';
 import router from '../../core/Router';
 import AuthAPI from '../../api/AuthAPI/auth-api';
 import UserController from '../../apiControllers/UserController/UserController';
+import Validate from '../../utils/validate';
+import Link from '../../partials/link/index';
 
 interface IEditProfileProps {
   user: {
@@ -16,6 +18,7 @@ interface IEditProfileProps {
     phone: string;
   };
   button_save: Button;
+  link_back: Link;
 }
 
 class EditProfile extends Block {
@@ -62,17 +65,40 @@ export const editProfilePage = new EditProfile({
     events: {
       click: async (e: Event) => {
         e.preventDefault();
-
-        const form = (e.target as HTMLElement).closest('form') as HTMLFormElement | undefined
-        const formData = new FormData(form)
+        const form = (e.target as HTMLElement).closest('form') as HTMLFormElement | undefined;
+        if (!form) return;
+        let isValid = true;
         const data: Record<string, string> = {};
-        formData.forEach((value, key) => {
-          data[key] = value.toString();
+        Array.from(form.elements).forEach((element) => {
+          const input = element as HTMLInputElement;
+          if (input.tagName !== 'INPUT') return;
+          const rule = input.name;
+          const error = Validate(input.value, rule);
+          if (error) {
+            input.setAttribute('data-error', error);
+            isValid = false;
+          } else {
+            input.removeAttribute('data-error');
+          }
+          data[input.name] = input.value.trim();
         });
-        console.log('updating', formData)
-
-        await UserController.updateProfile(data)
-        router.go('/profile');
+        if (!isValid) {
+          alert('Проверьте правильность заполнения полей!');
+          return;
+        }
+        await UserController.updateProfile(data);
+        router.go('/settings');
+      }
+    }
+  }),
+  link_back: new Link({
+    text: 'Назад',
+    href: '/settings',
+    type: 'button',
+    events: {
+      click: (e: Event) => {
+        e.preventDefault();
+        router.go('/settings');
       }
     }
   })

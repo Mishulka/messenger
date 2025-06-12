@@ -47,6 +47,7 @@ const template = `
             {{{button_save}}}
         </div>
     </form>
+    {{{link_back}}}
 </div>
 `
 

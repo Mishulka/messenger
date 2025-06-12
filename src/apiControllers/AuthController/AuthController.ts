@@ -13,46 +13,55 @@ class AuthController {
 
     async signup(data: SignupRequest): Promise<void> {
         try {
-            const user = await this.api.signup(data);
-            await this.getUser();
-            Store.set('user', user);
-            router.go('/select-chat');
+            await this.api.signup(data);
+            const user = await this.getUser();
+            if (user) {
+                Store.set('user', user);
+                localStorage.setItem('user', JSON.stringify(user));
+                router.go('/messenger');
+            }
         } catch (error) {
             const errMessage = await this.handleError(error);
             Store.set('auth.error', errMessage);
         }
     }
     async signin(data: LoginRequest): Promise<void> {
-    try {
-        await this.api.signin(data);
-        const user = await this.getUser();
-        Store.set('user', user);
-        localStorage.setItem('user', JSON.stringify(user));
-        router.go('/select-chat');
-    } catch (error) {
-        console.error('❌ caught error in signin:', error);
-        Store.set('auth.error', await this.handleError(error));
+        try {
+            await this.api.signin(data);
+            const user = await this.getUser();
+            if (user) {
+                Store.set('user', user);
+                localStorage.setItem('user', JSON.stringify(user));
+                router.go('/messenger');
+            }
+        } catch (error) {
+            console.error('❌ caught error in signin:', error);
+            Store.set('auth.error', await this.handleError(error));
+        }
     }
-}
     async logout() {
         try {
             await this.api.logout();
             Store.clearAll();
-            router.go('/login');
+            localStorage.removeItem('user');
+            router.go('/');
         } catch (error) {
             Store.set('auth.error', await this.handleError(error));
         }
     }
-    async getUser(): Promise<User | void> {
+    async getUser(): Promise<User | undefined> {
         try {
-            const res = await this.api.getUser();
-            const user = res;
-            Store.set('user', user);
-            router.go('/select-chat')
-            return;
+            const user = await this.api.getUser();
+            if (user) {
+                Store.set('user', user);
+                localStorage.setItem('user', JSON.stringify(user));
+                return user;
+            }
+            return undefined;
         } catch (error) {
             const errMessage = await this.handleError(error);
             Store.set('auth.error', errMessage);
+            return undefined;
         }
     }
 

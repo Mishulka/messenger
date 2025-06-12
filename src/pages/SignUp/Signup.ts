@@ -2,7 +2,6 @@ import Block from '../../core/block';
 import template from './Template';
 import Button from '../../partials/button/index';
 import Link from '../../partials/link/index';
-// import { loginPage } from '../Login/Login';
 import router from '../../core/Router';
 // import Store, { StoreEvents } from '../../core/Store';
 import AuthController from '../../apiControllers/AuthController/AuthController';
@@ -106,7 +105,7 @@ export const signUpPage = new SignUp({
   }),
   link_login: new Link({
           text: 'Login',
-          href: '/login',
+          href: '/',
           data_page: 'Login',
           type: 'button',
           events: {

@@ -3,6 +3,8 @@ import template from './Template';
 import Button from '../../partials/button/index';
 import router from '../../core/Router';
 import UserController from '../../apiControllers/UserController/UserController';
+import Validate from '../../utils/validate';
+import Link from '../../partials/link/index';
 
 interface IEditPasswordProps {
   [key: string]: unknown;
@@ -35,39 +37,42 @@ export const editPasswordPage = new EditPassword({
     events: {
       click: async (e: Event) => {
         e.preventDefault();
-        const button = e.target as HTMLButtonElement; 
+        const button = e.target as HTMLButtonElement;
         const form = button.closest('form') as HTMLFormElement;
         let isValid = true;
-
-        const data: Record<string, string> = {}
-
+        const data: Record<string, string> = {};
         Array.from(form.elements).forEach((element) => {
-            const input = element as HTMLInputElement;
-            if (input.tagName !== 'INPUT') return;
-
-            if (!input.value.trim()) {
-                input.setAttribute('data-error', 'Поле не может быть пустым');
-                isValid = false;
-            }
-            data[input.name] = input.value.trim();
+          const input = element as HTMLInputElement;
+          if (input.tagName !== 'INPUT') return;
+          const rule = input.name === 'repeat_password' ? 'new_password' : input.name;
+          const error = Validate(input.value, rule);
+          if (error) {
+            input.setAttribute('data-error', error);
+            isValid = false;
+          } else {
+            input.removeAttribute('data-error');
+          }
+          data[input.name] = input.value.trim();
         });
-
         if (!isValid) {
-            alert('Ошибка')
-            router.go('/profile');
-            return;
+          alert('Проверьте правильность заполнения полей!');
+          return;
         }
-
-        try {
-            await UserController.updatePassword(data);
-            router.go('/profile')
-        } catch (error) {
-            console.error('Login failed:', error);
-        }
-        router.go('/profile');
+        await UserController.updatePassword(data);
+        router.go('/settings');
       }
     }
-
+  }),
+  link_back: new Link({
+    text: 'Назад',
+    href: '/settings',
+    type: 'button',
+    events: {
+      click: (e: Event) => {
+        e.preventDefault();
+        router.go('/settings');
+      }
+    }
   })
 });
 

@@ -21,8 +21,27 @@ class Router {
         Router.__instance = this;
     }
 
-    use(pathname: string, block: Block): this {
-        const route = new Route(pathname, () => block, {rootQuery: this._rootQuery});
+    use(pathname: string, block: Block | (() => Block | null)): this {
+        const blockFactory = typeof block === 'function'
+            ? () => {
+                const result = (block as () => Block | null)();
+                if (result === null) {
+                    throw new Error('Block factory returned null');
+                }
+                return result;
+            }
+            : () => {
+                if (block === null) {
+                    throw new Error('Block is null');
+                }
+                return block;
+            };
+
+        const route = new Route(
+            pathname,
+            blockFactory,
+            { rootQuery: this._rootQuery }
+        );
         this.routes.push(route);
         return this;
     }

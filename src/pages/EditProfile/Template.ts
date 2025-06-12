@@ -12,7 +12,9 @@ const template = `
                  name="email" 
                  type="text" 
                  placeholder="ivanivanov@mail.com" 
-                 value="{{user.email}}" 
+                 value="{{user.email}}"
+                 data-error="{{emailError}}"
+                 onblur="handleInputBlur(event)"
           />
           <p id="email-error" class="field_err"></p>
         </div>
@@ -24,6 +26,8 @@ const template = `
                  type="text" 
                  placeholder="ivan" 
                  value="{{user.first_name}}"
+                 data-error="{{first_nameError}}"
+                 onblur="handleInputBlur(event)"
           />
           <p id="first_name-error" class="field_err"></p>
         </div>
@@ -35,6 +39,8 @@ const template = `
                  type="text" 
                  placeholder="Иван" 
                  value="{{user.login}}"
+                 data-error="{{loginError}}"
+                 onblur="handleInputBlur(event)"
           />
           <p id="login-error" class="field_err"></p>
         </div>
@@ -46,6 +52,8 @@ const template = `
                  type="text" 
                  placeholder="Иванов" 
                  value="{{user.second_name}}"
+                 data-error="{{second_nameError}}"
+                 onblur="handleInputBlur(event)"
           />
           <p id="second_name-error" class="field_err"></p>
         </div>
@@ -57,6 +65,8 @@ const template = `
                  type="text" 
                  placeholder="Ванек" 
                  value="{{user.display_name}}"
+                 data-error="{{display_nameError}}"
+                 onblur="handleInputBlur(event)"
           />
           <p id="display_name-error" class="field_err"></p>
         </div>
@@ -66,14 +76,15 @@ const template = `
                  id="phone" 
                  name="phone" 
                  type="text" 
-                 placeholder="+7(900)900-90-90" 
+                 placeholder="+79999999999" 
                  value="{{user.phone}}"
+                 data-error="{{phoneError}}"
+                 onblur="handleInputBlur(event)"
           />
           <p id="phone-error" class="field_err"></p>
         </div>
-        <div class="profile_container">
-            {{{button_save}}}
-        </div>
+        {{{button_save}}}
+        {{{link_back}}}
     </form>
 </div>
 `

@@ -1,13 +1,36 @@
 import router from "./core/Router";
 import * as Pages from "./pages";
+import Store from "./core/Store";
+import Block from "./core/block";
+
+
+// const protectedRoutes = [
+//   '/messenger',
+//   '/settings',
+//   '/edit-profile',
+//   '/edit-password',
+//   '/new-avatar'
+// ];
+
+function protectRoute(page: Block | null) {
+  return () => {
+    const user = Store.getState().user;
+    if (!user) {
+      router.go('/');
+      // Возвращаем пустой блок-заглушку, чтобы не было ошибки
+      return new Block('div', { class: 'empty-protected' });
+    }
+    return page;
+  };
+}
 
 router
-  .use('/login', Pages.loginPage)
+  .use('/', Pages.loginPage)
   .use('/signup', Pages.signUpPage)
-  .use('/select-chat', Pages.selectChatPage)
-  .use('/profile', Pages.profilePage)
-  .use('/edit-profile', Pages.editProfilePage)
-  .use('/edit-password', Pages.editPasswordPage)
-  .use('/new-avatar', Pages.newAvatarPage)
+  .use('/messenger', protectRoute(Pages.selectChatPage))
+  .use('/settings', protectRoute(Pages.profilePage))
+  .use('/edit-profile', protectRoute(Pages.editProfilePage))
+  .use('/edit-password', protectRoute(Pages.editPasswordPage))
+  .use('/new-avatar', protectRoute(Pages.newAvatarPage))
   .use('/404', Pages.notFoundPage)
   .use('/505', Pages.serverErrorPage);

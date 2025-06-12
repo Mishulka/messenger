@@ -57,7 +57,7 @@ export const profilePage = new Profile({
         events: {
             click: (e: Event) => {
                 e?.preventDefault();
-                router.go('/select-chat')
+                router.go('/messenger')
             }
         }
     }),
@@ -87,13 +87,13 @@ export const profilePage = new Profile({
     }),
     link_logout: new Link({
         text: 'Logout',
-        href: '/login',
+        href: '/',
         data_page: 'Login',
         type: 'button',
         events: {
             click: (e: Event) => {
                 e.preventDefault();
-                router.go('/login');
+                router.go('/');
                 AuthController.logout();
             }
         }

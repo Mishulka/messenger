@@ -70,23 +70,21 @@ class SelectChatPage extends Block {
      
     handleSendMessage(e: Event): void {
         e.preventDefault();
-        console.log(this.socket?.readyState === 1 ? 'WebSocket is open' : 'WebSocket is not open');
-        console.log('Отправка сообщения');
         const form = e.target as HTMLFormElement;
         const input = form.querySelector('.message_input') as HTMLInputElement;
-        console.log('Input value:', input.value);
         const messageText = input.value.trim();
+        if (!messageText) {
+            // Не отправлять пустое сообщение
+            alert('Нельзя отправить пустое сообщение!');
+            return;
+        }
+        console.log(this.socket?.readyState === 1 ? 'WebSocket is open' : 'WebSocket is not open');
+        console.log('Отправка сообщения');
         if (
-            messageText &&
             this.socket &&
             this.socket.readyState === 1
         ) {
             console.log('Отправка сообщения:', messageText);
-            console.log(
-                this.socket?.readyState === 1
-                    ? 'WebSocket is open'
-                    : 'WebSocket is not open'
-            );
             this.socket.send(
                 JSON.stringify({
                     content: messageText,
@@ -95,7 +93,6 @@ class SelectChatPage extends Block {
             );
             input.value = '';
         }
-        console.log('handleSendMessage, this.socket:', this.socket);
         if (!this.socket || this.socket.readyState !== 1) {
             alert('Соединение с чатом ещё не установлено. Попробуйте через секунду.');
             return;
@@ -189,13 +186,13 @@ export const selectChatPage = new SelectChatPage({
     }),
     link_profile: new Link({
         text: 'Profile',
-        href: '/profile',
+        href: '/settings',
         data_page: 'Profile',
         type: 'button',
         events: {
             click: (e: Event) => {
                 e.preventDefault();
-                router.go('/profile');
+                router.go('/settings');
             }
         }
     }),
