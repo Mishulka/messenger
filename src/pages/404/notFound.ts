@@ -1,7 +1,7 @@
-import Block from '../../core/block';
+import Block from '../../core/Block/block';
 import template from './Template';
 import Button from '../../partials/button/index';
-import router from '../../core/Router';
+import router from '../../core/Router/Router';
 
 interface INotFoundProps {
   backButton: Button;
