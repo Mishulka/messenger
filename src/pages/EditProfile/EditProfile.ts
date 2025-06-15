@@ -1,7 +1,7 @@
-import Block, { TProps } from '../../core/block';
+import Block, { TProps } from '../../core/Block/block';
 import template from './Template';
 import Button from '../../partials/button/index';
-import router from '../../core/Router';
+import router from '../../core/Router/Router';
 import AuthAPI from '../../api/AuthAPI/auth-api';
 import UserController from '../../apiControllers/UserController/UserController';
 import Validate from '../../utils/validate';

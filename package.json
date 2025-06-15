@@ -3,8 +3,14 @@
   "version": "1.0.0",
   "description": "### Откройте pull request в ветку main из ветки, где вы разрабатывали проект, и добавьте ссылку на этот pr в README.md в ветке main.  ### ВАЖНО: pull request должен называться “Sprint i” (i — номер спринта).",
   "main": "index.js",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm-run-all test lint:all",
+      "pre-push": "npm run other command"
+    }
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "dev": "vite",
     "build": "vite build",
     "start": "vite build && node server.cjs",
@@ -17,6 +23,7 @@
   },
   "devDependencies": {
     "@types/handlebars": "^4.1.0",
+    "@types/jest": "^29.5.14",
     "@types/node": "^22.14.0",
     "@typescript-eslint/eslint-plugin": "^8.32.0",
     "@typescript-eslint/parser": "^8.32.0",
@@ -26,12 +33,16 @@
     "eslint": "^8.57.1",
     "eslint-config-airbnb": "^19.0.4",
     "handlebars-loader": "^1.7.3",
+    "husky": "^9.1.7",
+    "jest": "^30.0.0",
+    "jest-environment-jsdom": "^30.0.0",
     "postcss": "^8.5.2",
     "postcss-cli": "^11.0.0",
     "postcss-preset-env": "^10.1.4",
     "stylelint": "^16.18.0",
     "stylelint-config-standard": "^38.0.0",
     "stylelint-config-standard-scss": "^14.0.0",
+    "ts-jest": "^29.4.0",
     "typescript": "^5.8.3",
     "vite": "^6.1.0",
     "vite-plugin-handlebars": "^1.0.0"

@@ -1,8 +1,8 @@
-import Block from '../../core/block';
+import Block from '../../core/Block/block';
 import template from './Template';
 import Button from '../../partials/button/index';
 import Link from '../../partials/link/index';
-import router from '../../core/Router';
+import router from '../../core/Router/Router';
 import AuthController from '../../apiControllers/AuthController/AuthController';
 
 export interface IPageProps {
