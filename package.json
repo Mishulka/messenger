@@ -5,7 +5,7 @@
   "main": "index.js",
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint && npm test",
+      "pre-commit": "npm-run-all test lint:all",
       "pre-push": "npm run other command"
     }
   },
@@ -19,7 +19,9 @@
     "lint:css-fix": "stylelint \"**/*.pcss\" --fix",
     "lint:ts": "eslint \"**/*.ts\"",
     "lint:ts-fix": "eslint \"**/*.ts\" --fix",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "prepare": "husky",
+    "lint": "npm run lint:ts && npm run lint:css && npm run type-check"
   },
   "devDependencies": {
     "@types/handlebars": "^4.1.0",
