@@ -1,5 +1,5 @@
 import { User } from 'core/types';
-import { Http } from '../../core/Http';
+import { Http } from '../../core/Http/Http';
 import type { 
     SignupRequest, 
     SignupResponse,

@@ -1,5 +1,5 @@
 import AuthController from './apiControllers/AuthController/AuthController';
-import router from './core/Router';
+import router from './core/Router/Router';
 
 (async () => {
   const user = await AuthController.getUser();

@@ -1,7 +1,7 @@
-import router from "./core/Router";
+import router from "./core/Router/Router";
 import * as Pages from "./pages";
 import Store from "./core/Store";
-import Block from "./core/block";
+import Block from "./core/Block/block";
 
 
 function protectRoute(page: Block | null) {

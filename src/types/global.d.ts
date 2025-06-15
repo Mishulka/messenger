@@ -1,4 +1,4 @@
-import { Http } from '../core/Http';
+import { Http } from '../core/Http/Http';
 
 declare global {
   namespace NodeJS {

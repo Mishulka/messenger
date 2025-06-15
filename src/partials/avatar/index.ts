@@ -1,4 +1,4 @@
-import Block from '../../core/block';
+import Block from '../../core/Block/block';
 import { compile } from 'handlebars';
 import { template } from './avatar';
 import Store from '../../core/Store';

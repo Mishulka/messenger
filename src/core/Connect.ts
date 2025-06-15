@@ -1,4 +1,4 @@
-import Block, { TProps } from "./block";
+import Block, { TProps } from "./Block/block";
 import Indexed from "./types";
 import store, { StoreEvents } from "./Store";
 import isEqual from "../utils/isEqual";

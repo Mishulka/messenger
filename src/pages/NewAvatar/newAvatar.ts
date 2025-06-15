@@ -1,5 +1,5 @@
 import template from './Template';
-import Block from '../../core/block';
+import Block from '../../core/Block/block';
 
 
 

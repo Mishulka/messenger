@@ -13,7 +13,7 @@ type Options = {
 };
 
 type OptionsWithoutMethod = Omit<Options, 'method'>;
-
+ 
 class Http {
   private readonly host = 'https://ya-praktikum.tech/api/v2';
   private baseUrl: string;

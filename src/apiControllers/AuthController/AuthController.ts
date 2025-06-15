@@ -1,6 +1,6 @@
 import { AuthAPI } from "../../api/AuthAPI/auth-api";
 import Store from "../../core/Store";
-import router from "../../core/Router";
+import router from "../../core/Router/Router";
 import type { SignupRequest, LoginRequest } from "../../api/AuthAPI/types";
 import { User } from "core/types";
 

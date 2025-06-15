@@ -1,5 +1,5 @@
 import { compile,} from 'handlebars';
-import Block from '../../core/block';
+import Block from '../../core/Block/block';
 import { template } from './Input';
 import Validate from '../../utils/validate';
 

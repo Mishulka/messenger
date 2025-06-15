@@ -1,4 +1,4 @@
-import Block from '../../core/block';
+import Block from '../../core/Block/block';
 import template from './Template';
 import Button from '../../partials/button/index';
 
