@@ -2,7 +2,7 @@ import AuthController from './apiControllers/AuthController/AuthController';
 import router from './core/Router/Router';
 import './routes.ts';
 
-document.addEventListener('DOMContentLoaded', async () => {
+//document.addEventListener('DOMContentLoaded', async () => {
     const user = await AuthController.getUser();
     if (user) {
         if (window.location.pathname === '/' || window.location.pathname === '/login') {
