@@ -1,5 +1,5 @@
 import AuthController from './apiControllers/AuthController/AuthController';
-import router from './core/Router.js';
+import router from './core/Router/Router';
 import './routes.ts';
 
 document.addEventListener('DOMContentLoaded', async () => {

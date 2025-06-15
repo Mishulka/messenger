@@ -1,5 +1,5 @@
 import { compile as HBcompile } from "handlebars";
-import EventBus from "./EventBus"
+import EventBus from "../EventBus"
 
 export type TProps = Record<string, unknown> & {
   events?: Record<string, EventListenerOrEventListenerObject>;
