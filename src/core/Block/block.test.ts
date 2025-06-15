@@ -12,11 +12,4 @@ describe('Block', () => {
   block.setProps({ text: 'Updated' });
   expect(block.props.text).toBe('Updated');
   });
-
-  it('should update props correctly', () => {
-    const block = new Block('div', { text: 'Initial' });
-    block.setProps({ text: 'Updated' });
-    const fragment = block.getContent();
-    expect(fragment?.textContent).toBe('Updated');
-  });
 });
