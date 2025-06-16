@@ -1,8 +1,8 @@
-import Block from '../../core/block';
+import Block from '../../core/Block/block';
 import template from './Template';
 import Button from '../../partials/button/index';
 import Link from '../../partials/link/index';
-import router from '../../core/Router';
+import router from '../../core/Router/Router';
 import ChatsController from '../../apiControllers/ChatsController/ChatsController';
 import Store, { StoreEvents } from '../../core/Store';
 import { WSConnect } from '../../core/WebSocket';

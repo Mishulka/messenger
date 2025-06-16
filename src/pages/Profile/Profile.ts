@@ -1,8 +1,7 @@
-
-import Block from '../../core/block';
+import Block from '../../core/Block/block';
 import template from './Template';
 import Link from '../../partials/link/index';
-import router from '../../core/Router';
+import router from '../../core/Router/Router';
 import AuthController from '../../apiControllers/AuthController/AuthController';
 import Store, { StoreEvents } from '../../core/Store';
 import { User } from '../../core/types';
